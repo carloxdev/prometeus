@@ -1,0 +1,28 @@
+body {
+    background-color: #F2F2F2;
+}
+
+.own-loginbox {
+    margin-top:50px;   
+}
+
+.own-panel-body {
+    padding: 15px 15px 0;   
+}
+
+.own-fields {
+    margin-bottom: 25px
+}
+
+.own-bottons {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.own-forgetpass {
+    float:right;
+    font-size: 80%;
+    position: relative;
+    top:-25px;
+    right:7px;    
+}

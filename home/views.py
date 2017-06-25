@@ -1,0 +1,15 @@
+# -*- coding: utf-8 -*-
+
+# Python's Libraries
+from __future__ import unicode_literals
+
+# Django's Libraries
+from django.shortcuts import render
+from django.views.generic.base import View
+
+
+class Index(View):
+    template_name = "index.html"
+
+    def get(self, _request):
+        return render(_request, self.template_name, {})

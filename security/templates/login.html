@@ -1,0 +1,90 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    
+    <title>
+        GCM - Log in
+    </title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap/3.3.7/css/bootstrap.min.css' %}">
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+
+    <div class="container">
+        <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 own-loginbox">
+            <div class="panel panel-default" >
+                <div class="panel-heading">
+                    <div class="panel-title">Bienvenido a GCM</div>
+                </div>
+                <div class="panel-body own-panel-body" >
+
+                    {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                    {% endfor %}  
+
+                    <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
+                    
+                    <form method="post"> {% csrf_token %}
+                        
+                        <div class="input-group own-fields">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                            <input id="login-username" type="text" class="form-control" name="cuenta" value="" placeholder="cuenta">
+                        </div>
+                        
+                        <div class="input-group own-fields">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                            <input id="login-password" type="password" class="form-control" name="contrasena" placeholder="contraseña">
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="checkbox">
+                                <label>
+                                    <input id="login-remember" type="checkbox" name="remember" value="1"> Recordar contraseña
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group own-bottons">
+                            <!-- Button -->
+                            <div class="col-sm-12 controls">
+                                <button type="submut" class="btn btn-success">Entrar</button>
+                            </div>
+                        </div>
+
+                        <a class="own-forgetpass" href="#">¿Olvidaste la Contraseña?</a>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="{% static 'libs/jquery/2.2.4/jquery.min.js' %}"> </script>
+    
+    <!-- Bootstrap -->
+    <script src="{% static 'libs/bootstrap/3.3.7/js/bootstrap.min.js' %}"></script>
+
+  </body>
+</html>

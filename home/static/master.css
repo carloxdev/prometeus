@@ -1,0 +1,64 @@
+html, body {
+    height: 100%;
+}
+
+
+.own-wrap {
+  min-height: 100%;
+}
+
+.own-main {
+  overflow:auto;
+  padding-bottom:2.7em; /* this needs to be bigger than footer height*/
+}
+
+
+.own-btn-logout {
+    padding-top: 4px !important;
+    padding-bottom: 4px !important;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.own-share-title {
+    margin-bottom: .5em;
+}
+
+.own-page-content {
+	margin-bottom: 2em;
+}
+
+.own-page-footer {
+
+	position: relative;
+	margin-top:-2.7em; /* negative value of footer height */
+
+	height: 2.7em;
+	border-top: 1px solid #E5E5E5;
+	background-color: #F8F8F8;
+	padding: .7em;
+  	clear:both;
+
+}
+
+@media (min-width: 750px) {
+
+    .own-btn-logout { 
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (min-width: 1200px) {
+
+}
+
+
+/*
+.footer {
+  
+  : -150px; 
+  : 150px;
+
+  padding-top:20px;
+} */
