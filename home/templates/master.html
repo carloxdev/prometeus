@@ -9,7 +9,7 @@
         <meta name="description" content="Portal Empleados de GCM">
         <meta name="author" content="Carlos Andres Martinez Jimenez">
         <!-- <link rel="icon" href="../../favicon.ico"> -->
-        <title> TuPack </title>
+        <title> GCM Empleados </title>
 
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap/3.3.7/css/bootstrap.min.css' %}"/>
@@ -44,7 +44,7 @@
                                 <span class="icon-bar"></span>
                             </button>                
                             <a class="navbar-brand" href="{% url 'home:index' %}">
-                                GCM - Portal Empleados
+                                GCM Empleados
                             </a>
                         </div>
 
@@ -64,12 +64,16 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username|upper }}<span class="caret"></span></a>
                                     {% endif %}
                                     <ul class="dropdown-menu">
-                                        <li><a href="#">Perfil</a></li>
+                                        <li><a href="{% url 'security:profile' 0 %}">Perfil</a></li>
+
+                                        {% if user.is_superuser %}
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="#">Usuarios</a></li>
-                                        <li><a href="#">Correo</a></li>
+                                        <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
+                                        <li><a href="{% url 'management:email' %} ">Correo</a></li>
+                                        {% endif %}
+                    
                                         <li role="separator" class="divider"></li>
-                                        <li><a href="#">Bandeja</a></li>                                        
+                                        <li><a href="{% url 'management:task_list' %}">Bandeja</a></li>                                        
                                     </ul>
                                 </li>
                                 <li>

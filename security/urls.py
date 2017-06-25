@@ -7,9 +7,9 @@ from django.contrib.auth.views import LogoutView
 
 # Own's Libraries
 from .views import Login
-from .views import Perfil
-from .views import PerfilPassword
-from .views import PerfilPasswordSuccess
+from .views import Profile
+from .views import ProfilePassword
+from .views import ProfilePasswordSuccess
 from .views import UserList
 from .views import UserAdd
 from .views import UserAddSuccess
@@ -20,9 +20,9 @@ from .views import UserPasswordSuccess
 urlpatterns = [
     url(r'^$', Login.as_view(), name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
-    url(r'^perfil/(?P<_pk>\d+)/$', Perfil.as_view(), name="perfil"),
-    url(r'^perfil/(?P<_pk>\d+)/password/$', PerfilPassword.as_view(), name="perfil_password"),
-    url(r'^perfil/password/success/$', PerfilPasswordSuccess.as_view(), name="perfil_password_success"),
+    url(r'^profile/(?P<_pk>\d+)/$', Profile.as_view(), name="profile"),
+    url(r'^profile/(?P<_pk>\d+)/password/$', ProfilePassword.as_view(), name="profile_password"),
+    url(r'^profile/password/success/$', ProfilePasswordSuccess.as_view(), name="profile_password_success"),
     url(r'^users/$', UserList.as_view(), name="user_list"),
     url(r'^users/add/$', UserAdd.as_view(), name="user_add"),
     url(r'^users/add/success/$', UserAddSuccess.as_view(), name="user_add_success"),

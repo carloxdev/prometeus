@@ -53,22 +53,22 @@ class Login(View):
         return render(request, self.template_name, {})
 
 
-class Perfil(View):
-    template_name = "perfil.html"
+class Profile(View):
+    template_name = "profile.html"
 
     def get(self, _request, _pk):
         return render(_request, self.template_name, {})
 
 
-class PerfilPassword(View):
-    template_name = "perfil_password.html"
+class ProfilePassword(View):
+    template_name = "profile_password.html"
 
     def get(self, _request, _pk):
         return render(_request, self.template_name, {})
 
 
-class PerfilPasswordSuccess(View):
-    template_name = "perfil_password_success.html"
+class ProfilePasswordSuccess(View):
+    template_name = "profile_password_success.html"
 
     def get(self, _request):
         return render(_request, self.template_name, {})
