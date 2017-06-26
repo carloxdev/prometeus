@@ -7,29 +7,52 @@
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" href="{% static 'userl_list.css' %}" />
+    <link rel="stylesheet" href="{% static 'user_list.css' %}" />
 
 {% endblock css %}
 
 {% block contenido %}
 
-
 <div class="container-fluid">
-    
-            <div class="container-fluid app-seccion-titulo">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <h4>
-                            <span class="app-titulo">{{ paginator.count }} Usuarios</span>
 
-                            <a class="btn btn-primary pull-right app-boton-agregar" href="{% url 'seguridad:usuario_nuevo' %}">
-                                <i class="fa fa-user-plus" aria-hidden="true"></i>
-                                Agregar Usuario
-                            </a>                            
-                        </h4>
+           <header>
+                <h3 class="own-titulo">Administrar Usuarios</h3>
+            </header>
+
+            <hr class="own-article-line">            
+
+            <nav class="own-article-toolbar">
+                
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="{% url 'payroll:voucher_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            Agregar Usuario
+                        </a>
                     </div>
+                    
+                    <br class="visible-xs">
+                    <br class="visible-xs">
+
+                    <form class="col-xs-12 col-sm-6" action="" method="GET">
+
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
+                            
+                            <span class="input-group-btn">
+                              <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                <span class="hidden-xs">Buscar</span>
+                              </button>
+                            </span>
+                        </div>   
+
+                    </form>
                 </div>
-            </div>
+            </nav>  
+
+            <br>            
 
             <div class="container-fluid">
 
@@ -50,7 +73,7 @@
                 <div class="row app-record" >
 
                     <!-- Clave y Estado -->
-                    <div class="visible-xs col-sm-5 app-column-pk {% if usuario.is_active %} app-column-pk-active {% else %} app-column-pk-disable {% endif %}">
+                    <div class="visible-xs col-sm-5 app-column-pk app-column-pk-active">
                         CMARTINEZJ
 
                         <span class="app-column-conten pull-right">
@@ -90,7 +113,7 @@
                     </div>
 
                     <!-- Last Login -->
-                    <div class="col-sx-12 col-sm-3 col-md-2 app-column">
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
                         <span class="app-data-label" >
                             Ultimo Login: 
                         </span>
@@ -101,14 +124,13 @@
                     </div>
                     
                     <!-- Comand -->
-                    <div class="col-sx-12 col-sm-1 col-md-1 app-column-comand">
-                        <a href="{% url 'seguridad:usuario_editar' usuario.pk %}" class="app-link">
-                            <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>                             
-                            <span class="app-link-text">
-                                Editar
-                            </span>
-                        </a>
-                    </div>
+                    <a href="{% url 'security:user_edit' 0 %}" class="col-sx-12 col-sm-1 col-md-1 app-column app-comando">
+
+                        <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Editar
+                        </span>
+                    </a>
 
                 </div>
 
@@ -116,7 +138,7 @@
                 <div class="row app-record" >
 
                     <!-- Clave y Estado -->
-                    <div class="visible-xs col-sm-5 app-column-pk {% if usuario.is_active %} app-column-pk-active {% else %} app-column-pk-disable {% endif %}">
+                    <div class="visible-xs col-sm-5 app-column-pk app-column-pk-disable">
                         CMARTINEZJ
 
                         <span class="app-column-conten pull-right">
@@ -156,7 +178,7 @@
                     </div>
 
                     <!-- Last Login -->
-                    <div class="col-sx-12 col-sm-3 col-md-2 app-column">
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
                         <span class="app-data-label" >
                             Ultimo Login: 
                         </span>
@@ -167,14 +189,13 @@
                     </div>
                     
                     <!-- Comand -->
-                    <div class="col-sx-12 col-sm-1 col-md-1 app-column-comand">
-                        <a href="{% url 'seguridad:usuario_editar' usuario.pk %}" class="app-link">
-                            <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>                             
-                            <span class="app-link-text">
-                                Editar
-                            </span>
-                        </a>
-                    </div>
+                    <a href="{% url 'security:user_edit' 0 %}" class="col-sx-12 col-sm-1 col-md-1 app-column app-comando">
+
+                        <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Editar
+                        </span>
+                    </a>
 
                 </div>
 
@@ -182,7 +203,7 @@
                 <div class="row app-record" >
 
                     <!-- Clave y Estado -->
-                    <div class="visible-xs col-sm-5 app-column-pk {% if usuario.is_active %} app-column-pk-active {% else %} app-column-pk-disable {% endif %}">
+                    <div class="visible-xs col-sm-5 app-column-pk app-column-pk-active">
                         CMARTINEZJ
 
                         <span class="app-column-conten pull-right">
@@ -222,7 +243,7 @@
                     </div>
 
                     <!-- Last Login -->
-                    <div class="col-sx-12 col-sm-3 col-md-2 app-column">
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
                         <span class="app-data-label" >
                             Ultimo Login: 
                         </span>
@@ -233,14 +254,13 @@
                     </div>
                     
                     <!-- Comand -->
-                    <div class="col-sx-12 col-sm-1 col-md-1 app-column-comand">
-                        <a href="{% url 'seguridad:usuario_editar' usuario.pk %}" class="app-link">
-                            <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>                             
-                            <span class="app-link-text">
-                                Editar
-                            </span>
-                        </a>
-                    </div>
+                    <a href="{% url 'security:user_edit' 0 %}" class="col-sx-12 col-sm-1 col-md-1 app-column app-comando">
+
+                        <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Editar
+                        </span>
+                    </a>
 
                 </div>
 
@@ -267,6 +287,25 @@
                 </div>           
                 
             </div>
+
+
+    
+<!--             <div class="container-fluid app-seccion-titulo">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>
+                            <span class="app-titulo">{{ paginator.count }} Usuarios</span>
+
+                            <a class="btn btn-primary pull-right app-boton-agregar" href="{% url 'security:user_add' %}">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                Agregar Usuario
+                            </a>                            
+                        </h4>
+                    </div>
+                </div>
+            </div> -->
+
+
 
 </div>
 
