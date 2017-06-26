@@ -8,6 +8,101 @@
 
 {% block contenido %}
 
+    <div class="row">
+
+        <div class="col-xs-12">
+
+            <header>
+                <h3 class="own-titulo">Administrar Noticias</h3>
+            </header>
+
+            <hr class="own-article-line">            
+
+            <nav class="own-article-toolbar">
+                
+                <div class="row">
+
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="{% url 'payroll:voucher_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                            Agregar
+                        </a>
+                    </div>
+                    
+                    <br class="visible-xs">
+                    <br class="visible-xs">
+
+                    <form class="col-xs-12 col-sm-6" action="" method="GET">
+
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
+                            
+                            <span class="input-group-btn">
+                              <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                <span class="hidden-xs">Buscar</span>
+                              </button>
+                            </span>
+                        </div>   
+
+                    </form>
+                </div>
+            </nav>  
+
+            <br>
+    
+            <article>
+                <div class="list-group">
+
+                    <a href="{% url 'payroll:voucher_view' 0 %}" class="list-group-item">
+                        <span class="badge">
+                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                            <span class="hidden-xs">Pendiente</span>
+                        </span>
+                        La enfermera de meza
+                    </a>
+                    <a href="{% url 'payroll:voucher_view' 0 %}" class="list-group-item">
+                        <span class="badge">
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                            <span class="hidden-xs">PUBLICADO</span>
+                        </span>
+                        Universitaria necesitada    
+                    </a>
+                    <a href="{% url 'payroll:voucher_view' 0 %}" class="list-group-item">
+                        <span class="badge">
+                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                            <span class="hidden-xs">Pendiente</span>
+                        </span>
+                        Una amiga de la familia
+                    </a>                                         
+                </div>
+            </article>
+
+            <div class="text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li>
+                            <a href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>                
+            </div>             
+         
+        </div>
+    </div>
+
 {% endblock contenido %}
 
 {% block scripts %}

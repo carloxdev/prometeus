@@ -2,11 +2,273 @@
 
 {% load static from staticfiles %}
 
+{% load humanize %}
+
 {% block css %}
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" href="{% static 'userl_list.css' %}" />
 
 {% endblock css %}
 
 {% block contenido %}
+
+
+<div class="container-fluid">
+    
+            <div class="container-fluid app-seccion-titulo">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4>
+                            <span class="app-titulo">{{ paginator.count }} Usuarios</span>
+
+                            <a class="btn btn-primary pull-right app-boton-agregar" href="{% url 'seguridad:usuario_nuevo' %}">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                Agregar Usuario
+                            </a>                            
+                        </h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+
+                <div class="row app-record-titles">
+
+                    <div class="col-sm-4 col-md-6">USUARIO</div>
+
+                    <div class="col-sm-1 col-md-1">ESTADO</div>
+
+                    <div class="col-sm-3 col-md-2">REGISTRO</div>
+
+                    <div class="col-sm-3 col-md-2">ULTIMO LOGIN</div>
+
+                    <div class="col-sm-1 col-md-1"></div>
+                    
+                </div>
+
+                <div class="row app-record" >
+
+                    <!-- Clave y Estado -->
+                    <div class="visible-xs col-sm-5 app-column-pk {% if usuario.is_active %} app-column-pk-active {% else %} app-column-pk-disable {% endif %}">
+                        CMARTINEZJ
+
+                        <span class="app-column-conten pull-right">
+                            <span class="glyphicon glyphicon-ok-sign app-data-activeicon" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                    
+                    <!-- Clave y Descripcion -->
+                    <div class="col-sx-12 col-sm-4 col-md-6 app-column-main app-column--border">
+                        
+                        <div class="row">
+                            <div class="hidden-xs col-sm-12 col-md-3">
+                                CMARTINEZJ
+                            </div>
+                            <div class="col-sx-12 col-sm-12 col-md-7 app-data-second">
+                                Carlos Andres Martinez Jimenez
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="hidden-xs col-sm-1 app-column app-column--center app-column--border app-column-estado">
+                        <span class="app-column-conten">
+                            <span class="glyphicon glyphicon-ok-sign app-data-icon-active" aria-hidden="true"></span>
+                        </span>
+                    </div>
+
+                    <!-- Created By -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Registro: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            12/05/2017
+                        </span>                             
+                    </div>
+
+                    <!-- Last Login -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column">
+                        <span class="app-data-label" >
+                            Ultimo Login: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Hace 20 min.
+                        </span>                 
+                    </div>
+                    
+                    <!-- Comand -->
+                    <div class="col-sx-12 col-sm-1 col-md-1 app-column-comand">
+                        <a href="{% url 'seguridad:usuario_editar' usuario.pk %}" class="app-link">
+                            <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>                             
+                            <span class="app-link-text">
+                                Editar
+                            </span>
+                        </a>
+                    </div>
+
+                </div>
+
+
+                <div class="row app-record" >
+
+                    <!-- Clave y Estado -->
+                    <div class="visible-xs col-sm-5 app-column-pk {% if usuario.is_active %} app-column-pk-active {% else %} app-column-pk-disable {% endif %}">
+                        CMARTINEZJ
+
+                        <span class="app-column-conten pull-right">
+                            <span class="glyphicon glyphicon-minus-sign app-data-disableicon" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                    
+                    <!-- Clave y Descripcion -->
+                    <div class="col-sx-12 col-sm-4 col-md-6 app-column-main app-column--border">
+                        
+                        <div class="row">
+                            <div class="hidden-xs col-sm-12 col-md-3">
+                                CMARTINEZJ
+                            </div>
+                            <div class="col-sx-12 col-sm-12 col-md-7 app-data-second">
+                                Carlos Andres Martinez Jimenez
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="hidden-xs col-sm-1 app-column app-column--center app-column--border app-column-estado">
+                        <span class="app-column-conten">
+                                <span class="glyphicon glyphicon-minus-sign app-data-icon-disable" aria-hidden="true"></span>
+                        </span>
+                    </div>
+
+                    <!-- Created By -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Registro: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            12/05/2017
+                        </span>                             
+                    </div>
+
+                    <!-- Last Login -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column">
+                        <span class="app-data-label" >
+                            Ultimo Login: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Hace 40 min.
+                        </span>                 
+                    </div>
+                    
+                    <!-- Comand -->
+                    <div class="col-sx-12 col-sm-1 col-md-1 app-column-comand">
+                        <a href="{% url 'seguridad:usuario_editar' usuario.pk %}" class="app-link">
+                            <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>                             
+                            <span class="app-link-text">
+                                Editar
+                            </span>
+                        </a>
+                    </div>
+
+                </div>
+
+
+                <div class="row app-record" >
+
+                    <!-- Clave y Estado -->
+                    <div class="visible-xs col-sm-5 app-column-pk {% if usuario.is_active %} app-column-pk-active {% else %} app-column-pk-disable {% endif %}">
+                        CMARTINEZJ
+
+                        <span class="app-column-conten pull-right">
+                            <span class="glyphicon glyphicon-ok-sign app-data-activeicon" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                    
+                    <!-- Clave y Descripcion -->
+                    <div class="col-sx-12 col-sm-4 col-md-6 app-column-main app-column--border">
+                        
+                        <div class="row">
+                            <div class="hidden-xs col-sm-12 col-md-3">
+                                CMARTINEZJ
+                            </div>
+                            <div class="col-sx-12 col-sm-12 col-md-7 app-data-second">
+                                Carlos Andres Martinez Jimenez
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="hidden-xs col-sm-1 app-column app-column--center app-column--border app-column-estado">
+                        <span class="app-column-conten">
+                                <span class="glyphicon glyphicon-ok-sign app-data-icon-active" aria-hidden="true"></span>
+                        </span>
+                    </div>
+
+                    <!-- Created By -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Registro: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            12/05/2017
+                        </span>                             
+                    </div>
+
+                    <!-- Last Login -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column">
+                        <span class="app-data-label" >
+                            Ultimo Login: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Hace 1 min.
+                        </span>                 
+                    </div>
+                    
+                    <!-- Comand -->
+                    <div class="col-sx-12 col-sm-1 col-md-1 app-column-comand">
+                        <a href="{% url 'seguridad:usuario_editar' usuario.pk %}" class="app-link">
+                            <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>                             
+                            <span class="app-link-text">
+                                Editar
+                            </span>
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="text-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>                
+                </div>           
+                
+            </div>
+
+</div>
 
 {% endblock contenido %}
 
