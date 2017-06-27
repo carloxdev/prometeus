@@ -4,9 +4,112 @@
 
 {% block css %}
 
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'profile.css' %}"/>
+
+
 {% endblock css %}
 
 {% block contenido %}
+    <div class="row">
+
+    	<div class="col-xs-12">
+
+            <header>
+                <h3 class="own-titulo">Profile</h3>
+            </header>
+
+            <hr class="own-article-line">
+
+			<br>       		
+    	</div>
+
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 own-form-section">      
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Vitor Freitas</h3>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4" align="center"> 
+							<img alt="User Pic" src="{% static "images/decorators/user.jpg" %}" class="img-circle img-responsive">
+						</div>
+						
+						<div class="col-xs-12 col-sm-8">
+							<table class="table table-user-information">
+								<tbody>
+									<tr>
+										<td>
+											<span class="glyphicon glyphicon-lock own-iconito" aria-hidden="true"></span>
+											<span class="own-table-title">Departamento:</span>
+										</td>
+										<td class="own-table-info">Produccion</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="glyphicon glyphicon-calendar own-iconito" aria-hidden="true"></span>
+											<span class="own-table-title">Contratacion:</span>
+										</td>
+										<td>06/23/2013</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="glyphicon glyphicon-gift own-iconito" aria-hidden="true"></span>
+											<span class="own-table-title">Cumpleaños:</span>
+										</td>
+										<td>01/24/1988</td>
+									</tr>
+									
+									<tr>
+									<tr>
+										<td>
+											<span class="glyphicon glyphicon-heart own-iconito" aria-hidden="true"></span>
+											<span class="own-table-title">Genero:</span>
+										</td>
+										<td>Masculino</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="glyphicon glyphicon-home own-iconito" aria-hidden="true"></span>
+											<span class="own-table-title">Direccion:</span>
+										</td>
+										<td>Andador Grijalva #9, Col. Infonavit Buenavista</td>
+									</tr>
+									<tr>
+										<td>
+											<span class="glyphicon glyphicon-envelope own-iconito" aria-hidden="true"></span>
+											<span class="own-table-title">Email:</span>
+										</td>
+										<td><a href="mailto:victor.fre@gcm.mx">victor.fre@gcm.mx</a></td>
+									</tr>
+									<tr>
+										<td>
+											<span class="glyphicon glyphicon-earphone own-iconito" aria-hidden="true"></span>
+											<span class="own-table-title">Telefono:</span>
+										</td>
+										<td>
+											123-4567-890 (OFICINA)
+											<br>
+											555-4567-890 (CELULAR)
+										</td>
+										
+									</tr>
+									
+								</tbody>
+							</table>
+							
+							<a href="{% url 'security:profile_password' 0 %}" class="btn btn-primary">
+								<i class="fa fa-key" aria-hidden="true"></i>
+								Cambiar Contraseña
+							</a>
+						</div>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
+
 
 {% endblock contenido %}
 

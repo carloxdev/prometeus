@@ -83,14 +83,6 @@
 
 
 	.app-comando {
-/*		margin-top: .8em;
-		font-size: .9em;
-		
-
-		
-		
-		
-		*/		
 
 		border-radius: 0 0  4px 4px;
 
@@ -188,6 +180,9 @@
 
 	.app-comando {
 		border-top: 0;
+		padding: 0px;
+
+		border-radius: 0 4px  4px 0px;
 	}
 
 	.app-column-comand {
