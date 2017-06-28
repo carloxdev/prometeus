@@ -96,7 +96,7 @@ class UserAddSuccess(View):
 
 
 class UserEdit(View):
-    template_name = "user_add_edit.html"
+    template_name = "user_edit.html"
 
     def get(self, _request, _pk):
         return render(_request, self.template_name, {})
