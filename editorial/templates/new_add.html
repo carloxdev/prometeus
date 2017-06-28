@@ -4,12 +4,61 @@
 
 {% block css %}
 
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'pack/pack_add.css' %}"/>
+
 {% endblock css %}
 
 {% block contenido %}
 
+    <div class="row">
+
+        <div class="col-xs-12">
+            <div class="jumbotron text-center">
+                <h2>¡Hola!</h2>
+                <p>
+                    Puedes subir fotos o dejar un link que quieras
+                    compartir con la comunidad
+                </p>                    
+                <p>
+                    Todo esto de forma completamente anonima.
+                </p>
+            </div>
+        </div>    
+
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+            <form action="">
+                
+                <div class="own-section-title">
+                    Para empezar proporcinanos los siguientes datos:
+                </div>
+
+                <div class="well">
+                    <div class="form-group">
+                        <label for="usr">Titulo del pack:</label>
+                        <input type="text" class="form-control" id="titulo">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment">Comentario:</label>
+                        <textarea class="form-control" rows="5" id="comment"></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="{% url 'editorial:pack_upload' 0 %}" class="btn btn-default">Continuar</a>
+                    </div>                    
+
+                </div>                
+
+            </form>
+         
+        </div>
+       
+    </div>
+
 {% endblock contenido %}
 
 {% block scripts %}
+
 
 {% endblock scripts %}

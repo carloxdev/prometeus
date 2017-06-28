@@ -2,13 +2,21 @@ html, body {
     height: 100%;
 }
 
+.own-success {
+    background-color: #57B754;
+}
+
+.own-warning {
+    background-color: #EDA847;
+}
 
 .own-wrap {
   min-height: 100%;
 }
 
 .own-main {
-  overflow:auto;
+  /*overflow:auto;*/
+  overflow: visible;
   padding-bottom:2.7em; /* this needs to be bigger than footer height*/
 }
 
@@ -26,6 +34,7 @@ html, body {
 
 .own-page-content {
 	margin-bottom: 2em;
+  min-height: 100%;
 }
 
 .own-page-footer {

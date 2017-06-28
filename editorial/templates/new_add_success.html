@@ -8,8 +8,26 @@
 
 {% block contenido %}
 
+    <div class="row">
+        
+        <div class="col-xs-12">
+            <div class="jumbotron text-center">
+                <h1>¡Gracias compartir con la com!</h1>
+                <p>
+                    El equipo tomara cartas en el asunto 
+                    para darle solucion a tu inconformidad 
+                </p>
+
+                <a href="{% url 'editorial:pack_published' %}" class="btn btn-default">
+                    Seguir viendo Packs
+                </a>
+            </div>
+        </div>
+    </div>
+
 {% endblock contenido %}
 
 {% block scripts %}
+
 
 {% endblock scripts %}

@@ -1,12 +1,128 @@
+
 {% extends 'master.html' %}
 
 {% load static from staticfiles %}
 
+{% load custom_tags %}
+
 {% block css %}
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'pack/pack_view.css' %}"/>
 
 {% endblock css %}
 
 {% block contenido %}
+
+    <div class="row">
+        
+        <div class="col-xs-12 col-sm-9">
+            <div class="well">
+                <div class="media">
+                    <div class="media-left">
+                        <a href="#">
+                            <img class="media-object" src="{% static "images/decorators/pack_cover_example.svg" %}" alt="...">
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Pack 1</h4>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="own-section-title">
+                    LINK
+                </div>
+                <div class="well own-section-body">
+                    www.google.com.mx
+                </div>
+            </div>
+
+            <div>
+                <div class="own-section-title">
+                    FOTOS
+                </div>   
+                <div class="well own-section-body">
+                    <div class="row">
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img src="{% static "images/decorators/pics.svg" %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img src="{% static "images/decorators/pics.svg" %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img src="{% static "images/decorators/pics.svg" %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img src="{% static "images/decorators/pics.svg" %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img src="{% static "images/decorators/pics.svg" %}" alt="...">
+                            </a>
+                        </div>                                                            
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img src="{% static "images/decorators/pics.svg" %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img src="{% static "images/decorators/pics.svg" %}" alt="...">
+                            </a>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <a href="#" class="thumbnail">
+                                <img src="{% static "images/decorators/pics.svg" %}" alt="...">
+                            </a>
+                        </div>
+                    </div>
+                </div>                             
+            </div>
+
+            <div class="form-group well">
+                <label for="comment">Comentario:</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
+            </div>
+            <div class="text-center">
+                <!-- <button type="submit" class="btn btn-default">Enviar comentario</button> -->
+                <a href="#" class="btn btn-default">Enviar comentario</a>
+
+            </div>               
+        </div>
+
+        <div class="col-xs-12 col-sm-3">
+            <div class="row">
+
+                {% tag_share_pack %}
+
+                <div class="col-sm-12">
+                    <div class="well text-center">
+                        Packs mas Populares
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="well text-center">
+                        Ultimos comentarios
+                    </div>
+                </div>                
+
+            </div>
+        </div>
+    </div>
+
+
 
 {% endblock contenido %}
 
