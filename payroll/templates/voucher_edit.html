@@ -8,8 +8,95 @@
 
 {% block contenido %}
 
+	<div class="row">
+
+		<div class="col-xs-12">
+            <header>
+                <h3 class="own-titulo">Solicitud de Comprobante</h3>
+            </header>
+
+            <hr class="own-article-line">
+
+			<br>			
+		</div>
+
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+
+			<div class="well">
+
+				<div class="form-group">
+					<label for="empleados">Empleado:</label>
+					<select id="empleados" class="form-control" disabled>
+						<option>201334 - JORGE MARTINEZ HERNANDEZ</option>
+						<option>208323 - CARLOS ANDRES MARTINEZ JIMENEZ</option>
+						<option>234121 - CLAUDIA VILLEGAS LOPEZ</option>
+					</select>					
+				</div>
+				
+				<div class="form-group">
+					<label for="empleados">Fecha:</label>
+					<input type="text" class="form-control" id="fecha" value="01/01/2015 - 01/31/2015" disabled />
+				</div>
+
+				<div class="form-group">
+					<label for="empleados">Tipo de Comprobante:</label>
+					<select id="empleados" class="form-control" disabled>>
+						<option>Recibo de Nomina</option>
+						<option>Recibo de Vacaciones</option>
+						<option>Recibo de Prestamo</option>
+					</select>					
+				</div>
+
+                <div class="form-group">
+                    <label for="empleados">Estado:</label>
+                    <select id="empleados" class="form-control" >
+                        <option>Pendiente</option>
+                        <option>PROCESADO</option>
+                    </select>                   
+                </div>					
+
+            
+	            <div class="form-group">
+	            	<label for="empleados">Archivo:</label>
+	                <input type="file" class="filestyle" id="portada" data-iconName="glyphicon glyphicon-file" data-buttonText="Seleccionar Archivo">
+	            </div>                	
+
+                <div class="form-group">
+                    <label for="comment">Comentarios de la Administracion:</label>
+                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                </div>
+
+				<div class="text-center">
+                    <button class="btn btn-danger pull-left">
+                        Cancelar
+                    </button>
+                    				
+                    <button class="btn btn-primary">
+                    	Guardar
+                    </button>
+                </div>
+
+			</div>
+        </div>
+
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <div class="form-group well">
+                <label for="comment">Comentario:</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
+				<br>
+				<button class="btn btn-default">
+                	Enviar
+            	</button>                            
+            </div>
+        </div>        
+	</div>
+
 {% endblock contenido %}
 
 {% block scripts %}
+
+    <!-- Bootstrap Filestyle -->
+    <script type="text/javascript" src="{% static 'libs/bootstrap-filestyle/1.2.1/src/bootstrap-filestyle.min.js' %}"></script>
+
 
 {% endblock scripts %}

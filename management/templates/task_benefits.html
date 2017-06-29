@@ -2,11 +2,294 @@
 
 {% load static from staticfiles %}
 
+{% load humanize %}
+
 {% block css %}
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" href="{% static 'benefit_list.css' %}" />
 
 {% endblock css %}
 
 {% block contenido %}
+
+    <div class="container-fluid">
+
+           <header>
+                <h3 class="own-titulo">Administracion de Prestaciones</h3>
+            </header>
+
+            <hr class="own-article-line">            
+
+            <nav class="own-article-toolbar">
+                
+                <div class="row">
+                    
+
+                    <form class="col-xs-12 col-sm-6 col-sm-offset-6" action="" method="GET">
+				
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
+                            
+                            <span class="input-group-btn">
+                              <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                <span class="hidden-xs">Buscar</span>
+                              </button>
+                            </span>
+                        </div>   
+
+                    </form>
+                </div>
+            </nav>  
+
+            <br>            
+
+            <div class="container-fluid">
+
+                <div class="row app-record-titles">
+
+                    <div class="col-sm-4 col-md-6">TIPO</div>
+
+                    <div class="col-sm-1 col-md-1">ESTADO</div>
+
+                    <div class="col-sm-3 col-md-2">FECHA</div>
+
+                    <div class="col-sm-3 col-md-2">FECHA SOLICITUD</div>
+
+                    <div class="col-sm-1 col-md-1"></div>
+                </div>
+
+                <div class="row app-record" >
+
+                    <!-- Clave y Estado -->
+                    <div class="visible-xs col-sm-5 app-column-pk app-column-pk-disable">
+                        CERDITO
+                        <span class="app-column-conten pull-right">
+                            <span class="glyphicon glyphicon-time app-data-activeicon" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                    
+                    <!-- Clave y Descripcion -->
+                    <div class="col-sx-12 col-sm-4 col-md-6 app-column-main app-column--border">
+                        
+                        <div class="row">
+                            <div class="hidden-xs col-sm-12 col-md-3">
+                                CERDITO
+                            </div>
+                            <div class="col-sx-12 col-sm-12 col-md-7 app-data-second">
+                                <a href=" {% url 'security:profile' 0 %}">
+                                    CARLOS ANDRES MARTINEZ JIMENEZ    
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="hidden-xs col-sm-1 app-column text-center app-column--border app-column-estado">
+                        <span class="app-column-conten">
+                            <span class="badge own-warning">
+                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                <span class="own-status-desc">Pendiente</span>
+                                
+                            </span>
+                        </span>
+                    </div>                    
+
+                    <!-- Created By -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Fecha:
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            12/05/2017
+                        </span>                             
+                    </div>
+
+                    <!-- Last Login -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Fecha Solicitud: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Hace 20 min.
+                        </span>                 
+                    </div>
+                    
+                    <!-- Comand -->
+                    <a href="{% url 'payroll:benefit_edit' 0 %}" class="col-sx-12 col-sm-1 col-md-1 app-column app-comando">
+
+                        <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>
+                        <span class="app-data-command">
+                            Editar
+                        </span>
+                    </a>
+                </div>
+
+                <div class="row app-record" >
+
+                    <!-- Clave y Estado -->
+                    <div class="visible-xs col-sm-5 app-column-pk app-column-pk-disable">
+                        CERDITO
+
+                        <span class="app-column-conten pull-right">
+                            <span class="glyphicon glyphicon-time app-data-disableicon" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                    
+                    <!-- Clave y Descripcion -->
+                    <div class="col-sx-12 col-sm-4 col-md-6 app-column-main app-column--border">
+                        
+                        <div class="row">
+                            <div class="hidden-xs col-sm-12 col-md-3">
+                                CERDITO
+                            </div>
+                            <div class="col-sx-12 col-sm-12 col-md-7 app-data-second">
+                                <a href=" {% url 'security:profile' 0 %}">
+                                    CLAUDIA JIMENEZ NERI
+                                </a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Estado -->
+                    <div class="hidden-xs col-sm-1 app-column text-center app-column--border app-column-estado">
+                        <span class="app-column-conten">
+                            <span class="badge own-warning">
+                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                <span class="own-status-desc">Pendiente</span>
+                            </span>
+                        </span>
+                    </div>   
+
+                    <!-- Created By -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Fecha:
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            12/05/2017
+                        </span>                             
+                    </div>
+
+                    <!-- Last Login -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Fecha Solicitud: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Hace 40 min.
+                        </span>                 
+                    </div>
+                    
+                    <!-- Comand -->
+                    <a href="{% url 'payroll:benefit_edit' 0 %}" class="col-sx-12 col-sm-1 col-md-1 app-column app-comando">
+
+                        <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>
+                        <span class="app-data-command">
+                            Editar
+                        </span>
+                    </a>
+                </div>
+
+                <div class="row app-record" >
+
+                    <!-- Clave y Estado -->
+                    <div class="visible-xs col-sm-5 app-column-pk app-column-pk-disable">
+                        CERDITO
+
+                        <span class="app-column-conten pull-right">
+                            <span class="glyphicon glyphicon-time app-data-activeicon" aria-hidden="true"></span>
+                        </span>
+                    </div>
+                    
+                    <!-- Clave y Descripcion -->
+                    <div class="col-sx-12 col-sm-4 col-md-6 app-column-main app-column--border">
+                        
+                        <div class="row">
+                            <div class="hidden-xs col-sm-12 col-md-3">
+                                CERDITO
+                            </div>
+                            <div class="col-sx-12 col-sm-12 col-md-7 app-data-second">
+                                <a href=" {% url 'security:profile' 0 %}">
+                                    JORGE MARTINEZ HERNANDEZ
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="hidden-xs col-sm-1 app-column text-center app-column--border app-column-estado">
+                        <span class="app-column-conten">
+                            <span class="badge own-warning">
+                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                <span class="own-status-desc">Pendiente</span>
+                            </span>
+                        </span>
+                    </div>                    
+
+                    <!-- Created By -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Fecha:
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            12/05/2017
+                        </span>                             
+                    </div>
+
+                    <!-- Last Login -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 app-column app-column--border">
+                        <span class="app-data-label" >
+                            Fecha Solicitud: 
+                        </span>
+                        <span class="glyphicon glyphicon-calendar app-data-icon" aria-hidden="true"></span>
+                        <span class="app-data-normalvalue">
+                            Hace 1 min.
+                        </span>                 
+                    </div>
+                    
+                    <!-- Comand -->
+                    <a href="{% url 'payroll:benefit_edit' 0 %}" class="col-sx-12 col-sm-1 col-md-1 app-column app-comando">
+
+                        <span class="glyphicon glyphicon-edit app-link-icon" aria-hidden="true"></span>
+                        <span class="app-data-command">
+                            Editar
+                        </span>
+                    </a>
+                </div>
+
+                <div class="text-center">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            <li>
+                                <a href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li>
+                                <a href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>                
+                </div>           
+                
+            </div>
+
+    </div>
 
 {% endblock contenido %}
 

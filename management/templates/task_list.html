@@ -4,9 +4,112 @@
 
 {% block css %}
 
+	<!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'task_list.css' %}"/>
+
 {% endblock css %}
 
 {% block contenido %}
+
+    <div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <div class="row">
+            <div class="col-md-4">
+				<div class="panel panel-primary">
+				  	<div class="panel-heading">
+				  		<div class="row">
+				  			<div class="col-xs-3">
+				  				<i class="fa fa-address-card-o fa-5x" aria-hidden="true"></i>
+				  			</div>
+				  			<div class="col-xs-9 text-right">
+								<div class="own-huge">3</div>
+								<div>Nuevas Solicitudes</div>
+				  			</div>
+				  		</div>
+				    	Comprobantes
+				  	</div>
+				  	<a href="{% url 'management:task_vouchers' %}">
+				  		<div class="panel-footer">
+							<span class="pull-left">Ver Solicitudes</span>
+							<span class="pull-right">
+								<i class="fa fa-arrow-circle-right"></i>
+							</span>
+							<div class="clearfix"></div>
+				  		</div>
+				  	</a>
+				</div>
+            </div>
+            <div class="col-md-4">
+				<div class="panel panel-success">
+				  	<div class="panel-heading">
+				  		<div class="row">
+				  			<div class="col-xs-3">
+				  				<i class="fa fa-usd fa-5x" aria-hidden="true"></i>
+				  			</div>
+				  			<div class="col-xs-9 text-right">
+								<div class="own-huge">10</div>
+								<div>Nuevas Solicitudes</div>
+				  			</div>
+				  		</div>
+				    	Prestaciones
+				  	</div>
+				  	<a href="{% url 'management:task_benefits' %}">
+				  		<div class="panel-footer">
+							<span class="pull-left">Ver Solicitudes</span>
+							<span class="pull-right">
+								<i class="fa fa-arrow-circle-right"></i>
+							</span>
+							<div class="clearfix"></div>
+				  		</div>
+				  	</a>
+				</div>
+            </div>            
+            <div class="col-md-4">
+				<div class="panel panel-danger">
+				  	<div class="panel-heading">
+				  		<div class="row">
+				  			<div class="col-xs-3">
+				  				<i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i>
+				  			</div>
+				  			<div class="col-xs-9 text-right">
+								<div class="own-huge">2</div>
+								<div>Nuevos Reportes</div>
+				  			</div>
+				  		</div>
+				    	Incidencias
+				  	</div>
+				  	<a href="{% url 'management:task_incidences' %}">
+				  		<div class="panel-footer">
+							<span class="pull-left">Ver Reportes</span>
+							<span class="pull-right">
+								<i class="fa fa-arrow-circle-right"></i>
+							</span>
+							<div class="clearfix"></div>
+				  		</div>
+				  	</a>
+				</div>
+            </div>   
+        </div>        
+    </div>  
+
+	<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+		<div class="well text-center">
+			<br>
+			<br>
+			<h2>Graficas Varias....</h2>
+			<br>
+			<br>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+		<div class="well text-center">
+			<br>
+			<br>
+			<h2>Indicadores Varios....</h2>
+			<br>
+			<br>
+		</div>
+	</div>	
 
 {% endblock contenido %}
 

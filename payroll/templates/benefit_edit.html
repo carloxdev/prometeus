@@ -59,21 +59,31 @@
 
                 <div class="form-group">
                     <label for="empleados">Estado:</label>
-                    <select id="empleados" class="form-control" disabled="">
+                    <select id="empleados" class="form-control" >
+                        <option>Pendiente</option>
+                        <option>Pago Agregado</option>
                         <option>Pago Validado</option>
                     </select>                   
                 </div>
 
                 <div class="form-group">
                     <label for="comment">Comentarios de la Administracion:</label>
-                    <textarea class="form-control" rows="5" id="comment" disabled>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio qui quaerat sint consectetur quas, eaque, nemo odio nostrum sit perspiciatis commodi hic totam dolores eum neque repellendus, iure ad. Sapiente.</textarea>
+                    <textarea class="form-control" rows="5" id="comment"></textarea>
                 </div>
 
                 <div class="text-center">
-                    <button class="btn btn-primary">
-                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                        Imprimir
+                    <button class="btn btn-danger pull-left">
+                        Cancelar
                     </button>
+
+                    <button class="btn btn-primary">
+                        Guardar
+                    </button>
+
+                    <button class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal">
+                        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>                    
+                        Informacion del Pago
+                    </button>                       
                 </div>                                                                  
 
             </div>
@@ -88,6 +98,38 @@
                 Enviar
             </button>            
         </div>        
+    </div>
+
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Informacion del Pago</h4>
+          </div>
+          <div class="modal-body">
+                
+                <div class="form-group">
+                    <label for="empleados">Folio:</label>
+                    <input type="text" class="form-control" value="XXXXXXXX" disabled="">
+                </div>
+
+                <div class="form-group">
+                    <label for="empleados">Referencia de Pago:</label>
+                    <input type="text" class="form-control" value="XXXXXXXXX" disabled="">
+                </div>                
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Salir</button>
+          </div>
+        </div>
+
+      </div>
     </div>
 
 {% endblock contenido %}
