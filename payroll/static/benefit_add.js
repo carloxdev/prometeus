@@ -17,8 +17,8 @@ $(document).ready(function () {
 	})
 
 	$fecha = $('#fecha')
-	$fecha.daterangepicker()
-
+	
+    $fecha.datepicker()
 })
 
 

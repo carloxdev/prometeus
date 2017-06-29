@@ -23,7 +23,7 @@
                 <div class="row">
 
                     <div class="col-xs-12 col-sm-6">
-                        <a href="{% url 'payroll:voucher_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                        <a href="{% url 'editorial:new_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
                             Agregar
                         </a>
@@ -54,26 +54,26 @@
             <article>
                 <div class="list-group">
 
-                    <a href="{% url 'payroll:voucher_view' 0 %}" class="list-group-item">
-                        <span class="badge">
+                    <a href="{% url 'editorial:new_edit' 0 %}" class="list-group-item">
+                        <span class="badge own-warning">
                             <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                             <span class="hidden-xs">Pendiente</span>
                         </span>
-                        La enfermera de meza
+                        Cambios en prestaciones y servicios
                     </a>
-                    <a href="{% url 'payroll:voucher_view' 0 %}" class="list-group-item">
-                        <span class="badge">
+                    <a href="{% url 'editorial:new_edit' 0 %}" class="list-group-item">
+                        <span class="badge own-success">
                             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             <span class="hidden-xs">PUBLICADO</span>
                         </span>
-                        Universitaria necesitada    
+                        Conocer los nuevos productos que distribuiremos
                     </a>
-                    <a href="{% url 'payroll:voucher_view' 0 %}" class="list-group-item">
-                        <span class="badge">
+                    <a href="{% url 'editorial:new_edit' 0 %}" class="list-group-item">
+                        <span class="badge own-warning">
                             <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                             <span class="hidden-xs">Pendiente</span>
                         </span>
-                        Una amiga de la familia
+                        Actualiza tu informacion en el portal
                     </a>                                         
                 </div>
             </article>

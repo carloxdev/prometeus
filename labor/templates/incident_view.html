@@ -1,0 +1,92 @@
+{% extends 'master.html' %}
+
+{% load static from staticfiles %}
+
+{% block css %}
+
+    <!-- Bootstrap Select -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/select2/4.0.3/dist/css/select2.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/select2-bootstrap-theme-master/0.1.0-beta.10/dist/select2-bootstrap.min.css' %}"/>
+
+    <!-- Bootrstrap DatePicker -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css' %}"/>
+
+{% endblock css %}
+
+{% block contenido %}
+
+    <div class="row">
+
+        <div class="col-xs-12">
+            <header>
+                <h3 class="own-titulo">Revision Reporte de Incidencia</h3>
+            </header>
+
+            <hr class="own-article-line">
+
+            <br>            
+        </div>
+
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+
+            <div class="well">
+
+                <div class="form-group">
+                    <label for="empleados">Empleado:</label>
+                    <select id="empleados" class="form-control" disabled>
+                        <option>201334 - JORGE MARTINEZ HERNANDEZ</option>
+                        <option>208323 - CARLOS ANDRES MARTINEZ JIMENEZ</option>
+                        <option>234121 - CLAUDIA VILLEGAS LOPEZ</option>
+                    </select>                   
+                </div>
+                
+                <div class="form-group">
+                    <label for="empleados">Fecha:</label>
+                    <input type="text" id="fecha" class="form-control" value="12/04/2017" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label for="empleados">Tipo de Incidencia:</label>
+                    <select id="empleados" class="form-control" disabled>
+                        <option>ACTO INSEGURO</option>
+                        <option>INCUMPLIMIENTO A NORMA</option>
+                        <option>ACCIDENTE</option>
+                    </select>                   
+                </div>              
+
+                <div class="form-group">
+                    <label for="comment">Descripcion de la Incidencia:</label>
+                    <textarea class="form-control" rows="5" id="comment" disabled>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et sint tenetur tempora eaque adipisci obcaecati sequi cupiditate, quod dolores maiores sed ut accusamus nesciunt eius. Repellendus quaerat vel sed expedita!</textarea>
+                </div>                
+
+                <div class="form-group">
+                    <label for="comment">Recomendaciones de Calidad/Seguridad:</label>
+                    <textarea class="form-control" rows="5" id="comment" disabled>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio qui quaerat sint consectetur quas, eaque, nemo odio nostrum sit perspiciatis commodi hic totam dolores eum neque repellendus, iure ad. Sapiente.</textarea>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                        Imprimir
+                    </button>
+                </div> 
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock contenido %}
+
+{% block scripts %}
+
+    <!-- Bootstrap Select -->
+    <script type="text/javascript" src="{% static 'libs/select2/4.0.3/dist/js/select2.min.js' %}"></script>
+
+    <!-- Bootrstrap DatePicker -->
+    <script type="text/javascript" src="{% static 'libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js' %}"></script>
+
+    <!-- Own's Scripts -->
+    <script type="text/javascript" src="{% static 'benefit_add.js' %}"></script>    
+
+{% endblock scripts %}

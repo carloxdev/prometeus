@@ -3,12 +3,10 @@
 
 {% load static from staticfiles %}
 
-{% load custom_tags %}
-
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'pack/pack_view.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'new_view.css' %}"/>
 
 {% endblock css %}
 
@@ -16,17 +14,27 @@
 
     <div class="row">
         
-        <div class="col-xs-12 col-sm-9">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
             <div class="well">
                 <div class="media">
                     <div class="media-left">
                         <a href="#">
-                            <img class="media-object" src="{% static "images/decorators/pack_cover_example.svg" %}" alt="...">
+                            <img class="media-object" src="{% static "images/decorators/pics.svg" %}" alt="...">
                         </a>
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Pack 1</h4>
+                        <h4 class="media-heading">Conoce los nuevos productos de la empresa</h4>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam hic eaque quaerat eligendi qui tempore soluta, tenetur enim, veniam accusantium eum sed culpa illum! Illo nulla vero officiis natus tenetur.
+
                     </div>
                 </div>
             </div>
@@ -101,25 +109,6 @@
             </div>               
         </div>
 
-        <div class="col-xs-12 col-sm-3">
-            <div class="row">
-
-                {% tag_share_pack %}
-
-                <div class="col-sm-12">
-                    <div class="well text-center">
-                        Packs mas Populares
-                    </div>
-                </div>
-
-                <div class="col-sm-12">
-                    <div class="well text-center">
-                        Ultimos comentarios
-                    </div>
-                </div>                
-
-            </div>
-        </div>
     </div>
 
 

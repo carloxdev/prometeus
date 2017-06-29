@@ -1,0 +1,49 @@
+{% extends 'master.html' %}
+
+{% load static from staticfiles %}
+
+{% block css %}
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'profile_password.css' %}"/>
+
+{% endblock css %}
+
+{% block contenido %}
+
+    <div class="row">
+
+
+        <div class="col-xs-12">
+
+            <header>
+                <h3 class="own-titulo">Profile</h3>
+            </header>
+
+            <hr class="own-article-line">
+
+            <br>            
+        </div>
+
+
+        <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 own-loginbox">
+
+
+            <form action="">
+                
+                <div class="well">
+
+            
+                    
+                </div>
+
+            </form>         
+
+        </div>      
+    </div>
+
+{% endblock contenido %}
+
+{% block scripts %}
+
+{% endblock scripts %}

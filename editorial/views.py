@@ -22,6 +22,13 @@ class NewAdd(View):
         return render(_request, self.template_name, {})
 
 
+class NewUpload(View):
+    template_name = "new_upload.html"
+
+    def get(self, _request, _pk):
+        return render(_request, self.template_name, {})
+
+
 class NewAddSuccess(View):
     template_name = "new_add_success.html"
 

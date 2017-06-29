@@ -102,6 +102,13 @@ class UserEdit(View):
         return render(_request, self.template_name, {})
 
 
+class UserPermissions(View):
+    template_name = "user_permissions.html"
+
+    def get(self, _request, _pk):
+        return render(_request, self.template_name, {})
+
+
 class UserPassword(View):
     template_name = "user_password.html"
 

@@ -8,6 +8,7 @@ from .views import IncidentList
 from .views import IncidentAdd
 from .views import IncidentAddSuccess
 from .views import IncidentEdit
+from .views import IncidentView
 
 
 urlpatterns = [
@@ -15,4 +16,5 @@ urlpatterns = [
     url(r'^incidences/add/$', IncidentAdd.as_view(), name="incident_add"),
     url(r'^incidences/add/success/$', IncidentAddSuccess.as_view(), name="incident_add_success"),
     url(r'^incidences/(?P<_pk>\d+)/edit/$', IncidentEdit.as_view(), name="incident_edit"),
+    url(r'^incidences/(?P<_pk>\d+)/view/$', IncidentView.as_view(), name="incident_view"),
 ]

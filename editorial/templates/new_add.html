@@ -4,8 +4,11 @@
 
 {% block css %}
 
+    <!-- Summernote -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/summernote/0.8.3/summernote.css' %}"/>        
+
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'pack/pack_add.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'new_add.css' %}"/>
 
 {% endblock css %}
 
@@ -14,51 +17,63 @@
     <div class="row">
 
         <div class="col-xs-12">
-            <div class="jumbotron text-center">
-                <h2>¡Hola!</h2>
-                <p>
-                    Puedes subir fotos o dejar un link que quieras
-                    compartir con la comunidad
-                </p>                    
-                <p>
-                    Todo esto de forma completamente anonima.
-                </p>
-            </div>
-        </div>    
+            <header>
+                <h3 class="own-titulo">Nueva Publicación</h3>
+            </header>
+            <hr class="own-article-line">
+            <br>            
+        </div>
 
         <div class="col-xs-12 col-sm-8 col-sm-offset-2">
             <form action="">
                 
                 <div class="own-section-title">
-                    Para empezar proporcinanos los siguientes datos:
+                    Proporciona los siguientes datos:
                 </div>
 
                 <div class="well">
                     <div class="form-group">
-                        <label for="usr">Titulo del pack:</label>
+                        <label for="usr">Titulo de la publicacion:</label>
                         <input type="text" class="form-control" id="titulo">
                     </div>
 
                     <div class="form-group">
-                        <label for="comment">Comentario:</label>
+                        <label>Portada:</label>
+                        <input type="file" class="filestyle" id="portada" data-iconName="glyphicon glyphicon-picture" data-buttonText="Seleccionar Imagen">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment">Contenido:</label>
                         <textarea class="form-control" rows="5" id="comment"></textarea>
                     </div>
 
-                    <div class="text-center">
-                        <a href="{% url 'editorial:pack_upload' 0 %}" class="btn btn-default">Continuar</a>
+                    <div class="form-group">
+                        <label for="empleados">Estado:</label>
+                        <select id="empleados" class="form-control">
+                            <option>En Redaccion</option>
+                            <option>PUBLICADO</option>
+                        </select>                   
                     </div>                    
 
-                </div>                
-
+                    <div class="text-center">
+                        <a href="{% url 'editorial:new_add_success' %}" class="btn btn-default">Guardar</a>
+                    </div>
+                </div>
             </form>
-         
         </div>
-       
     </div>
 
 {% endblock contenido %}
 
 {% block scripts %}
 
+    <!-- Bootstrap Filestyle -->
+    <script type="text/javascript" src="{% static 'libs/bootstrap-filestyle/1.2.1/src/bootstrap-filestyle.min.js' %}"></script>
+
+    <!-- Summernote -->
+    <script type="text/javascript" src="{% static 'libs/summernote/0.8.3/summernote.min.js' %}"></script>    
+
+    <!-- Own's Scripts -->
+    <script type="text/javascript" src="{% static 'new_add.js' %}"></script>        
 
 {% endblock scripts %}

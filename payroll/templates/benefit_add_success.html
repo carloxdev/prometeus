@@ -12,15 +12,21 @@
         
         <div class="col-xs-12">
             <div class="jumbotron text-center">
-                <h2>Solicitud Enviada</h2>
-
+                <h2>Solicitud de Prestacion Autorizada</h2>
                 <p>
-                	El equipo del departamento de Nomina procesara tu solicitud.
+                	Ahora puedes realizar el pago con la siguiente informacion:                    
                 </p>
+                <div>* Banco: XXXXX</div>
+                <div>* Cuenta: XXXXXXX</div>
+                <div>* Monto: $ XXXXXX</div>
 
-                <a href="{% url 'home:index' %}" class="btn btn-default">
-                    Ir al inicio
-                </a>
+                <br>
+                <p class="text-center">
+                    <button class="btn btn-primary">
+                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+                        Imprimir
+                    </button>
+                </p>
             </div>
         </div>
     </div>

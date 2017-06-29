@@ -8,8 +8,8 @@
     <link rel="stylesheet" type="text/css" href="{% static 'libs/select2/4.0.3/dist/css/select2.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'libs/select2-bootstrap-theme-master/0.1.0-beta.10/dist/select2-bootstrap.min.css' %}"/>
 
-    <!-- DateRangePicker -->
-    <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap-daterangepicker/2.1.25/daterangepicker.css' %}"/>
+    <!-- Bootrstrap DatePicker -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css' %}"/>
 
 {% endblock css %}
 
@@ -19,7 +19,7 @@
 
 		<div class="col-xs-12">
             <header>
-                <h3 class="own-titulo">Solicitar Comprobante</h3>
+                <h3 class="own-titulo">Solicitar Prestación</h3>
             </header>
 
             <hr class="own-article-line">
@@ -42,20 +42,23 @@
 				
 				<div class="form-group">
 					<label for="empleados">Fecha:</label>
-					<input type="text" class="form-control" id="fecha" value="01/01/2015 - 01/31/2015" />
+                    <input type="text" id="fecha" class="form-control">
 				</div>
 
 				<div class="form-group">
-					<label for="empleados">Tipo de Comprobante:</label>
+					<label for="empleados">Tipo de Prestacion:</label>
 					<select id="empleados" class="form-control">
-						<option>Recibo de Nomina</option>
-						<option>Recibo de Vacaciones</option>
-						<option>Recibo de Prestamo</option>
+						<option>Cerdito</option>
 					</select>					
 				</div>				
 
+                <div class="form-group">
+                    <label for="comment">Motivo:</label>
+                    <textarea class="form-control" rows="5" id="comment"></textarea>
+                </div>                
+
                 <div class="text-center">
-                    <a href="{% url 'payroll:voucher_add_success' %}" class="btn btn-primary">Solicitar</a>
+                    <a href="{% url 'payroll:benefit_add_success' %}" class="btn btn-primary">Solicitar</a>
                 </div> 
 
 			</div>
@@ -70,11 +73,10 @@
 	<!-- Bootstrap Select -->
 	<script type="text/javascript" src="{% static 'libs/select2/4.0.3/dist/js/select2.min.js' %}"></script>
 
-	<!-- DateRangePicker -->
-	<script type="text/javascript" src="{% static 'libs/bootstrap-daterangepicker/2.1.25/moment.min.js' %}"></script>
-	<script type="text/javascript" src="{% static 'libs/bootstrap-daterangepicker/2.1.25/daterangepicker.js' %}"></script>
+	<!-- Bootrstrap DatePicker -->
+	<script type="text/javascript" src="{% static 'libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js' %}"></script>
 
 	<!-- Own's Scripts -->
-	<script type="text/javascript" src="{% static 'voucher_add.js' %}"></script>	
+	<script type="text/javascript" src="{% static 'benefit_add.js' %}"></script>	
 
 {% endblock scripts %}
