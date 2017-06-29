@@ -13,9 +13,8 @@ $(document).ready(function () {
   
     $portada = $('#portada')
 
-    $comment = $('#comment')
+    $('#permisos').multiSelect()
 
-    $comment.summernote();
 
 
     // $portada.filestyle({

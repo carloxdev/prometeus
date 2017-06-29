@@ -65,15 +65,29 @@
                 </div>
 
                 <div class="text-center">
+                    <button class="btn btn-danger pull-left">
+                        Cancelar
+                    </button>
+
                     <button class="btn btn-primary">
                         <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                         Imprimir
                     </button>
                 </div> 
-
             </div>
 
         </div>
+
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <div class="form-group well">
+                <label for="comment">Comentario:</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <br>
+                <button class="btn btn-default">
+                    Enviar
+                </button>                            
+            </div>
+        </div>  
     </div>
 
 {% endblock contenido %}

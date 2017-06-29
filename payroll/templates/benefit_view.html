@@ -70,16 +70,66 @@
                 </div>
 
                 <div class="text-center">
+                    <button class="btn btn-danger pull-left">
+                        Cancelar
+                    </button>
+                
                     <button class="btn btn-primary">
                         <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
                         Imprimir
                     </button>
+
+                    <button class="btn btn-default pull-right" data-toggle="modal" data-target="#myModal">
+                        <span class="glyphicon glyphicon-usd" aria-hidden="true"></span>                    
+                        Informacion del Pago
+                    </button>                    
                 </div>                                                                  
 
             </div>
-
         </div>
+
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+            <div class="form-group well">
+                <label for="comment">Comentario:</label>
+                <textarea class="form-control" rows="5" id="comment"></textarea>
+                <br>
+                <button class="btn btn-default">
+                    Enviar
+                </button>                            
+            </div>
+        </div>       
     </div>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Informacion del Pago</h4>
+          </div>
+          <div class="modal-body">
+                
+                <div class="form-group">
+                    <label for="empleados">Folio:</label>
+                    <input type="text" class="form-control" value="XXXXXXXX">
+                </div>
+
+                <div class="form-group">
+                    <label for="empleados">Referencia de Pago:</label>
+                    <input type="text" class="form-control" value="XXXXXXXXX">
+                </div>                
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success" data-dismiss="modal">Guardar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>    
 
 {% endblock contenido %}
 
