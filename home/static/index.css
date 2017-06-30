@@ -11,7 +11,35 @@
 }
 
 
+.own-banners-link-voucher {
+    text-decoration: none;
+    color: white;
+}
 
+.own-banners-link-voucher:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.own-banners-link-benefit {
+    text-decoration: none;
+    color: #2E662C;
+}
+
+.own-banners-link-benefit:hover {
+    text-decoration: none;
+    color: #2E662C;
+}
+
+.own-banners-link-incident {
+    text-decoration: none;
+    color: #775B29;
+}
+
+.own-banners-link-incident:hover {
+    text-decoration: none;
+    color: 775B29;
+}
 
 @media (min-width: 750px) { 
 
