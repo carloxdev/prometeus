@@ -1,41 +1,45 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro');
+
 html, body {
     height: 100%;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
 }
 
-.own-success {
-    background-color: #57B754;
+h1, h2, h3 {
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
-.own-warning {
-    background-color: #EDA847;
-}
+/* ---------------------- Master ---------------------- */
 
 .own-wrap {
   min-height: 100%;
 }
 
-.own-main {
-  /*overflow:auto;*/
-  overflow: visible;
-  padding-bottom:2.7em; /* this needs to be bigger than footer height*/
-}
+    .own-main {
+      overflow: visible;
+      padding-bottom:2.7em; /* this needs to be bigger than footer height*/
+    }
 
+        .own-dropdown {
+            margin-right: 0.4em;
+        }
 
-.own-btn-logout {
-    padding-top: 4px !important;
-    padding-bottom: 4px !important;
-    margin-left: 70px;
-    margin-right: 70px;
-}
+            .own-btn-logout {
+                padding-top: 4px !important;
+                padding-bottom: 4px !important;
+                margin-left: 70px;
+                margin-right: 70px;
+            }
 
-.own-share-title {
-    margin-bottom: .5em;
-}
+            .own-page-content {
+            	margin-bottom: 2em;
+              min-height: 100%;
+            }
 
-.own-page-content {
-	margin-bottom: 2em;
-  min-height: 100%;
-}
+            /*.own-share-title {
+                margin-bottom: .5em;
+            }*/
 
 .own-page-footer {
 
@@ -50,9 +54,22 @@ html, body {
 
 }
 
+/* ---------------------- Mensajes ---------------------- */
+
+.own-success {
+    background-color: #57B754;
+}
+
+.own-warning {
+    background-color: #EDA847;
+}
+
+
+/* ---------------------- Media Class ---------------------- */
+
 @media (min-width: 750px) {
 
-    .own-btn-logout { 
+    .own-btn-logout {
         margin-left: auto;
         margin-right: auto;
     }
@@ -61,13 +78,3 @@ html, body {
 @media (min-width: 1200px) {
 
 }
-
-
-/*
-.footer {
-  
-  : -150px; 
-  : 150px;
-
-  padding-top:20px;
-} */

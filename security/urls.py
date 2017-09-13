@@ -19,7 +19,7 @@ from .views import UserPassword
 from .views import UserPasswordSuccess
 
 urlpatterns = [
-    url(r'^$', Login.as_view(), name="login"),
+    url(r'^login/$', Login.as_view(), name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
     url(r'^profile/(?P<_pk>\d+)/$', Profile.as_view(), name="profile"),
     url(r'^profile/(?P<_pk>\d+)/password/$', ProfilePassword.as_view(), name="profile_password"),
