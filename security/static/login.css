@@ -1,28 +1,37 @@
-body {
-    background-color: #F2F2F2;
+@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro');
+
+html, body {
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    /*background-color: #F2F2F2;*/
+}
+
+h1, h2, h3 {
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 .own-loginbox {
-    margin-top:50px;   
+    margin-top:50px;
 }
 
-.own-panel-body {
-    padding: 15px 15px 0;   
-}
+    .own-panel-body {
+        padding: 15px 15px 0;
+    }
 
-.own-fields {
-    margin-bottom: 25px
-}
+        .own-fields {
+            margin-bottom: 25px
+        }
 
-.own-bottons {
-    margin-top: 10px;
-    margin-bottom: 0px;
-}
+        .own-bottons {
+            margin-top: 10px;
+            margin-bottom: 0px;
+        }
 
-.own-forgetpass {
-    float:right;
-    font-size: 80%;
-    position: relative;
-    top:-25px;
-    right:7px;    
-}
+        .own-forgetpass {
+            float:right;
+            font-size: 80%;
+            position: relative;
+            top:-25px;
+            right:7px;
+        }
