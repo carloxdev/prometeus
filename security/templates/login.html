@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 
     <title>
-        GCM - Log in
+        GCM - Login
     </title>
 
     <!-- Bootstrap -->
@@ -37,29 +37,17 @@
 
                     {% include 'tags/alerts.html' %}
 
-                    <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-
                     <form method="post"> {% csrf_token %}
 
                         <div class="input-group own-fields">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <!-- <input id="login-username" type="text" class="form-control" name="cuenta" value="" placeholder="cuenta"> -->
                             {{ form.username }}
                         </div>
 
                         <div class="input-group own-fields">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <!-- <input id="login-password" type="password" class="form-control" name="contrasena" placeholder="contraseña"> -->
                             {{ form.password }}
                         </div>
-
-                        <!-- <div class="input-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input id="login-remember" type="checkbox" name="remember" value="1"> Recordar contraseña
-                                </label>
-                            </div>
-                        </div> -->
 
                         <div class="form-group own-bottons">
                             <div class="col-sm-12 controls">
