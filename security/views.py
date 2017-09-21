@@ -14,43 +14,53 @@ from django.shortcuts import redirect
 
 from django.views.generic.base import View
 
+# Own's Libraries
+from .forms import LoginForm
+
 
 class Login(View):
 
     template_name = 'login.html'
 
-    def get(self, request):
+    def get(self, _request):
 
-        if request.user.is_authenticated():
+        if _request.user.is_authenticated():
             return redirect(reverse('home:index'))
 
         else:
-            return render(request, self.template_name, {})
+            formulario = LoginForm()
 
-    def post(self, request):
+            context = {
+                'form': formulario
+            }
 
-        cuenta = request.POST.get('cuenta')
-        contrasena = request.POST.get('contrasena')
+            return render(_request, self.template_name, context)
 
-        user = authenticate(username=cuenta, password=contrasena)
+    def post(self, _request):
 
-        if user is not None:
+        formulario = LoginForm(_request.POST)
 
-            if user.is_active:
-                login(request, user)
+        if formulario.is_valid():
+            datos = formulario.cleaned_data
+            cuenta = datos.get('username')
+            contrasena = datos.get('password')
+
+            user = authenticate(_request, username=cuenta, password=contrasena)
+
+            if user is not None:
+                login(_request, user)
                 return redirect(reverse('home:index'))
             else:
-                messages.warning(
-                    request,
-                    'Cuenta DESACTIVADA, favor de contactar a su administrador'
+                messages.error(
+                    _request,
+                    "Cuenta usuario o contraseña no valida"
                 )
-        else:
-            messages.error(
-                request,
-                "Cuenta usuario o contraseña no valida"
-            )
 
-        return render(request, self.template_name, {})
+        context = {
+            'form': formulario
+        }
+
+        return render(_request, self.template_name, context)
 
 
 class Profile(View):

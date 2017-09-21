@@ -43,12 +43,14 @@
 
                         <div class="input-group own-fields">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input id="login-username" type="text" class="form-control" name="cuenta" value="" placeholder="cuenta">
+                            <!-- <input id="login-username" type="text" class="form-control" name="cuenta" value="" placeholder="cuenta"> -->
+                            {{ form.username }}
                         </div>
 
                         <div class="input-group own-fields">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                            <input id="login-password" type="password" class="form-control" name="contrasena" placeholder="contraseña">
+                            <!-- <input id="login-password" type="password" class="form-control" name="contrasena" placeholder="contraseña"> -->
+                            {{ form.password }}
                         </div>
 
                         <!-- <div class="input-group">
