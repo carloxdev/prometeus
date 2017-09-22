@@ -16,6 +16,7 @@ from django.views.generic.base import View
 
 # Own's Libraries
 from .forms import LoginForm
+from .forms import CustomPasswordResetForm
 
 
 class Login(View):
@@ -30,11 +31,11 @@ class Login(View):
         else:
             formulario = LoginForm()
 
-            context = {
+            contexto = {
                 'form': formulario
             }
 
-            return render(_request, self.template_name, context)
+            return render(_request, self.template_name, contexto)
 
     def post(self, _request):
 
@@ -61,6 +62,43 @@ class Login(View):
         }
 
         return render(_request, self.template_name, context)
+
+
+class PasswordReset(View):
+
+    template_name = "password_reset/form.html"
+
+    def get(self, _request):
+
+        formulario = CustomPasswordResetForm()
+
+        contexto = {
+            'form': formulario
+        }
+
+        return render(_request, self.template_name, contexto)
+
+    def post(self, _request):
+
+        formulario = CustomPasswordResetForm(_request.POST)
+
+        if formulario.is_valid():
+
+            formulario.save(
+                use_https=_request.is_secure(),
+                request=_request
+            )
+
+            messages.success(
+                _request,
+                "El formulario es valido"
+            )
+
+        contexto = {
+            'form': formulario
+        }
+
+        return render(_request, self.template_name, contexto)
 
 
 class Profile(View):

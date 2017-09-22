@@ -2,11 +2,13 @@
 
 # Django's Libraries
 from django.conf.urls import url
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
-
 
 # Own's Libraries
 from .views import Login
+from .views import PasswordReset
+
 from .views import Profile
 from .views import ProfilePassword
 from .views import ProfilePasswordSuccess
@@ -21,9 +23,12 @@ from .views import UserPasswordSuccess
 urlpatterns = [
     url(r'^login/$', Login.as_view(), name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
+    url(r'^password/reset/$', PasswordReset.as_view(), name="password_reset"),
+
     url(r'^profile/(?P<_pk>\d+)/$', Profile.as_view(), name="profile"),
     url(r'^profile/(?P<_pk>\d+)/password/$', ProfilePassword.as_view(), name="profile_password"),
     url(r'^profile/password/success/$', ProfilePasswordSuccess.as_view(), name="profile_password_success"),
+
     url(r'^users/$', UserList.as_view(), name="user_list"),
     url(r'^users/add/$', UserAdd.as_view(), name="user_add"),
     url(r'^users/add/success/$', UserAddSuccess.as_view(), name="user_add_success"),

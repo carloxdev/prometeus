@@ -1,5 +1,7 @@
 {% load static from staticfiles %}
 
+{% load custom_tags %}
+
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -13,6 +15,9 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap/3.3.7/css/bootstrap.min.css' %}">
+
+    <!-- Pace -->
+    <link rel="stylesheet" href="{% static 'libs/pace/1.0.0/pace.css' %}" type="text/css"/>
 
     <!-- Own's Styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
@@ -28,16 +33,22 @@
   <body>
 
     <div class="container">
-        <div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 own-loginbox">
+        <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 own-loginbox">
             <div class="panel panel-primary" >
                 <div class="panel-heading">
                     <div class="panel-title">Bienvenido a GCM Empleados</div>
                 </div>
                 <div class="panel-body own-panel-body" >
 
-                    {% include 'tags/alerts.html' %}
+                    {% include 'tags/messages.html' %}
 
                     <form method="post"> {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            {% for error in form.non_field_errors %}
+                                {% tag_message 'danger' error %}
+                            {% endfor %}
+                        {% endif %}
 
                         <div class="input-group own-fields">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -55,7 +66,7 @@
                             </div>
                         </div>
 
-                        <a class="own-forgetpass" href="#">¿Olvidaste la Contraseña?</a>
+                        <a class="own-forgetpass" href="{% url 'security:password_reset' %}">¿Olvidaste la Contraseña?</a>
 
                     </form>
                 </div>
