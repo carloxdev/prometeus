@@ -9,6 +9,7 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from django.shortcuts import render
@@ -60,7 +61,7 @@ class Login(View):
             else:
                 messages.error(
                     _request,
-                    "Cuenta usuario o contraseña no valida"
+                    "Cuenta de usuario o contraseña no valida"
                 )
 
         context = {
@@ -90,21 +91,36 @@ class PasswordResetRequest(View):
 
         if formulario.is_valid():
 
-            formulario.save(
+            user = formulario.save(
                 use_https=_request.is_secure(),
                 request=_request
             )
 
-            messages.success(
-                _request,
-                "Se envio correo con instrucciones para cambiar su contraseña"
-            )
+            return redirect(reverse(
+                'security:password_reset_request_done',
+                kwargs={'_pk': user.pk}
+            ))
 
         contexto = {
             'form': formulario
         }
 
         return render(_request, self.template_name, contexto)
+
+
+class PasswordResetRequestDone(View):
+
+    template_name = "password_reset/request_done.html"
+
+    def get(self, _request, _pk):
+
+        user = User.objects.get(pk=_pk)
+
+        context = {
+            'email': user.email
+        }
+
+        return render(_request, self.template_name, context)
 
 
 class PasswordResetConfirm(PasswordResetConfirmView):

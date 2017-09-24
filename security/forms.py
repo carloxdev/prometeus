@@ -82,6 +82,7 @@ class PasswordResetRequestForm(PasswordResetForm):
             domain = current_site.domain
         else:
             site_name = domain = domain_override
+
         context = {
             'email': email,
             'domain': domain,
@@ -98,6 +99,8 @@ class PasswordResetRequestForm(PasswordResetForm):
             subject_template_name, email_template_name, context, from_email,
             email, html_email_template_name=html_email_template_name,
         )
+
+        return user
 
 
 class PasswordResetConfirmForm(AdminPasswordChangeForm):
