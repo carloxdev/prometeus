@@ -4,6 +4,8 @@
 from __future__ import unicode_literals
 
 # Django's Libraries
+from django.urls import reverse_lazy
+
 from django.contrib import messages
 from django.contrib.auth import authenticate
 from django.contrib.auth import login
@@ -12,11 +14,15 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render
 from django.shortcuts import redirect
 
+from django.contrib.auth.views import PasswordResetConfirmView
+from django.contrib.auth.views import PasswordResetCompleteView
+
 from django.views.generic.base import View
 
 # Own's Libraries
 from .forms import LoginForm
-from .forms import CustomPasswordResetForm
+from .forms import PasswordResetRequestForm
+from .forms import PasswordResetConfirmForm
 
 
 class Login(View):
@@ -64,13 +70,13 @@ class Login(View):
         return render(_request, self.template_name, context)
 
 
-class PasswordReset(View):
+class PasswordResetRequest(View):
 
-    template_name = "password_reset/form.html"
+    template_name = "password_reset/request.html"
 
     def get(self, _request):
 
-        formulario = CustomPasswordResetForm()
+        formulario = PasswordResetRequestForm()
 
         contexto = {
             'form': formulario
@@ -80,7 +86,7 @@ class PasswordReset(View):
 
     def post(self, _request):
 
-        formulario = CustomPasswordResetForm(_request.POST)
+        formulario = PasswordResetRequestForm(_request.POST)
 
         if formulario.is_valid():
 
@@ -91,7 +97,7 @@ class PasswordReset(View):
 
             messages.success(
                 _request,
-                "El formulario es valido"
+                "Se envio correo con instrucciones para cambiar su contraseña"
             )
 
         contexto = {
@@ -99,6 +105,16 @@ class PasswordReset(View):
         }
 
         return render(_request, self.template_name, contexto)
+
+
+class PasswordResetConfirm(PasswordResetConfirmView):
+    form_class = PasswordResetConfirmForm
+    template_name = 'password_reset/confirm.html'
+    success_url = reverse_lazy('security:password_reset_complete')
+
+
+class PasswordResetComplete(PasswordResetCompleteView):
+    template_name = 'password_reset/complete.html'
 
 
 class Profile(View):

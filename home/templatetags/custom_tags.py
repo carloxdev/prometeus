@@ -18,8 +18,26 @@ def tag_message(_type, _text):
             - primary
             - warning
     """
-    contexto = {
+    context = {
         'type': _type,
         'text': _text
     }
-    return contexto
+    return context
+
+
+@register.inclusion_tag('tags/field.html', takes_context=False)
+def tag_field(_field):
+
+    context = {
+        'field': _field,
+    }
+    return context
+
+
+@register.inclusion_tag('tags/form_errors.html', takes_context=False)
+def tag_form_errors(_form):
+
+    context = {
+        'form': _form,
+    }
+    return context

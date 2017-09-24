@@ -7,7 +7,9 @@ from django.contrib.auth.views import LogoutView
 
 # Own's Libraries
 from .views import Login
-from .views import PasswordReset
+from .views import PasswordResetRequest
+from .views import PasswordResetConfirm
+from .views import PasswordResetComplete
 
 from .views import Profile
 from .views import ProfilePassword
@@ -23,7 +25,12 @@ from .views import UserPasswordSuccess
 urlpatterns = [
     url(r'^login/$', Login.as_view(), name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
-    url(r'^password/reset/$', PasswordReset.as_view(), name="password_reset"),
+    url(r'^password/reset/request$', PasswordResetRequest.as_view(), name="password_reset_request"),
+    url(r'^password/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        PasswordResetConfirm.as_view(), name='password_reset_confirm'),
+    url(r'^password/reset/complete/$',
+        PasswordResetComplete.as_view(), name='password_reset_complete'),
+
 
     url(r'^profile/(?P<_pk>\d+)/$', Profile.as_view(), name="profile"),
     url(r'^profile/(?P<_pk>\d+)/password/$', ProfilePassword.as_view(), name="profile_password"),

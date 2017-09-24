@@ -9,16 +9,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
 
-    <title>
-        GCM - Restablecer Contraseña
-    </title>
+    <title> {% block title %} {% endblock title %} </title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap/3.3.7/css/bootstrap.min.css' %}">
 
     <!-- Pace -->
-    <link rel="stylesheet" href="{% static 'libs/pace/1.0.0/pace.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'libs/pace/1.0.0/pace.theme.css' %}" type="text/css"/>
 
+    <!-- Awesome Icons -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/awesome-icons/4.7.0/css/font-awesome.min.css' %}">
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'out.css' %}">
+
+    {% block css %}
+
+    {% endblock css %}
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,32 +39,9 @@
 
     <div class="container">
 
-        {% include 'tags/messages.html' %}
+        {% block contenido %}
 
-        <form method="post"> {% csrf_token %}
-
-            <h4>
-                Ingrese un su Numero de Empleado
-            </h4>
-
-            {% if form.non_field_errors %}
-                {% for error in form.non_field_errors %}
-                    {% tag_message 'danger' error %}
-                {% endfor %}
-            {% endif %}
-
-            <div class="input-group own-fields">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                {{ form.email }}
-            </div>
-
-            <button type="submit" class="btn btn-success btn-lg">
-                <i class="icon mdi mdi-key"></i>
-                Restablecer mi contraseña
-            </button>
-
-        </form>
-
+        {% endblock contenido %}
 
     </div>
 
@@ -66,6 +50,13 @@
 
     <!-- Bootstrap -->
     <script src="{% static 'libs/bootstrap/3.3.7/js/bootstrap.min.js' %}"></script>
+
+    <!-- Pace -->
+    <script type="text/javascript" src="{% static 'libs/pace/1.0.0/pace.min.js' %}"></script>
+
+    {% block scripts %}
+
+    {% endblock scripts %}
 
   </body>
 </html>

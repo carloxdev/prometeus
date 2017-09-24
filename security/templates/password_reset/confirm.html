@@ -1,0 +1,54 @@
+{% extends 'out.html' %}
+
+{% load static from staticfiles %}
+
+{% load custom_tags %}
+
+{% block title %} GCM - Restablecer Contraseña Confirmacion {% endblock title %}
+
+{% block contenido %}
+
+    <br><br>
+
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+
+        <div class="well">
+        {% if validlink %}
+
+            <form action="" method="POST"> {% csrf_token %}
+
+                <h4 class="text-center">
+                    Especifique su nueva contraseña
+                </h4>
+
+                <br>
+
+                {% include 'tags/messages.html' %}
+
+                {% tag_form_errors form %}
+
+                {% tag_field form.password1 %}
+
+                {% tag_field form.password2 %}
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">
+                        Guardar contraseña
+                    </button>
+                </div>
+            </form>
+
+        {% else %}
+            <h4>
+                El link es invalido, posiblemente ya ha sido utilizado.
+                Por favor solicite uno nuevo.
+            </h4>
+
+            <div class="text-center">
+                <a href="{% url 'security:password_reset_request' %}" class="btn btn-default">Recuperar Contraseña</a>
+            </div>
+        {% endif %}
+        </div>
+    </div>
+
+{% endblock contenido %}

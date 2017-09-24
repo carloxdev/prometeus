@@ -1,0 +1,27 @@
+{% if field.errors %}
+
+    <div class="form-group has-error has-feedback">
+        <label class="control-label" for="{{ field.id_for_label }}">
+          {{ field.label }}
+        </label>
+        {{ field }}
+        <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+        <div class="help-block with-errors">
+            <ul class="list-unstyled">
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="form-group">
+        <label class="control-label" for="{{ field.id_for_label }}">
+          {{ field.label }}
+        </label>
+        {{ field }}
+    </div>
+
+{% endif %}

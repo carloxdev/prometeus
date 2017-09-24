@@ -6,10 +6,10 @@ Si solicitaste restablecimiento de contraseña.
 Click en el siguiente link para crear una nueva contraseña.
 
 
-
+{{ protocol }}://{{ domain }}{% url 'security:password_reset_confirm' uidb64=uid token=token %}
 
 ¡Tenga buen dia!.
 
 Atentamente.
-Departamento de Desarrollo TI
+Depto. Recuros Humanos
 {% endautoescape %}

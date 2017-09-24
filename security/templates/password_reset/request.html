@@ -1,0 +1,49 @@
+{% extends 'out.html' %}
+
+{% load static from staticfiles %}
+
+{% load custom_tags %}
+
+{% block title %} GCM - Restablecer Contraseña Solicitud {% endblock title %}
+
+{% block contenido %}
+
+    <br><br>
+
+    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+
+        <div class="well">
+
+            <form action="" method="POST"> {% csrf_token %}
+
+                <h4 class="text-center">
+                    Ingrese su Numero de Empleado
+                </h4>
+
+                {% include 'tags/messages.html' %}
+
+                {% tag_form_errors form %}
+
+                {% for error in form.email.errors %}
+                    {% tag_message 'danger' error %}
+                {% endfor %}
+
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        {{ form.email }}
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg">
+                        Restablecer mi contraseña
+                    </button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+
+{% endblock contenido %}
