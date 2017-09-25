@@ -97,7 +97,7 @@ class PasswordResetRequest(View):
             )
 
             return redirect(reverse(
-                'security:password_reset_request_done',
+                'security:password_reset_message',
                 kwargs={'_pk': user.pk}
             ))
 
@@ -108,9 +108,9 @@ class PasswordResetRequest(View):
         return render(_request, self.template_name, contexto)
 
 
-class PasswordResetRequestDone(View):
+class PasswordResetMessage(View):
 
-    template_name = "password_reset/request_done.html"
+    template_name = "password_reset/message.html"
 
     def get(self, _request, _pk):
 
@@ -126,11 +126,11 @@ class PasswordResetRequestDone(View):
 class PasswordResetConfirm(PasswordResetConfirmView):
     form_class = PasswordResetConfirmForm
     template_name = 'password_reset/confirm.html'
-    success_url = reverse_lazy('security:password_reset_complete')
+    success_url = reverse_lazy('security:password_reset_done')
 
 
-class PasswordResetComplete(PasswordResetCompleteView):
-    template_name = 'password_reset/complete.html'
+class PasswordResetDone(PasswordResetCompleteView):
+    template_name = 'password_reset/done.html'
 
 
 class Profile(View):
