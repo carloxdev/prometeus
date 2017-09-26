@@ -2,7 +2,11 @@
 
     <div class="form-group has-error has-feedback">
         <label class="control-label" for="{{ field.id_for_label }}">
-          {{ field.label }}
+            {{ field.label }}
+
+            {% if field.field.required is False %}
+                <span>(opcional)</span>
+            {% endif %}
         </label>
         {{ field }}
         <span class="glyphicon glyphicon-remove form-control-feedback"></span>
@@ -19,9 +23,18 @@
 
     <div class="form-group">
         <label class="control-label" for="{{ field.id_for_label }}">
-          {{ field.label }}
+            {{ field.label }}
+
+            {% if field.field.required is False %}
+                <span>(opcional)</span>
+            {% endif %}
         </label>
         {{ field }}
+        {% if field.help_text %}
+            <div class="help-block">
+                {{ field.help_text }}
+            </div>
+        {% endif %}
     </div>
 
 {% endif %}

@@ -18,12 +18,20 @@ from django.shortcuts import redirect
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth.views import PasswordResetCompleteView
 
+from django.views.generic import ListView
 from django.views.generic.base import View
+
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage
+from django.core.paginator import PageNotAnInteger
+
+from django.db.models import Q
 
 # Own's Libraries
 from .forms import LoginForm
 from .forms import PasswordResetRequestForm
 from .forms import PasswordResetConfirmForm
+from .forms import UserAddForm
 
 
 class Login(View):
@@ -155,17 +163,47 @@ class ProfilePasswordSuccess(View):
 
 
 class UserList(View):
-    template_name = "user_list.html"
+    template_name = "user/list.html"
 
-    def get(self, _request):
-        return render(_request, self.template_name, {})
+    def get(self, request):
+
+        query = request.GET.get('q')
+        if query:
+            usuarios = User.objects.filter(
+                Q(titulo__icontains=query) |
+                Q(contenido__icontains=query)
+            ).order_by("-date_joined")
+        else:
+            usuarios = User.objects.all().order_by("-date_joined")
+
+        paginador = Paginator(usuarios, 10)
+        pagina = request.GET.get('page')
+
+        try:
+            usuarios = paginador.page(pagina)
+        except PageNotAnInteger:
+            usuarios = paginador.page(1)
+        except EmptyPage:
+            usuarios = paginador.page(paginador.num_page)
+
+        contexto = {
+            'usuarios': usuarios
+        }
+
+        return render(request, self.template_name, contexto)
 
 
 class UserAdd(View):
-    template_name = "user_add.html"
+    template_name = "user/add.html"
 
     def get(self, _request):
-        return render(_request, self.template_name, {})
+
+        form = UserAddForm()
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
 
 
 class UserAddSuccess(View):

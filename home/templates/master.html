@@ -66,16 +66,15 @@
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username|upper }}<span class="caret"></span></a>
                                     {% endif %}
                                     <ul class="dropdown-menu">
-                                        <li><a href="{% url 'security:profile' 0 %}">Perfil</a></li>
 
                                         {% if user.is_superuser %}
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
-                                        <li><a href="{% url 'management:email' %} ">Correo</a></li>
+                                            <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
+                                            <li><a href="{% url 'management:email' %} ">Correo</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="{% url 'management:task_list' %}">Bandeja</a></li>
+                                        {% else %}
+                                            <li><a href="{% url 'security:profile' 0 %}">Mi Perfil</a></li>
                                         {% endif %}
-
-                                        <li role="separator" class="divider"></li>
-                                        <li><a href="{% url 'management:task_list' %}">Bandeja</a></li>
                                     </ul>
                                 </li>
                                 <li>

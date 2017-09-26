@@ -2,21 +2,28 @@
 
 # Django's Libraries
 from django.forms import Form
+from django.forms import ModelForm
 from django.forms import ValidationError
 
 from django.forms import CharField
+from django.forms import DateField
+from django.forms import EmailField
 
 from django.forms import TextInput
+from django.forms import DateInput
 from django.forms import PasswordInput
+from django.forms import EmailInput
 
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
+from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib.sites.shortcuts import get_current_site
 
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.utils.safestring import mark_safe
 
 
 class LoginForm(Form):
@@ -41,7 +48,7 @@ class PasswordResetRequestForm(PasswordResetForm):
     email = CharField(
         label='No. Empleado',
         widget=TextInput(
-            attrs={'class': 'form-control input-xs'}
+            attrs={'class': 'form-control'}
         )
     )
 
@@ -120,3 +127,88 @@ class PasswordResetConfirmForm(AdminPasswordChangeForm):
     class Meta:
         model = User
         fields = ('password1', 'password2', )
+
+
+class UserAddForm(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+        )
+
+        widgets = {
+            'username': TextInput(attrs={'class': 'form-control'}),
+            'first_name': TextInput(attrs={'class': 'form-control'}),
+            'last_name': TextInput(attrs={'class': 'form-control'}),
+            'email': EmailInput(attrs={'class': 'form-control'}),
+        }
+
+        labels = {
+            'username': 'Clave',
+            'first_name': 'Nombre(s)',
+            'last_name': 'Apellido(s)',
+            'email': 'Email',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(UserAddForm, self).__init__(*args, **kwargs)
+        self.fields['username'].help_text = "Longitud máxima 150 caracteres alfanuméricos. Letras, dígitos y @/./+/-/_ únicamente."
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+        self.fields['email'].required = True
+
+        self.fields['password1'].help_text = mark_safe("<ul><li>Su contraseña no puede ser similar a su otra información personal.</li><li>Su contraseña es muy corta. Debe contener al menos 8 caracteres.</li><li>Su contraseña no puede ser una contraseña común.</li><li>Su contraseña no puede ser enteramente numérica.</li></ul>")
+        self.fields['password1'].widget.attrs['class'] = 'form-control'
+
+        self.fields['password2'].help_text = "Para verificar, introduzca la misma contraseña que introdujo antes."
+        self.fields['password2'].widget.attrs['class'] = 'form-control'
+
+
+class UserOtherInfoForm(ModelForm):
+
+    recruited_date = DateField(
+        label="Fecha Contratación",
+        required=False,
+        input_formats=[
+            "%d/%m/%Y",
+        ],
+        widget=DateInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    birth_date = DateField(
+        label="Fecha Nacimiento",
+        required=False,
+        input_formats=[
+            "%d/%m/%Y",
+        ],
+        widget=DateInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    # gender = models.CharField(choices=GENEROS, max_length=144, null=True, blank=True)
+    job_title = CharField(
+        label="Puesto",
+        required=False,
+        widget=TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    department = CharField(
+        required=False,
+        label="Departamento",
+        widget=TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
+    phone = CharField(
+        required=False,
+        label="Telefono",
+        widget=TextInput(
+            attrs={'class': 'form-control'}
+        )
+    )
