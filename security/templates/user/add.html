@@ -10,11 +10,10 @@
 
         <div class="col-xs-12">
             <header>
-                <h3 class="own-titulo">Crear Usuario</h3>
+                <h2 class="own-titulo">Crear un nuevo usuario</h2>
             </header>
 
             <hr class="own-article-line">
-
         </div>
 
         <div class="col-xs-12">
@@ -39,8 +38,9 @@
 
                 <div class="text-center">
                     <button type="submit" class="btn btn-primary">
-                        Guardar
+                        Crear usuario
                     </button>
+                    <a href="{% url 'security:user_list' %}" class="btn btn-default">Cancelar</a>
                 </div>
 
             </form>

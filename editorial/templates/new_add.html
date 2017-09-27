@@ -5,7 +5,7 @@
 {% block css %}
 
     <!-- Summernote -->
-    <link rel="stylesheet" type="text/css" href="{% static 'libs/summernote/0.8.3/summernote.css' %}"/>        
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/summernote/0.8.3/summernote.css' %}"/>
 
     <!-- Own's Styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'new_add.css' %}"/>
@@ -21,12 +21,12 @@
                 <h3 class="own-titulo">Nueva Publicación</h3>
             </header>
             <hr class="own-article-line">
-            <br>            
+            <br>
         </div>
 
         <div class="col-xs-12 col-sm-8 col-sm-offset-2">
             <form action="">
-                
+
                 <div class="own-section-title">
                     Proporciona los siguientes datos:
                 </div>
@@ -52,11 +52,12 @@
                         <select id="empleados" class="form-control">
                             <option>En Redaccion</option>
                             <option>PUBLICADO</option>
-                        </select>                   
-                    </div>                    
+                        </select>
+                    </div>
 
                     <div class="text-center">
                         <a href="{% url 'editorial:new_add_success' %}" class="btn btn-default">Guardar</a>
+                        
                     </div>
                 </div>
             </form>
@@ -71,9 +72,9 @@
     <script type="text/javascript" src="{% static 'libs/bootstrap-filestyle/1.2.1/src/bootstrap-filestyle.min.js' %}"></script>
 
     <!-- Summernote -->
-    <script type="text/javascript" src="{% static 'libs/summernote/0.8.3/summernote.min.js' %}"></script>    
+    <script type="text/javascript" src="{% static 'libs/summernote/0.8.3/summernote.min.js' %}"></script>
 
     <!-- Own's Scripts -->
-    <script type="text/javascript" src="{% static 'new_add.js' %}"></script>        
+    <script type="text/javascript" src="{% static 'new_add.js' %}"></script>
 
 {% endblock scripts %}

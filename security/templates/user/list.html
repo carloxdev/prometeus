@@ -26,9 +26,15 @@
                 <div class="row">
 
                     <div class="col-xs-12 col-sm-6">
-                        <a href="{% url 'security:user_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                        <a href="{% url 'security:user_add' %}" class="btn btn-primary">
                             <i class="fa fa-user-plus" aria-hidden="true"></i>
-                            Agregar Usuario
+                            Crear Usuario
+                        </a>
+
+                        <a href="{% url 'security:user_add' %}" class="btn btn-default">
+
+                            Exportar
+                            <span class="glyphicon glyphicon-download-alt"></span>
                         </a>
                     </div>
 
@@ -53,10 +59,11 @@
             </nav>
 
             <br>
+            <br class="hidden-xs">
 
             <div class="container-fluid">
 
-                {% if usuarios %}
+                {% if users %}
 
                     <div class="row own-record-titles">
 
@@ -72,16 +79,16 @@
 
                     </div>
 
-                    {% for usuario in usuarios %}
+                    {% for user in users %}
 
                         <div class="row own-record" >
 
                             <!-- Clave y Estado -->
-                            <div class="visible-xs col-sm-5 own-column-pk {% if usuario.is_active %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
-                                {{usuario.username}}
+                            <div class="visible-xs col-sm-5 own-column-pk {% if user.is_active %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
+                                {{user.username}}
 
                                 <span class="own-column-conten pull-right">
-                                    {% if usuario.is_active %}
+                                    {% if user.is_active %}
                                         <span class="glyphicon glyphicon-ok-sign own-data-activeicon" aria-hidden="true"></span>
                                     {% else %}
                                         <span class="glyphicon glyphicon-minus-sign own-data-disableicon" aria-hidden="true"></span>
@@ -94,10 +101,10 @@
 
                                 <div class="row">
                                     <div class="hidden-xs col-sm-12 col-md-3">
-                                        <strong>{{usuario.username|upper}}</strong>
+                                        <strong>{{user.username|upper}}</strong>
                                     </div>
                                     <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                        {{usuario.get_full_name}}
+                                        {{user.get_full_name}}
                                     </div>
                                 </div>
                             </div>
@@ -105,7 +112,7 @@
                             <!-- Estado -->
                             <div class="hidden-xs col-sm-1 own-column own-column--center own-column--border own-column-estado">
                                 <span class="own-column-conten">
-                                    {% if usuario.is_active %}
+                                    {% if user.is_active %}
                                         <span class="glyphicon glyphicon-ok-sign own-data-icon-active" aria-hidden="true"></span>
                                     {% else %}
                                         <span class="glyphicon glyphicon-minus-sign own-data-icon-disable" aria-hidden="true"></span>
@@ -120,7 +127,7 @@
                                 </span>
                                 <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                                 <span class="own-data-normalvalue">
-                                    {{usuario.date_joined|date:"d M Y"}}
+                                    {{user.date_joined|date:"d M Y"}}
                                 </span>
                             </div>
 
@@ -131,12 +138,12 @@
                                 </span>
                                 <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                                 <span class="own-data-normalvalue">
-                                    {{usuario.last_login|timesince}}
+                                    {{user.last_login|timesince}}
                                 </span>
                             </div>
 
                             <!-- Comand -->
-                            <a href="{% url 'security:user_edit' 0 %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+                            <a href="{% url 'security:user_edit' user.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
 
                                 <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
                                 <span class="own-data-normalvalue">
@@ -148,36 +155,26 @@
 
                     {% endfor %}
 
-                    {% if is_paginated %}
-                        <div class="text-center">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    {% if page_obj.has_previous %}
-                                        <li>
-                                            <a href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                    {% for i in paginator.page_range %}
-                                        <li {% if page_obj.number == i %} class="active" {% endif %}>
-                                            <a href="?page={{i}}">{{ i }}</a>
-                                        </li>
-                                    {% endfor %}
-                                    {% if page_obj.has_next %}
-                                        <li>
-                                            <a href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </nav>
-                        </div>
-                    {% endif %}
+                    <div class="text-center">
+                        <ul class="pagination pagination-sm no-margin legal-paginador">
+                            {% if users.has_previous %}
+                                <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                            {% endif %}
+
+                            {% for i in users.paginator.page_range %}
+                                <li {% if users.number == i %} class="active" {% endif %}>
+                                    <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+
+                            {% if users.has_next %}
+                                <li><a href="?page={{ users.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
 
                 {% else %}
-                    <h3 class="sin-resultados">No se encontraron usuarios</h3>
+                    <h1 class="text-center">No se encontraron usuarios</h1>
                 {% endif %}
 
             </div>

@@ -28,6 +28,8 @@ from django.core.paginator import PageNotAnInteger
 from django.db.models import Q
 
 # Own's Libraries
+from home.utilities import Helper
+
 from .forms import LoginForm
 from .forms import PasswordResetRequestForm
 from .forms import PasswordResetConfirmForm
@@ -44,24 +46,24 @@ class Login(View):
             return redirect(reverse('home:index'))
 
         else:
-            formulario = LoginForm()
+            form = LoginForm()
 
-            contexto = {
-                'form': formulario
+            context = {
+                'form': form
             }
 
-            return render(_request, self.template_name, contexto)
+            return render(_request, self.template_name, context)
 
     def post(self, _request):
 
-        formulario = LoginForm(_request.POST)
+        form = LoginForm(_request.POST)
 
-        if formulario.is_valid():
-            datos = formulario.cleaned_data
-            cuenta = datos.get('username')
-            contrasena = datos.get('password')
+        if form.is_valid():
+            data = form.cleaned_data
+            account = data.get('username')
+            password = data.get('password')
 
-            user = authenticate(_request, username=cuenta, password=contrasena)
+            user = authenticate(_request, username=account, password=password)
 
             if user is not None:
                 login(_request, user)
@@ -73,7 +75,7 @@ class Login(View):
                 )
 
         context = {
-            'form': formulario
+            'form': form
         }
 
         return render(_request, self.template_name, context)
@@ -85,21 +87,21 @@ class PasswordResetRequest(View):
 
     def get(self, _request):
 
-        formulario = PasswordResetRequestForm()
+        form = PasswordResetRequestForm()
 
-        contexto = {
-            'form': formulario
+        context = {
+            'form': form
         }
 
-        return render(_request, self.template_name, contexto)
+        return render(_request, self.template_name, context)
 
     def post(self, _request):
 
-        formulario = PasswordResetRequestForm(_request.POST)
+        form = PasswordResetRequestForm(_request.POST)
 
-        if formulario.is_valid():
+        if form.is_valid():
 
-            user = formulario.save(
+            user = form.save(
                 use_https=_request.is_secure(),
                 request=_request
             )
@@ -109,11 +111,11 @@ class PasswordResetRequest(View):
                 kwargs={'_pk': user.pk}
             ))
 
-        contexto = {
-            'form': formulario
+        context = {
+            'form': form
         }
 
-        return render(_request, self.template_name, contexto)
+        return render(_request, self.template_name, context)
 
 
 class PasswordResetMessage(View):
@@ -165,32 +167,33 @@ class ProfilePasswordSuccess(View):
 class UserList(View):
     template_name = "user/list.html"
 
-    def get(self, request):
+    def get(self, _request):
 
-        query = request.GET.get('q')
+        query = _request.GET.get('q')
         if query:
-            usuarios = User.objects.filter(
-                Q(titulo__icontains=query) |
-                Q(contenido__icontains=query)
+            users = User.objects.filter(
+                Q(username__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query)
             ).order_by("-date_joined")
         else:
-            usuarios = User.objects.all().order_by("-date_joined")
+            users = User.objects.all().order_by("-date_joined")
 
-        paginador = Paginator(usuarios, 10)
-        pagina = request.GET.get('page')
+        paginator = Paginator(users, 10)
+        current_pagina = _request.GET.get('page')
 
         try:
-            usuarios = paginador.page(pagina)
+            users = paginator.page(current_pagina)
         except PageNotAnInteger:
-            usuarios = paginador.page(1)
+            users = paginator.page(1)
         except EmptyPage:
-            usuarios = paginador.page(paginador.num_page)
+            users = paginator.page(paginator.num_page)
 
-        contexto = {
-            'usuarios': usuarios
+        context = {
+            'users': users
         }
 
-        return render(request, self.template_name, contexto)
+        return render(_request, self.template_name, context)
 
 
 class UserAdd(View):
@@ -205,18 +208,36 @@ class UserAdd(View):
         }
         return render(_request, self.template_name, context)
 
+    def post(self, _request):
+
+        form = UserAddForm(_request.POST)
+
+        if form.is_valid():
+            user = form.save()
+
+            return redirect(Helper.get_Url_With_Querystring(
+                reverse('security:user_edit', kwargs={'_pk': user.pk}),
+                new=True
+            ))
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+
+class UserEdit(View):
+    template_name = "user/edit.html"
+
+    def get(self, _request, _pk):
+        # print _request.GET['new']
+        return render(_request, self.template_name, {})
+
 
 class UserAddSuccess(View):
     template_name = "user_add_success.html"
 
     def get(self, _request):
-        return render(_request, self.template_name, {})
-
-
-class UserEdit(View):
-    template_name = "user_edit.html"
-
-    def get(self, _request, _pk):
         return render(_request, self.template_name, {})
 
 

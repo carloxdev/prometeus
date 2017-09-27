@@ -19,84 +19,99 @@
 {% block contenido %}
 
     <div class="row">
-
         <div class="col-xs-12">
             <header>
-                <h3 class="own-titulo">Crear Usuario</h3>
+                <h3>
+                    <ol class="breadcrumb">
+                      <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
+                      <li>Carlos</li>
+                    </ol>
+                </h3>
             </header>
+        </div>
+    </div>
 
-            <hr class="own-article-line">
+    <ul class="own-review-menu">
+        <li class="active">
+            <a href="#">Cuenta</a>
+        </li>
+        <li>
+            <a href="#">Persona</a>
+        </li>
+    </ul>
 
-            <br>
+    <div class="row">
+        <div class="col-xs-12 col-md-8 col-lg-9">
+
+            <form class="" action="" method="post">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Informacion de la cuenta</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="empleados">Clave:</label>
+                            <input type="text" class="form-control" value="JMARTINEZH">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="empleados" class="control-label">Nombre(s):</label>
+                            <input type="text" class="form-control" value="JORGE DE JESUS">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="empleados">Apellido(s):</label>
+                            <input type="text" class="form-control" value="MARTINEZ HERNANDEZ">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="empleados">Fecha Nacimiento:</label>
+                            <input type="text" id="fecha" class="form-control" value="30/11/1985">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="empleados" class="control-label">Email:</label>
+                            <input type="text" class="form-control" value="jorge.martinez@cmr.com.mx">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="empleados" class="own-label control-label">Estado:</label>
+                            <select id="empleados" class="form-control">
+                                <option>ACTIVO</option>
+                                <option>Deshabilitado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </form>
+
         </div>
 
-        <div class="col-xs-12 col-sm-4">
-
-            <img id="img_preview"
-            class="img-responsive img-thumbnail legal-img"
-            src="{% static 'images/decorators/no-image-user.jpg' %}"
-            alt="User Image">
-
-            <div class="form-group">
-                    <input type="file" class="filestyle" id="portada" data-iconName="glyphicon glyphicon-picture" data-buttonText="Seleccionar Imagen">
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-8 ">
-
-            <div class="well">
-
-                <div class="form-group">
-                    <label for="empleados">Clave:</label>
-                    <input type="text" class="form-control" value="JMARTINEZH">
+        <div class="col-xs-12 col-md-4 col-lg-3">
+            <div class="panel panel-default affix-top">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Otras Acciones:</h3>
                 </div>
-
-                <div class="form-group">
-                    <label for="empleados">Nombre(s):</label>
-                    <input type="text" class="form-control" value="JORGE DE JESUS">
-                </div>
-
-                <div class="form-group">
-                    <label for="empleados">Apellido(s):</label>
-                    <input type="text" class="form-control" value="MARTINEZ HERNANDEZ">
-                </div>
-
-                <div class="form-group">
-                    <label for="empleados">Fecha Nacimiento:</label>
-                    <input type="text" id="fecha" class="form-control" value="30/11/1985">
-                </div>
-
-                <div class="form-group">
-                    <label for="empleados">Email:</label>
-                    <input type="text" class="form-control" value="jorge.martinez@cmr.com.mx">
-                </div>
-
-                <div class="form-group">
-                    <label for="empleados">Estado:</label>
-                    <select id="empleados" class="form-control">
-                        <option>ACTIVO</option>
-                        <option>Deshabilitado</option>
-                    </select>
-                </div>
-
-                <div>
-                    <a href="{% url 'security:user_password' 0 %}" class="btn btn-default">
+                <ul class="list-group">
+                    <a class="list-group-item text-center" href="#">
                         <i class="fa fa-key" aria-hidden="true"></i>
                         Cambiar Contraseña
                     </a>
-                    <a href="{% url 'security:user_permissions' 0 %}" class="btn btn-default">
+                    <a class="list-group-item text-center" href="#">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                         Editar Permisos
                     </a>
-
-                    <a href="#" class="btn btn-primary pull-right">Guardar</a>
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
 {% endblock contenido %}
