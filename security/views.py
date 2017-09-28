@@ -30,10 +30,14 @@ from django.db.models import Q
 # Own's Libraries
 from home.utilities import Helper
 
+from .business import UserBusiness
+
 from .forms import LoginForm
 from .forms import PasswordResetRequestForm
 from .forms import PasswordResetConfirmForm
 from .forms import UserAddForm
+from .forms import UserEditForm
+from .forms import ProfileForm
 
 
 class Login(View):
@@ -200,21 +204,16 @@ class UserAdd(View):
     template_name = "user/add.html"
 
     def get(self, _request):
-
         form = UserAddForm()
-
         context = {
             'form': form
         }
         return render(_request, self.template_name, context)
 
     def post(self, _request):
-
         form = UserAddForm(_request.POST)
-
         if form.is_valid():
             user = form.save()
-
             return redirect(Helper.get_Url_With_Querystring(
                 reverse('security:user_edit', kwargs={'_pk': user.pk}),
                 new=True
@@ -231,7 +230,53 @@ class UserEdit(View):
 
     def get(self, _request, _pk):
         # print _request.GET['new']
-        return render(_request, self.template_name, {})
+        form = UserEditForm(instance=UserBusiness.get(_pk))
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, _pk):
+        form = UserEditForm(
+                _request.POST,
+                instance=UserBusiness.get(_pk)
+            )
+
+        if form.is_valid():
+            form.save()
+            messages.success(_request, "El usuario fue actualizado correctamente")
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+
+class UserEmployee(View):
+    template_name = "user/employee.html"
+
+    def get(self, _request, _pk):
+        form = ProfileForm(instance=UserBusiness.get_Profile(_pk))
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, _pk):
+
+        form = ProfileForm(
+            _request.POST,
+            instance=UserBusiness.get_Profile(_pk)
+        )
+
+        if form.is_valid():
+            form.save()
+            messages.success(_request, "La informacion de Empleado fue actualizada correctamente")
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
 
 
 class UserAddSuccess(View):

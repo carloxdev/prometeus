@@ -13,8 +13,6 @@
     <!-- Bootrstrap DatePicker -->
     <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css' %}"/>
 
-    <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'new_add.css' %}"/>
 
 {% endblock css %}
 
@@ -26,7 +24,7 @@
                 <h3>
                     <ol class="breadcrumb">
                       <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
-                      <li>{{form.instance.username}}</li>
+                      <li>{{form.instance.user.username}}</li>
                     </ol>
                 </h3>
             </header>
@@ -34,11 +32,11 @@
     </div>
 
     <ul class="own-review-menu">
-        <li class="active">
-            <a href="#">Cuenta</a>
-        </li>
         <li>
-            <a href="{% url 'security:user_employee' form.instance.pk %}">Empleado</a>
+            <a href="{% url 'security:user_edit' form.instance.user.pk %}">Cuenta</a>
+        </li>
+        <li class="active">
+            <a href="#">Empleado</a>
         </li>
     </ul>
 
@@ -57,17 +55,21 @@
 
                         {% tag_form_errors form %}
 
-                        {% tag_field form.username %}
+                        {% tag_field form.recruited_date %}
 
-                        {% tag_field form.first_name %}
-
-                        {% tag_field form.last_name %}
-
-                        {% tag_field form.email %}
+                        {% tag_field form.birth_date %}
 
                         <div class="form-group">
-                            <label class="checkbox-inline">{{form.is_active}} {{form.is_active.label}}</label>
+                            {% for choice in form.gender %}
+                                <label class="radio-inline">{{ choice.tag }}{{ choice.choice_label }}</label>
+                            {% endfor %}
                         </div>
+
+                        {% tag_field form.job_title %}
+
+                        {% tag_field form.department %}
+
+                        {% tag_field form.phone %}
 
                     </div>
                     <div class="panel-footer">
@@ -77,7 +79,19 @@
                         </button>
                     </div>
                 </div>
+
             </form>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-lg-3">
+            <img id="img_preview"
+            class="img-responsive img-thumbnail legal-img"
+            src="{% static 'images/decorators/no-image-user.jpg' %}"
+            alt="User Image">
+            <div class="form-group">
+                    <input type="file" class="filestyle" id="portada" data-iconName="glyphicon glyphicon-picture" data-buttonText="Seleccionar Imagen">
+            </div>
 
         </div>
 
@@ -98,8 +112,9 @@
                 </ul>
             </div>
         </div>
-    </div>
 
+
+    </div>
 {% endblock contenido %}
 
 {% block scripts %}
@@ -114,7 +129,6 @@
     <script type="text/javascript" src="{% static 'libs/bootstrap-filestyle/1.2.1/src/bootstrap-filestyle.min.js' %}"></script>
 
     <!-- Own's Scripts -->
-    <script type="text/javascript" src="{% static 'user_add.js' %}"></script>
-
+    <script type="text/javascript" src="{% static 'user/employee.js' %}"></script>
 
 {% endblock scripts %}
