@@ -44,7 +44,6 @@ urlpatterns = [
     url(r'^users/(?P<_pk>\d+)/edit/$', UserEdit.as_view(), name="user_edit"),
     url(r'^users/(?P<_pk>\d+)/employee/$', UserEmployee.as_view(), name="user_employee"),
 
-    url(r'^users/add/success/$', UserAddSuccess.as_view(), name="user_add_success"),
     url(r'^users/(?P<_pk>\d+)/permissions/$', UserPermissions.as_view(), name="user_permissions"),
     url(r'^users/(?P<_pk>\d+)/password/$', UserPassword.as_view(), name="user_password"),
     url(r'^users/password/success/$', UserPasswordSuccess.as_view(), name="user_password_success"),

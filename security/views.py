@@ -147,27 +147,6 @@ class PasswordResetDone(PasswordResetCompleteView):
     template_name = 'password_reset/done.html'
 
 
-class Profile(View):
-    template_name = "profile.html"
-
-    def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
-
-
-class ProfilePassword(View):
-    template_name = "profile_password.html"
-
-    def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
-
-
-class ProfilePasswordSuccess(View):
-    template_name = "profile_password_success.html"
-
-    def get(self, _request):
-        return render(_request, self.template_name, {})
-
-
 class UserList(View):
     template_name = "user/list.html"
 
@@ -280,13 +259,6 @@ class UserEmployee(View):
         return render(_request, self.template_name, context)
 
 
-class UserAddSuccess(View):
-    template_name = "user_add_success.html"
-
-    def get(self, _request):
-        return render(_request, self.template_name, {})
-
-
 class UserPermissions(View):
     template_name = "user_permissions.html"
 
@@ -303,6 +275,27 @@ class UserPassword(View):
 
 class UserPasswordSuccess(View):
     template_name = "user_password_success.html"
+
+    def get(self, _request):
+        return render(_request, self.template_name, {})
+
+
+class Profile(View):
+    template_name = "profile.html"
+
+    def get(self, _request, _pk):
+        return render(_request, self.template_name, {})
+
+
+class ProfilePassword(View):
+    template_name = "profile_password.html"
+
+    def get(self, _request, _pk):
+        return render(_request, self.template_name, {})
+
+
+class ProfilePasswordSuccess(View):
+    template_name = "profile_password_success.html"
 
     def get(self, _request):
         return render(_request, self.template_name, {})

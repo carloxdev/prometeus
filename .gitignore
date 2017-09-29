@@ -1,35 +1,26 @@
-# OS generated files 
-# ---------------------------------------
+# ------------------- OS GENERATED FILES ------------------- #
 .DS_Store
 .Trashes
 Thumbs.db
 
-# Python Files
-# ---------------------------------------
+# ------------------- PYTHON FILES ------------------- #
 *.pyc
 
-# Python Files
-# ---------------------------------------
+# ------------------- DB FILES ------------------- #
 db.*
 
-# Directories
-# ---------------------------------------
+# ------------------- DIRECTORIES ------------------- #
 media/*
 static/*
 .vscode/*
 
-# Configuracion
-# ---------------------------------------
+# ------------------- CONFIGURATION ------------------- #
 Prometeus/settings.py
 
-# Migraciones
-# ---------------------------------------
+# ------------------- MIGRATIONS ------------------- #
 editorial/migrations/*
 home/migrations/*
 labor/migrations/*
 management/migrations/*
 payroll/migrations/*
 security/migrations/*
-
-
-
