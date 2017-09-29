@@ -15,6 +15,7 @@ from django.forms import DateInput
 from django.forms import PasswordInput
 from django.forms import EmailInput
 from django.forms import RadioSelect
+from django.forms import ClearableFileInput
 
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -250,6 +251,7 @@ class ProfileForm(ModelForm):
             'job_title',
             'department',
             'phone',
+            'photo',
         )
 
         widgets = {
@@ -257,6 +259,11 @@ class ProfileForm(ModelForm):
             'job_title': TextInput(attrs={'class': 'form-control'}),
             'department': TextInput(attrs={'class': 'form-control'}),
             'phone': TextInput(attrs={'class': 'form-control'}),
+            'photo': ClearableFileInput(attrs={
+                'class': 'filestyle',
+                'data-buttonText': "Seleccionar Imagen",
+                'data-iconName': "glyphicon glyphicon-picture"
+            })
         }
 
         labels = {
@@ -264,6 +271,7 @@ class ProfileForm(ModelForm):
             'job_title': 'Puesto',
             'department': 'Departamento',
             'phone': 'Telefono',
+            'photo': 'Foto',
         }
 
 

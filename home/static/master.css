@@ -134,6 +134,10 @@ h1, h2, h3 {
     border-bottom: 3px solid #AC4539;
 }
 
+.own-optional {
+    color: #737373;
+    font-size: 11px;
+}
 
 /* ---------------------- Media Class ---------------------- */
 

@@ -266,6 +266,7 @@ class UserEmployee(View):
 
         form = ProfileForm(
             _request.POST,
+            _request.FILES,
             instance=UserBusiness.get_Profile(_pk)
         )
 

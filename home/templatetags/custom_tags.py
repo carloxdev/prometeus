@@ -34,6 +34,16 @@ def tag_field(_field):
     return context
 
 
+@register.inclusion_tag('tags/image.html', takes_context=False)
+def tag_image(_field, _object):
+
+    context = {
+        'field': _field,
+        'object': _object
+    }
+    return context
+
+
 @register.inclusion_tag('tags/form_errors.html', takes_context=False)
 def tag_form_errors(_form):
 

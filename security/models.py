@@ -9,6 +9,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+# Own's Libraries
+from home.utilities import Helper
+
 
 class Profile(models.Model):
 
@@ -24,6 +27,14 @@ class Profile(models.Model):
     job_title = models.CharField(max_length=144, null=True, blank=True)
     department = models.CharField(max_length=144, null=True, blank=True)
     phone = models.CharField(max_length=144, null=True, blank=True)
+    photo = models.ImageField(
+        upload_to='perfil/photos',
+        blank=True,
+        validators=[
+            Helper.validate_Img_Extension,
+            Helper.validate_Size
+        ]
+    )
 
 
 @receiver(post_save, sender=User)

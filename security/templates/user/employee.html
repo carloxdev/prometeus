@@ -41,59 +41,51 @@
     </ul>
 
     <div class="row">
-        <div class="col-xs-12 col-md-8 col-lg-9">
+        <form class="" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
 
-            <form class="" action="" method="post"> {% csrf_token %}
+            <div class="col-xs-12 col-md-8 col-lg-9">
 
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Informacion de la cuenta</h3>
-                    </div>
-                    <div class="panel-body">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Informacion del empleado </h3>
 
-                        {% include 'tags/messages.html' %}
-
-                        {% tag_form_errors form %}
-
-                        {% tag_field form.recruited_date %}
-
-                        {% tag_field form.birth_date %}
-
-                        <div class="form-group">
-                            {% for choice in form.gender %}
-                                <label class="radio-inline">{{ choice.tag }}{{ choice.choice_label }}</label>
-                            {% endfor %}
                         </div>
+                        <div class="panel-body">
 
-                        {% tag_field form.job_title %}
+                            {% include 'tags/messages.html' %}
 
-                        {% tag_field form.department %}
+                            {% tag_form_errors form %}
 
-                        {% tag_field form.phone %}
+                            {% tag_field form.recruited_date %}
 
+                            {% tag_field form.birth_date %}
+
+                            <div class="form-group">
+                                {% for choice in form.gender %}
+                                    <label class="radio-inline">{{ choice.tag }}{{ choice.choice_label }}</label>
+                                {% endfor %}
+                            </div>
+
+                            {% tag_field form.job_title %}
+
+                            {% tag_field form.department %}
+
+                            {% tag_field form.phone %}
+
+                        </div>
+                        <div class="panel-footer">
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                Guardar
+                            </button>
+                        </div>
                     </div>
-                    <div class="panel-footer">
-                        <button type="submit" class="btn btn-success">
-                            <span class="glyphicon glyphicon-ok"></span>
-                            Guardar
-                        </button>
-                    </div>
-                </div>
-
-            </form>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-4 col-lg-3">
-            <img id="img_preview"
-            class="img-responsive img-thumbnail legal-img"
-            src="{% static 'images/decorators/no-image-user.jpg' %}"
-            alt="User Image">
-            <div class="form-group">
-                    <input type="file" class="filestyle" id="portada" data-iconName="glyphicon glyphicon-picture" data-buttonText="Seleccionar Imagen">
             </div>
 
-        </div>
+            <div class="col-xs-12 col-sm-4 col-lg-3">
+                {% tag_image form.photo form.instance.photo %}
+            </div>
+        </form>
 
         <div class="col-xs-12 col-md-4 col-lg-3">
             <div class="panel panel-default affix-top">

@@ -1,0 +1,50 @@
+{% load static from staticfiles %}
+
+{% if field.errors %}
+
+    <label class="control-label" for="{{field.id_for_label}}">
+        {{ field.label }}
+
+        {% if field.field.required is False %}
+            <span class="own-optional">(opcional)</span>
+        {% endif %}
+    </label>
+
+    {% if object %}
+        <img id="img_preview" class="img-responsive img-thumbnail"
+            src="{{object.url}}" alt="{{field.id_for_label}}">
+    {% else %}
+        <img id="img_preview" class="img-responsive img-thumbnail"
+            src="{% static 'images/decorators/no-image-user.jpg' %}"
+            alt="{{field.id_for_label}}">
+    {% endif %}
+
+    <div class="form-group has-error">
+        {{ field }}
+    </div>
+
+
+{% else %}
+
+    <label class="control-label" for="{{field.id_for_label}}">
+        {{ field.label }}
+
+        {% if field.field.required is False %}
+            <span class="own-optional">(opcional)</span>
+        {% endif %}
+    </label>
+
+    {% if object %}
+        <img id="img_preview" class="img-responsive img-thumbnail"
+            src="{{object.url}}" alt="{{field.id_for_label}}">
+    {% else %}
+        <img id="img_preview" class="img-responsive img-thumbnail"
+            src="{% static 'images/decorators/no-image-user.jpg' %}"
+            alt="{{field.id_for_label}}">
+    {% endif %}
+
+    <div class="form-group">
+        {{ field }}
+    </div>
+
+{% endif %}
