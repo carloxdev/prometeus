@@ -4,8 +4,15 @@ import os
 
 # Django's Libraries
 from django import template
+from django.contrib.auth.models import Group
 
 register = template.Library()
+
+
+@register.filter(name='filter_has_group')
+def filter_has_group(user, group_name):
+    group = Group.objects.get(name=group_name)
+    return group in user.groups.all()
 
 
 @register.inclusion_tag('tags/message.html', takes_context=False)

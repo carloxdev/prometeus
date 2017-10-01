@@ -14,6 +14,7 @@ from .views import PasswordResetConfirm
 from .views import PasswordResetDone
 
 from .views import UserList
+from .views import UserListExport
 from .views import UserAdd
 from .views import UserEdit
 from .views import UserProfile
@@ -38,6 +39,8 @@ urlpatterns = [
         PasswordResetDone.as_view(), name='password_reset_done'),
 
     url(r'^users/$', UserList.as_view(), name="user_list"),
+    url(r'^users/export/$', UserListExport.as_view(), name="user_list_export"),
+
     url(r'^users/add/$', UserAdd.as_view(), name="user_add"),
     url(r'^users/(?P<_pk>\d+)/edit/$', UserEdit.as_view(), name="user_edit"),
     url(r'^users/(?P<_pk>\d+)/profile/$', UserProfile.as_view(), name="user_profile"),

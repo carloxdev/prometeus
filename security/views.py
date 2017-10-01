@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 # Django's Libraries
 from django.urls import reverse_lazy
 
+from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 
@@ -35,6 +36,7 @@ from django.db.models import Q
 
 # Own's Libraries
 from home.utilities import Helper
+from home.mixins import GroupLoginRequiredMixin
 
 from .business import UserBusiness
 
@@ -46,6 +48,9 @@ from .forms import UserEditForm
 from .forms import UserProfileForm
 from .forms import UserPasswordForm
 from .forms import ProfilePasswordForm
+
+# Third-party Libraries
+import xlwt
 
 
 class Login(View):
@@ -155,9 +160,9 @@ class PasswordResetDone(PasswordResetCompleteView):
     template_name = 'password/done.html'
 
 
-@method_decorator(login_required, name='dispatch')
-class UserList(View):
+class UserList(GroupLoginRequiredMixin, View):
     template_name = "user/list.html"
+    group = ['security', ]
 
     def get(self, _request):
 
@@ -188,9 +193,58 @@ class UserList(View):
         return render(_request, self.template_name, context)
 
 
-@method_decorator(login_required, name='dispatch')
-class UserAdd(View):
+class UserListExport(GroupLoginRequiredMixin, View):
+
+    def get(self, _request):
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="usuarios.xls"'
+
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Infomacion')
+
+        # Sheet header, first row
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+
+        columns = [
+            'Numero',
+            'Nombre(s)',
+            'Apellido(s)',
+            'Email',
+        ]
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+        # Sheet body, remaining rows
+        font_style = xlwt.XFStyle()
+
+        query = _request.GET.get('q')
+        if query:
+            rows = User.objects.filter(
+                Q(username__icontains=query) |
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query)
+            ).order_by("-date_joined")
+        else:
+            rows = User.objects.all().order_by("-date_joined")
+
+        for row in rows:
+            row_num += 1
+
+            ws.write(row_num, 0, row.username, font_style)
+            ws.write(row_num, 1, row.first_name, font_style)
+            ws.write(row_num, 2, row.last_name, font_style)
+            ws.write(row_num, 3, row.email, font_style)
+
+        wb.save(response)
+        return response
+
+
+class UserAdd(GroupLoginRequiredMixin, View):
     template_name = "user/add.html"
+    group = ['security', ]
 
     def get(self, _request):
         form = UserAddForm()
@@ -214,9 +268,9 @@ class UserAdd(View):
         return render(_request, self.template_name, context)
 
 
-@method_decorator(login_required, name='dispatch')
-class UserEdit(View):
+class UserEdit(GroupLoginRequiredMixin, View):
     template_name = "user/edit.html"
+    group = ['security', ]
 
     def get(self, _request, _pk):
         # print _request.GET['new']
@@ -241,9 +295,9 @@ class UserEdit(View):
         return render(_request, self.template_name, context)
 
 
-@method_decorator(login_required, name='dispatch')
-class UserProfile(View):
+class UserProfile(GroupLoginRequiredMixin, View):
     template_name = "user/profile.html"
+    group = ['security', ]
 
     def get(self, _request, _pk):
         form = UserProfileForm(instance=UserBusiness.get_Profile(_pk))
@@ -270,9 +324,9 @@ class UserProfile(View):
         return render(_request, self.template_name, context)
 
 
-@method_decorator(login_required, name='dispatch')
-class UserPassword(View):
+class UserPassword(GroupLoginRequiredMixin, View):
     template_name = "user/password.html"
+    group = ['security', ]
 
     def get(self, _request, _pk):
         form = UserPasswordForm(user=UserBusiness.get(_pk))
@@ -296,9 +350,9 @@ class UserPassword(View):
         return render(_request, self.template_name, context)
 
 
-@method_decorator(login_required, name='dispatch')
-class UserPermissions(View):
+class UserPermissions(GroupLoginRequiredMixin, View):
     template_name = "user_permissions.html"
+    group = ['security', ]
 
     def get(self, _request, _pk):
         return render(_request, self.template_name, {})

@@ -1,5 +1,7 @@
 {% load static from staticfiles %}
 
+{% load custom_tags %}
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -67,7 +69,8 @@
                                     {% endif %}
                                     <ul class="dropdown-menu">
 
-                                        {% if user.is_superuser %}
+                                        {% if user.is_superuser or user|filter_has_group:"security" %}
+
                                             <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
                                             <li><a href="{% url 'management:email' %} ">Correo</a></li>
                                             <li role="separator" class="divider"></li>
