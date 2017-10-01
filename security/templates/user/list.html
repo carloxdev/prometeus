@@ -27,35 +27,35 @@
 
                 <div class="row">
 
-                    <div class="col-xs-12 col-sm-6">
-                        <a href="{% url 'security:user_add' %}" class="btn btn-primary">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i>
-                            Crear Usuario
-                        </a>
+                    <form action="" method="get">
 
-                        <a href="{% url 'security:user_list_export' %}" class="btn btn-default">
+                        <div class="col-xs-12 col-sm-6">
+                            <a href="{% url 'security:user_add' %}" class="btn btn-primary">
+                                <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                Crear Usuario
+                            </a>
 
-                            Exportar
-                            <span class="glyphicon glyphicon-download-alt"></span>
-                        </a>
-                    </div>
-
-                    <br class="visible-xs">
-                    <br class="visible-xs">
-
-                    <form class="col-xs-12 col-sm-6" action="" method="GET">
-
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
-
-                            <span class="input-group-btn">
-                              <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
-                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                <span class="hidden-xs">Buscar</span>
-                              </button>
-                            </span>
+                            <a href="{% url 'security:user_list_export' request.GET.q %}" class="btn btn-default">
+                                Exportar
+                                <span class="glyphicon glyphicon-download-alt"></span>
+                            </a>
                         </div>
 
+                        <br class="visible-xs">
+                        <br class="visible-xs">
+
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
+
+                                <span class="input-group-btn">
+                                  <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                    <span class="hidden-xs">Buscar</span>
+                                  </button>
+                                </span>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </nav>

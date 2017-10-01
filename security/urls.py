@@ -39,7 +39,7 @@ urlpatterns = [
         PasswordResetDone.as_view(), name='password_reset_done'),
 
     url(r'^users/$', UserList.as_view(), name="user_list"),
-    url(r'^users/export/$', UserListExport.as_view(), name="user_list_export"),
+    url(r'^users/export/(?P<_query>.*)/$', UserListExport.as_view(), name="user_list_export"),
 
     url(r'^users/add/$', UserAdd.as_view(), name="user_add"),
     url(r'^users/(?P<_pk>\d+)/edit/$', UserEdit.as_view(), name="user_edit"),

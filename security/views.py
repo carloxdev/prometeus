@@ -28,12 +28,6 @@ from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 
-from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage
-from django.core.paginator import PageNotAnInteger
-
-from django.db.models import Q
-
 # Own's Libraries
 from home.utilities import Helper
 from home.mixins import GroupLoginRequiredMixin
@@ -48,9 +42,6 @@ from .forms import UserEditForm
 from .forms import UserProfileForm
 from .forms import UserPasswordForm
 from .forms import ProfilePasswordForm
-
-# Third-party Libraries
-import xlwt
 
 
 class Login(View):
@@ -167,78 +158,30 @@ class UserList(GroupLoginRequiredMixin, View):
     def get(self, _request):
 
         query = _request.GET.get('q')
-        if query:
-            users = User.objects.filter(
-                Q(username__icontains=query) |
-                Q(first_name__icontains=query) |
-                Q(last_name__icontains=query)
-            ).order_by("-date_joined")
-        else:
-            users = User.objects.all().order_by("-date_joined")
 
-        paginator = Paginator(users, 10)
-        current_pagina = _request.GET.get('page')
+        users = UserBusiness.get_FilterBy(query)
 
-        try:
-            users = paginator.page(current_pagina)
-        except PageNotAnInteger:
-            users = paginator.page(1)
-        except EmptyPage:
-            users = paginator.page(paginator.num_page)
+        users_paginated = UserBusiness.get_Paginated(users, _request.GET.get('page'))
 
         context = {
-            'users': users
+            'users': users_paginated
         }
-
         return render(_request, self.template_name, context)
 
 
 class UserListExport(GroupLoginRequiredMixin, View):
 
-    def get(self, _request):
+    def get(self, _request, _query):
+
+        users = UserBusiness.get_FilterBy(_query)
+
+        file = UserBusiness.get_ExcelData(users)
+
         response = HttpResponse(content_type='application/ms-excel')
         response['Content-Disposition'] = 'attachment; filename="usuarios.xls"'
 
-        wb = xlwt.Workbook(encoding='utf-8')
-        ws = wb.add_sheet('Infomacion')
+        file.save(response)
 
-        # Sheet header, first row
-        row_num = 0
-
-        font_style = xlwt.XFStyle()
-
-        columns = [
-            'Numero',
-            'Nombre(s)',
-            'Apellido(s)',
-            'Email',
-        ]
-
-        for col_num in range(len(columns)):
-            ws.write(row_num, col_num, columns[col_num], font_style)
-
-        # Sheet body, remaining rows
-        font_style = xlwt.XFStyle()
-
-        query = _request.GET.get('q')
-        if query:
-            rows = User.objects.filter(
-                Q(username__icontains=query) |
-                Q(first_name__icontains=query) |
-                Q(last_name__icontains=query)
-            ).order_by("-date_joined")
-        else:
-            rows = User.objects.all().order_by("-date_joined")
-
-        for row in rows:
-            row_num += 1
-
-            ws.write(row_num, 0, row.username, font_style)
-            ws.write(row_num, 1, row.first_name, font_style)
-            ws.write(row_num, 2, row.last_name, font_style)
-            ws.write(row_num, 3, row.email, font_style)
-
-        wb.save(response)
         return response
 
 
