@@ -6,19 +6,25 @@ from __future__ import unicode_literals
 # Django's Libraries
 from django.urls import reverse_lazy
 
-from django.contrib import messages
-from django.contrib.auth import authenticate
-from django.contrib.auth import login
-from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.utils.decorators import method_decorator
 
 from django.shortcuts import render
 from django.shortcuts import redirect
 
+from django.contrib import messages
+from django.contrib.auth import authenticate
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth.views import PasswordResetCompleteView
+from django.contrib.auth.views import PasswordChangeView
 
 from django.views.generic import ListView
+from django.views.generic import TemplateView
 from django.views.generic.base import View
 
 from django.core.paginator import Paginator
@@ -37,7 +43,9 @@ from .forms import PasswordResetRequestForm
 from .forms import PasswordResetConfirmForm
 from .forms import UserAddForm
 from .forms import UserEditForm
-from .forms import ProfileForm
+from .forms import UserProfileForm
+from .forms import UserPasswordForm
+from .forms import ProfilePasswordForm
 
 
 class Login(View):
@@ -87,7 +95,7 @@ class Login(View):
 
 class PasswordResetRequest(View):
 
-    template_name = "password_reset/request.html"
+    template_name = "password/request.html"
 
     def get(self, _request):
 
@@ -124,7 +132,7 @@ class PasswordResetRequest(View):
 
 class PasswordResetMessage(View):
 
-    template_name = "password_reset/message.html"
+    template_name = "password/message.html"
 
     def get(self, _request, _pk):
 
@@ -139,14 +147,15 @@ class PasswordResetMessage(View):
 
 class PasswordResetConfirm(PasswordResetConfirmView):
     form_class = PasswordResetConfirmForm
-    template_name = 'password_reset/confirm.html'
+    template_name = 'password/confirm.html'
     success_url = reverse_lazy('security:password_reset_done')
 
 
 class PasswordResetDone(PasswordResetCompleteView):
-    template_name = 'password_reset/done.html'
+    template_name = 'password/done.html'
 
 
+@method_decorator(login_required, name='dispatch')
 class UserList(View):
     template_name = "user/list.html"
 
@@ -179,6 +188,7 @@ class UserList(View):
         return render(_request, self.template_name, context)
 
 
+@method_decorator(login_required, name='dispatch')
 class UserAdd(View):
     template_name = "user/add.html"
 
@@ -204,6 +214,7 @@ class UserAdd(View):
         return render(_request, self.template_name, context)
 
 
+@method_decorator(login_required, name='dispatch')
 class UserEdit(View):
     template_name = "user/edit.html"
 
@@ -217,9 +228,8 @@ class UserEdit(View):
 
     def post(self, _request, _pk):
         form = UserEditForm(
-                _request.POST,
-                instance=UserBusiness.get(_pk)
-            )
+            _request.POST,
+            instance=UserBusiness.get(_pk))
 
         if form.is_valid():
             form.save()
@@ -231,11 +241,12 @@ class UserEdit(View):
         return render(_request, self.template_name, context)
 
 
-class UserEmployee(View):
-    template_name = "user/employee.html"
+@method_decorator(login_required, name='dispatch')
+class UserProfile(View):
+    template_name = "user/profile.html"
 
     def get(self, _request, _pk):
-        form = ProfileForm(instance=UserBusiness.get_Profile(_pk))
+        form = UserProfileForm(instance=UserBusiness.get_Profile(_pk))
         context = {
             'form': form
         }
@@ -243,7 +254,7 @@ class UserEmployee(View):
 
     def post(self, _request, _pk):
 
-        form = ProfileForm(
+        form = UserProfileForm(
             _request.POST,
             _request.FILES,
             instance=UserBusiness.get_Profile(_pk)
@@ -259,6 +270,33 @@ class UserEmployee(View):
         return render(_request, self.template_name, context)
 
 
+@method_decorator(login_required, name='dispatch')
+class UserPassword(View):
+    template_name = "user/password.html"
+
+    def get(self, _request, _pk):
+        form = UserPasswordForm(user=UserBusiness.get(_pk))
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, _pk):
+
+        form = UserPasswordForm(
+            data=_request.POST,
+            user=UserBusiness.get(_pk))
+        if form.is_valid():
+            form.save()
+            messages.success(_request, "Se actualizo la contraseña con exito")
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
 class UserPermissions(View):
     template_name = "user_permissions.html"
 
@@ -266,36 +304,44 @@ class UserPermissions(View):
         return render(_request, self.template_name, {})
 
 
-class UserPassword(View):
-    template_name = "user_password.html"
-
-    def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
-
-
-class UserPasswordSuccess(View):
-    template_name = "user_password_success.html"
-
-    def get(self, _request):
-        return render(_request, self.template_name, {})
-
-
+@method_decorator(login_required, name='dispatch')
 class Profile(View):
-    template_name = "profile.html"
+    template_name = "profile/view.html"
 
     def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
+        profile = UserBusiness.get_Profile(_pk)
+        context = {
+            'profile': profile
+        }
+        return render(_request, self.template_name, context)
 
 
+@method_decorator(login_required, name='dispatch')
 class ProfilePassword(View):
-    template_name = "profile_password.html"
+    template_name = "profile/password.html"
 
     def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
+        form = ProfilePasswordForm(user=UserBusiness.get(_pk))
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, _pk):
+        form = ProfilePasswordForm(
+            data=_request.POST,
+            user=UserBusiness.get(_pk))
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(_request, form.user)
+            return redirect(reverse('security:profile_password_done'))
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
 
 
-class ProfilePasswordSuccess(View):
-    template_name = "profile_password_success.html"
-
-    def get(self, _request):
-        return render(_request, self.template_name, {})
+@method_decorator(login_required, name='dispatch')
+class ProfilePasswordDone(TemplateView):
+    template_name = "profile/password_done.html"

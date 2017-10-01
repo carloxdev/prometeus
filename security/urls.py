@@ -16,16 +16,14 @@ from .views import PasswordResetDone
 from .views import UserList
 from .views import UserAdd
 from .views import UserEdit
-from .views import UserEmployee
-
-from .views import UserAddSuccess
-from .views import UserPermissions
+from .views import UserProfile
 from .views import UserPassword
-from .views import UserPasswordSuccess
 
 from .views import Profile
 from .views import ProfilePassword
-from .views import ProfilePasswordSuccess
+from .views import ProfilePasswordDone
+
+from .views import UserPermissions
 
 
 urlpatterns = [
@@ -42,13 +40,14 @@ urlpatterns = [
     url(r'^users/$', UserList.as_view(), name="user_list"),
     url(r'^users/add/$', UserAdd.as_view(), name="user_add"),
     url(r'^users/(?P<_pk>\d+)/edit/$', UserEdit.as_view(), name="user_edit"),
-    url(r'^users/(?P<_pk>\d+)/employee/$', UserEmployee.as_view(), name="user_employee"),
-
-    url(r'^users/(?P<_pk>\d+)/permissions/$', UserPermissions.as_view(), name="user_permissions"),
+    url(r'^users/(?P<_pk>\d+)/profile/$', UserProfile.as_view(), name="user_profile"),
     url(r'^users/(?P<_pk>\d+)/password/$', UserPassword.as_view(), name="user_password"),
-    url(r'^users/password/success/$', UserPasswordSuccess.as_view(), name="user_password_success"),
 
     url(r'^profile/(?P<_pk>\d+)/$', Profile.as_view(), name="profile"),
     url(r'^profile/(?P<_pk>\d+)/password/$', ProfilePassword.as_view(), name="profile_password"),
-    url(r'^profile/password/success/$', ProfilePasswordSuccess.as_view(), name="profile_password_success"),
+    url(r'^profile/password/done/$', ProfilePasswordDone.as_view(), name="profile_password_done"),
+
+    url(r'^users/(?P<_pk>\d+)/permissions/$', UserPermissions.as_view(), name="user_permissions"),
+
+
 ]

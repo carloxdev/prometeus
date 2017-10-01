@@ -4,6 +4,8 @@
 
 {% load custom_tags %}
 
+{% block title %} GCM - Editar Usuario {% endblock title %}
+
 {% block css %}
 
     <!-- Bootstrap Select -->
@@ -15,7 +17,7 @@
 
 {% endblock css %}
 
-{% block contenido %}
+{% block content %}
 
     <div class="row">
         <div class="col-xs-12">
@@ -35,7 +37,7 @@
             <a href="#">Cuenta</a>
         </li>
         <li>
-            <a href="{% url 'security:user_employee' form.instance.pk %}">Empleado</a>
+            <a href="{% url 'security:user_profile' form.instance.pk %}">Empleado</a>
         </li>
     </ul>
 
@@ -67,7 +69,7 @@
                         </div>
 
                     </div>
-                    <div class="panel-footer">
+                    <div class="panel-footer text-center">
                         <button type="submit" class="btn btn-success">
                             <span class="glyphicon glyphicon-ok"></span>
                             Guardar
@@ -84,7 +86,7 @@
                     <h3 class="panel-title">Otras Acciones:</h3>
                 </div>
                 <ul class="list-group">
-                    <a class="list-group-item text-center" href="#">
+                    <a class="list-group-item text-center" href="{% url 'security:user_password' form.instance.pk %}">
                         <i class="fa fa-key" aria-hidden="true"></i>
                         Cambiar Contraseña
                     </a>
@@ -97,7 +99,7 @@
         </div>
     </div>
 
-{% endblock contenido %}
+{% endblock content %}
 
 {% block scripts %}
 

@@ -27,6 +27,7 @@ class Profile(models.Model):
     job_title = models.CharField(max_length=144, null=True, blank=True)
     department = models.CharField(max_length=144, null=True, blank=True)
     phone = models.CharField(max_length=144, null=True, blank=True)
+    address = models.CharField(max_length=255, null=True, blank=True)
     photo = models.ImageField(
         upload_to='perfil/photos',
         blank=True,

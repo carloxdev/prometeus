@@ -13,7 +13,7 @@
 
 {% endblock css %}
 
-{% block contenido %}
+{% block content %}
 
     <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 own-loginbox">
         <div class="panel panel-primary">
@@ -26,11 +26,7 @@
 
                 <form method="post"> {% csrf_token %}
 
-                    {% if form.non_field_errors %}
-                        {% for error in form.non_field_errors %}
-                            {% tag_message 'danger' error %}
-                        {% endfor %}
-                    {% endif %}
+                    {% tag_form_errors form %}
 
                     <div class="input-group own-fields">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
@@ -44,7 +40,10 @@
 
                     <div class="form-group own-bottons">
                         <div class="col-sm-12 controls">
-                            <button type="submut" class="btn btn-success">Entrar</button>
+                            <button type="submut" class="btn btn-success">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                Ingresar
+                            </button>
                         </div>
                     </div>
 
@@ -55,4 +54,4 @@
         </div>
     </div>
 
-{% endblock contenido %}
+{% endblock content %}

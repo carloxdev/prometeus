@@ -37,13 +37,36 @@
   </head>
   <body>
 
-    <div class="container">
+      <div class="own-wrap">
 
-        {% block contenido %}
+          <div class="own-main">
 
-        {% endblock contenido %}
+              <nav class="navbar navbar-default">
+                  <div class="container-fluid">
+                      <div class="navbar-header">
+                          <a class="navbar-brand" href="{% url 'home:index' %}">
+                              GCM Empleados
+                          </a>
+                      </div>
 
-    </div>
+                  </div>
+              </nav>
+
+              <div class="container own-page-content">
+
+                  {% block content %}
+
+                  {% endblock content %}
+              </div>
+
+          </div>
+
+
+      </div>
+
+      <footer class="text-center own-page-footer">
+          GSM Derechos Reservados.
+      </footer>
 
     <!-- jQuery -->
     <script src="{% static 'libs/jquery/2.2.4/jquery.min.js' %}"> </script>

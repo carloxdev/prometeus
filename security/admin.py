@@ -35,6 +35,7 @@ class CustomUserAdmin(UserAdmin):
         'job_title',
         'department',
         'phone',
+        'address',
     )
     list_select_related = ('profile', )
 
@@ -55,6 +56,9 @@ class CustomUserAdmin(UserAdmin):
 
     def phone(self, instance):
         return instance.profile.phone
+
+    def address(self, instance):
+        return instance.profile.address
 
     # get_recruited_date.short_recruited_date = "Contratacion"
     # get_birth_date.short_birth_date = "Cumpleaños"

@@ -22,6 +22,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AdminPasswordChangeForm
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.sites.shortcuts import get_current_site
 
 from django.utils.encoding import force_bytes
@@ -81,8 +82,8 @@ class PasswordResetRequestForm(PasswordResetForm):
         return active_user
 
     def save(self, domain_override=None,
-             subject_template_name='password_reset/subject.txt',
-             email_template_name='password_reset/email.html',
+             subject_template_name='password/subject.txt',
+             email_template_name='password/email.html',
              use_https=False, token_generator=default_token_generator,
              from_email=None, request=None, html_email_template_name=None,
              extra_email_context=None):
@@ -131,10 +132,6 @@ class PasswordResetConfirmForm(AdminPasswordChangeForm):
         )
     )
 
-    class Meta:
-        model = User
-        fields = ('password1', 'password2', )
-
 
 class UserAddForm(UserCreationForm):
 
@@ -168,7 +165,7 @@ class UserAddForm(UserCreationForm):
         self.fields['last_name'].required = True
         self.fields['email'].required = True
 
-        self.fields['password1'].help_text = mark_safe("<ul><li>Su contraseña no puede ser similar a su otra información personal.</li><li>Su contraseña es muy corta. Debe contener al menos 8 caracteres.</li><li>Su contraseña no puede ser una contraseña común.</li><li>Su contraseña no puede ser enteramente numérica.</li></ul>")
+        self.fields['password1'].help_text = mark_safe("<ul><li>La contraseña no puede ser similar a su otra información personal.</li><li>La contraseña debe contener al menos 8 caracteres.</li><li>La contraseña no puede ser una contraseña común.</li><li>La contraseña no puede ser enteramente numérica.</li></ul>")
         self.fields['password1'].widget.attrs['class'] = 'form-control'
 
         self.fields['password2'].help_text = "Para verificar, introduzca la misma contraseña que introdujo antes."
@@ -211,7 +208,7 @@ class UserEditForm(ModelForm):
         self.fields['email'].required = True
 
 
-class ProfileForm(ModelForm):
+class UserProfileForm(ModelForm):
 
     recruited_date = DateField(
         required=False,
@@ -251,14 +248,15 @@ class ProfileForm(ModelForm):
             'job_title',
             'department',
             'phone',
+            'address',
             'photo',
         )
 
         widgets = {
-            # 'gender': TextInput(attrs={'class': 'form-control'}),
             'job_title': TextInput(attrs={'class': 'form-control'}),
             'department': TextInput(attrs={'class': 'form-control'}),
             'phone': TextInput(attrs={'class': 'form-control'}),
+            'address': TextInput(attrs={'class': 'form-control'}),
             'photo': ClearableFileInput(attrs={
                 'class': 'filestyle',
                 'data-buttonText': "Seleccionar Imagen",
@@ -267,55 +265,51 @@ class ProfileForm(ModelForm):
         }
 
         labels = {
-            # 'gender': 'Genero',
             'job_title': 'Puesto',
             'department': 'Departamento',
             'phone': 'Telefono',
+            'address': 'Direccion',
             'photo': 'Foto',
         }
 
 
-class UserOtherInfoForm(ModelForm):
+class UserPasswordForm(AdminPasswordChangeForm):
+    password1 = CharField(
+        label='Nueva contraseña',
+        help_text=mark_safe("<ul><li>La contraseña no puede ser similar a su otra información personal.</li><li>La contraseña debe contener al menos 8 caracteres.</li><li>La contraseña no puede ser una contraseña común.</li><li>La contraseña no puede ser enteramente numérica.</li></ul>"),
+        widget=PasswordInput(
+            attrs={'class': 'form-control input-xs'}
+        )
+    )
+    password2 = CharField(
+        label='Confirmar contraseña',
+        help_text="Para verificar, introduzca la misma contraseña que introdujo antes.",
+        widget=PasswordInput(
+            attrs={'class': 'form-control input-xs'}
+        )
+    )
 
-    recruited_date = DateField(
-        label="Fecha Contratación",
-        required=False,
-        input_formats=[
-            "%d/%m/%Y",
-        ],
-        widget=DateInput(
-            attrs={'class': 'form-control'}
+
+class ProfilePasswordForm(PasswordChangeForm):
+
+    old_password = CharField(
+        label='Contraseña Actual',
+        widget=PasswordInput(
+            attrs={'class': 'form-control input-xs', 'autofocus': True}
         )
     )
-    birth_date = DateField(
-        label="Fecha Nacimiento",
-        required=False,
-        input_formats=[
-            "%d/%m/%Y",
-        ],
-        widget=DateInput(
-            attrs={'class': 'form-control'}
+
+    new_password1 = CharField(
+        label='Nueva contraseña',
+        help_text=mark_safe("<ul><li>La contraseña no puede ser similar a su otra información personal.</li><li>La contraseña debe contener al menos 8 caracteres.</li><li>La contraseña no puede ser una contraseña común.</li><li>La contraseña no puede ser enteramente numérica.</li></ul>"),
+        widget=PasswordInput(
+            attrs={'class': 'form-control input-xs'}
         )
     )
-    # gender = models.CharField(choices=GENEROS, max_length=144, null=True, blank=True)
-    job_title = CharField(
-        label="Puesto",
-        required=False,
-        widget=TextInput(
-            attrs={'class': 'form-control'}
-        )
-    )
-    department = CharField(
-        required=False,
-        label="Departamento",
-        widget=TextInput(
-            attrs={'class': 'form-control'}
-        )
-    )
-    phone = CharField(
-        required=False,
-        label="Telefono",
-        widget=TextInput(
-            attrs={'class': 'form-control'}
+    new_password2 = CharField(
+        label='Confirmar contraseña',
+        help_text="Para verificar, introduzca la misma contraseña que introdujo antes.",
+        widget=PasswordInput(
+            attrs={'class': 'form-control input-xs'}
         )
     )

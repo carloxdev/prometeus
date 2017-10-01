@@ -34,6 +34,15 @@ def tag_field(_field):
     return context
 
 
+@register.inclusion_tag('tags/radio.html', takes_context=False)
+def tag_radio(_field):
+
+    context = {
+        'field': _field,
+    }
+    return context
+
+
 @register.inclusion_tag('tags/image.html', takes_context=False)
 def tag_image(_field, _object):
 

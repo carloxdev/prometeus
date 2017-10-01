@@ -1,47 +1,36 @@
 {% load static from staticfiles %}
 
+<label class="control-label" for="{{field.id_for_label}}">
+    {{ field.label }}
+
+    {% if field.field.required is False %}
+        <span class="own-optional">(opcional)</span>
+    {% endif %}
+</label>
+
+{% if object %}
+    <img id="img_preview" class="img-responsive img-thumbnail"
+        src="{{object.url}}" alt="{{field.id_for_label}}">
+{% else %}
+    <img id="img_preview" class="img-responsive img-thumbnail"
+        src="{% static 'images/decorators/no-image-user.jpg' %}"
+        alt="{{field.id_for_label}}">
+{% endif %}
+
 {% if field.errors %}
 
-    <label class="control-label" for="{{field.id_for_label}}">
-        {{ field.label }}
-
-        {% if field.field.required is False %}
-            <span class="own-optional">(opcional)</span>
-        {% endif %}
-    </label>
-
-    {% if object %}
-        <img id="img_preview" class="img-responsive img-thumbnail"
-            src="{{object.url}}" alt="{{field.id_for_label}}">
-    {% else %}
-        <img id="img_preview" class="img-responsive img-thumbnail"
-            src="{% static 'images/decorators/no-image-user.jpg' %}"
-            alt="{{field.id_for_label}}">
-    {% endif %}
-
-    <div class="form-group has-error">
+    <div class="form-group has-error has-feedback">
         {{ field }}
+        <div class="help-block with-errors">
+            <ul class="list-unstyled">
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
-
 {% else %}
-
-    <label class="control-label" for="{{field.id_for_label}}">
-        {{ field.label }}
-
-        {% if field.field.required is False %}
-            <span class="own-optional">(opcional)</span>
-        {% endif %}
-    </label>
-
-    {% if object %}
-        <img id="img_preview" class="img-responsive img-thumbnail"
-            src="{{object.url}}" alt="{{field.id_for_label}}">
-    {% else %}
-        <img id="img_preview" class="img-responsive img-thumbnail"
-            src="{% static 'images/decorators/no-image-user.jpg' %}"
-            alt="{{field.id_for_label}}">
-    {% endif %}
 
     <div class="form-group">
         {{ field }}

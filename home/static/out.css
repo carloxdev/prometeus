@@ -1,11 +1,37 @@
-/*@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro');
+@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro|Open+Sans');
+
 
 html, body {
     height: 100%;
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
+    /*font-size: 16px;*/
+    /*font-family: 'Roboto', sans-serif;*/
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     font-family: 'Source Sans Pro', sans-serif;
-}*/
+}
+
+
+.own-wrap {
+  min-height: 100%;
+}
+
+    .own-main {
+      overflow: visible;
+      padding-bottom:2.7em; /* this needs to be bigger than footer height*/
+    }
+
+
+.own-page-footer {
+
+	position: relative;
+	margin-top:-2.7em; /* negative value of footer height */
+
+	height: 2.7em;
+	border-top: 1px solid #E5E5E5;
+	background-color: #F8F8F8;
+    color: #666;
+	padding: .7em;
+  	clear:both;
+
+}

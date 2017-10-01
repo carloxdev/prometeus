@@ -2,6 +2,8 @@
 
 {% load static from staticfiles %}
 
+{% block title %} GCM - Inicio {% endblock title %}
+
 {% block css %}
 
     <!-- Own's Styles -->
@@ -9,7 +11,7 @@
 
 {% endblock css %}
 
-{% block contenido %}
+{% block content %}
 
 <div class="row">
 
@@ -54,20 +56,20 @@
                 <span class="glyphicon glyphicon-chevron-right"></span>
                 <span class="sr-only">Next</span>
             </a>
-        </div>        
+        </div>
     </div>
 
     <div class="hidden-xs col-sm-5">
         <div class="panel panel-primary">
             <div class="panel-heading own-banners">
-                
+
                 <h2 class="text-center">Solicitar Comprobantes</h2>
                 <div class="text-center">
-                    <span><a href="{% url 'payroll:voucher_add' %}" class="own-banners-link-voucher">Nomina</a></span> - 
-                    <span><a href="{% url 'payroll:voucher_add' %}" class="own-banners-link-voucher">Vacaciones</a></span> - 
+                    <span><a href="{% url 'payroll:voucher_add' %}" class="own-banners-link-voucher">Nomina</a></span> -
+                    <span><a href="{% url 'payroll:voucher_add' %}" class="own-banners-link-voucher">Vacaciones</a></span> -
                     <span><a href="{% url 'payroll:voucher_add' %}" class="own-banners-link-voucher">Prestamos</a></span>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -75,14 +77,14 @@
     <div class="hidden-xs col-sm-5">
         <div class="panel panel-success">
             <div class="panel-heading own-banners">
-                
+
                 <h2 class="text-center">Solicitar Prestacion</h2>
                 <div class="text-center">
-                    <span><a href="{% url 'payroll:benefit_add' %}" class="own-banners-link-benefit">Cerdito</a></span> - 
-                    <span><a href="{% url 'payroll:benefit_add' %}" class="own-banners-link-benefit">Despensa</a></span> - 
+                    <span><a href="{% url 'payroll:benefit_add' %}" class="own-banners-link-benefit">Cerdito</a></span> -
+                    <span><a href="{% url 'payroll:benefit_add' %}" class="own-banners-link-benefit">Despensa</a></span> -
                     <span><a href="{% url 'payroll:benefit_add' %}" class="own-banners-link-benefit">Becas</a></span>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -90,17 +92,17 @@
     <div class="hidden-xs col-sm-5">
         <div class="panel panel-warning">
             <div class="panel-heading own-banners">
-                
+
                 <h2 class="text-center">Reportar Incidente</h2>
                 <div class="text-center">
-                    <span><a href="{% url 'labor:incident_add' %}" class="own-banners-link-incident">Norma</a></span> - 
-                    <span><a href="{% url 'labor:incident_add' %}" class="own-banners-link-incident">Despensa</a></span> - 
+                    <span><a href="{% url 'labor:incident_add' %}" class="own-banners-link-incident">Norma</a></span> -
+                    <span><a href="{% url 'labor:incident_add' %}" class="own-banners-link-incident">Despensa</a></span> -
                     <span><a href="{% url 'labor:incident_add' %}" class="own-banners-link-incident">Becas</a></span>
                 </div>
-                
+
             </div>
         </div>
-    </div>        
+    </div>
 
     <div class="clearfix"></div>
 </div>
@@ -147,7 +149,7 @@
                     </a>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
 
     <div class="col-xs-12 own-other-news">
@@ -182,11 +184,11 @@
                     </a>
                 </div>
             </div>
-        </div>        
-    </div>    
+        </div>
+    </div>
 </div>
 
-{% endblock contenido %}
+{% endblock content %}
 
 {% block scripts %}
 
