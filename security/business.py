@@ -67,11 +67,21 @@ class UserBusiness(object):
 
         font_style = xlwt.XFStyle()
 
+        date_format = xlwt.XFStyle()
+        date_format.num_format_str = 'dd/mm/yyyy'
+
         columns = [
             'Numero',
             'Nombre(s)',
             'Apellido(s)',
             'Email',
+            'Contratacion',
+            'Fecha Nacimiento',
+            'Genero',
+            'Puesto',
+            'Departamento',
+            'Telefono',
+            'Direccion',
         ]
 
         for col_num in range(len(columns)):
@@ -87,5 +97,12 @@ class UserBusiness(object):
             ws.write(row_num, 1, row.first_name, font_style)
             ws.write(row_num, 2, row.last_name, font_style)
             ws.write(row_num, 3, row.email, font_style)
+            ws.write(row_num, 4, row.profile.recruited_date, date_format)
+            ws.write(row_num, 5, row.profile.birth_date, date_format)
+            ws.write(row_num, 6, row.profile.get_gender_display(), font_style)
+            ws.write(row_num, 7, row.profile.job_title, font_style)
+            ws.write(row_num, 8, row.profile.department, font_style)
+            ws.write(row_num, 9, row.profile.phone, font_style)
+            ws.write(row_num, 10, row.profile.address, font_style)
 
         return wb
