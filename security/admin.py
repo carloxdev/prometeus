@@ -27,8 +27,7 @@ class UserResource(resources.ModelResource):
             'first_name',
             'last_name',
             'email',
-            'is_valid',
-            'password',
+            'is_active',
         )
         import_id_fields = ['username']
         export_order = (
@@ -36,8 +35,7 @@ class UserResource(resources.ModelResource):
             'first_name',
             'last_name',
             'email',
-            'is_valid',
-            'password',
+            'is_active',
         )
 
 

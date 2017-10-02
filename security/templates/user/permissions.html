@@ -11,8 +11,8 @@
     <!-- Loudev -->
     <link rel="stylesheet" type="text/css" href="{% static 'libs/lou-multi-select/0.9.10/css/multi-select.css' %}"/>
 
-    <!-- jQuery-->
-    <script type="text/javascript" src="{% static 'libs/jquery/2.2.4/jquery.min.js' %}"></script>
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'user/permissions.css' %}"/>
 
 {% endblock css %}
 
@@ -21,24 +21,43 @@
     <div class="row">
 
         <div class="col-xs-12">
-
             <header>
-                <h3 class="own-titulo">Permisos del usuario xxx</h3>
-            </header>
+                <h3>
+                    <ol class="breadcrumb">
+                        <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
+                        <li><a href="{% url 'security:user_edit' form.instance.pk %}">{{form.instance.username}}</a></li>
+                        <li>Permisos</li>
+                    </ol>
+                </h3>
 
+            </header>
             <hr class="own-article-line">
         </div>
 
-        <div class="col-xs-12 col-sm-8 col-sm-offset-4">
-            <form class="" action="" method="post"> {% csrf_token %}
+        <div class="col-xs-12">
+            <form action="" method="POST" class="well text-center"> {% csrf_token %}
 
-                {% include 'tags/messages.html' %}
+                <div class="row">
+                    <div class="col-xs-12 col-md-8  col-md-offset-2">
+                        {% include 'tags/messages.html' %}
 
-                {% tag_form_errors form %}
+                        {% tag_form_errors form %}
 
-                {{ form.groups }}
+                        {{ form.groups }}
+                    </div>
+                </div>
 
-                <button type="submit" class="btn btn-primary">Guardar</button>
+                <br>
+
+                <div class="text-center">
+                    <a href="{% url 'security:user_edit' form.instance.pk %}" class="btn btn-default">
+                        <span class="glyphicon glyphicon-arrow-left"></span>
+                        Regresar a Edicion
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        Guardar Cambios
+                    </button>
+                </div>
             </form>
 
         </div>
@@ -52,6 +71,6 @@
     <script type="text/javascript" src="{% static 'libs/lou-multi-select/0.9.10/js/jquery.multi-select.js' %}"></script>
 
     <!-- Own's Scripts -->
-    <script type="text/javascript" src="{% static 'user_permissions.js' %}"></script>
+    <script type="text/javascript" src="{% static 'user/permissions.js' %}"></script>
 
 {% endblock scripts %}
