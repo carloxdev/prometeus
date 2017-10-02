@@ -40,17 +40,14 @@ urlpatterns = [
 
     url(r'^users/$', UserList.as_view(), name="user_list"),
     url(r'^users/export/(?P<_query>.*)/$', UserListExport.as_view(), name="user_list_export"),
-
     url(r'^users/add/$', UserAdd.as_view(), name="user_add"),
     url(r'^users/(?P<_pk>\d+)/edit/$', UserEdit.as_view(), name="user_edit"),
     url(r'^users/(?P<_pk>\d+)/profile/$', UserProfile.as_view(), name="user_profile"),
     url(r'^users/(?P<_pk>\d+)/password/$', UserPassword.as_view(), name="user_password"),
+    url(r'^users/(?P<_pk>\d+)/permissions/$', UserPermissions.as_view(), name="user_permissions"),
 
     url(r'^profile/(?P<_pk>\d+)/$', Profile.as_view(), name="profile"),
     url(r'^profile/(?P<_pk>\d+)/password/$', ProfilePassword.as_view(), name="profile_password"),
     url(r'^profile/password/done/$', ProfilePasswordDone.as_view(), name="profile_password_done"),
-
-    url(r'^users/(?P<_pk>\d+)/permissions/$', UserPermissions.as_view(), name="user_permissions"),
-
 
 ]
