@@ -2,16 +2,16 @@
 
 # Django's Libraries
 from django.conf.urls import url
-from django.contrib.auth import views as auth_views
+# from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 
 # Own's Libraries
 from .views import Login
 
-from .views import PasswordResetRequest
-from .views import PasswordResetMessage
-from .views import PasswordResetConfirm
-from .views import PasswordResetDone
+from .views import PasswordRequest
+from .views import PasswordMessage
+from .views import PasswordConfirm
+from .views import PasswordDone
 
 from .views import UserList
 from .views import UserListExport
@@ -31,12 +31,12 @@ urlpatterns = [
     url(r'^login/$', Login.as_view(), name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
 
-    url(r'^password/reset/request/$', PasswordResetRequest.as_view(), name="password_reset_request"),
-    url(r'^password/reset/(?P<_pk>\d+)/message/$', PasswordResetMessage.as_view(), name="password_reset_message"),
-    url(r'^password/reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        PasswordResetConfirm.as_view(), name='password_reset_confirm'),
-    url(r'^password/reset/done/$',
-        PasswordResetDone.as_view(), name='password_reset_done'),
+    url(r'^password/request/$', PasswordRequest.as_view(), name="password_request"),
+    url(r'^password/(?P<_pk>\d+)/message/$', PasswordMessage.as_view(), name="password_message"),
+    url(r'^password/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        PasswordConfirm.as_view(), name='password_confirm'),
+    url(r'^password/done/$',
+        PasswordDone.as_view(), name='password_done'),
 
     url(r'^users/$', UserList.as_view(), name="user_list"),
     url(r'^users/export/(?P<_query>.*)/$', UserListExport.as_view(), name="user_list_export"),

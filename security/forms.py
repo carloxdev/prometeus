@@ -7,8 +7,9 @@ from django.forms import ValidationError
 
 from django.forms import CharField
 from django.forms import DateField
-from django.forms import EmailField
+# from django.forms import EmailField
 from django.forms import ChoiceField
+# FilteredSelectMultiple
 
 from django.forms import TextInput
 from django.forms import DateInput
@@ -51,7 +52,7 @@ class LoginForm(Form):
     )
 
 
-class PasswordResetRequestForm(PasswordResetForm):
+class PasswordRequestForm(PasswordResetForm):
 
     email = CharField(
         label='No. Empleado',
@@ -69,7 +70,7 @@ class PasswordResetRequestForm(PasswordResetForm):
                 is_active=True,
             )
 
-        except Exception as e:
+        except Exception:
             raise ValidationError(
                 "No se encontro un Empleado con el numero %s" % (username)
             )
@@ -118,7 +119,7 @@ class PasswordResetRequestForm(PasswordResetForm):
         return user
 
 
-class PasswordResetConfirmForm(AdminPasswordChangeForm):
+class PasswordConfirmForm(AdminPasswordChangeForm):
     password1 = CharField(
         label='Nueva contraseña',
         widget=PasswordInput(
@@ -313,3 +314,7 @@ class ProfilePasswordForm(PasswordChangeForm):
             attrs={'class': 'form-control input-xs'}
         )
     )
+
+
+class UserGroupForm(Form):
+    pass
