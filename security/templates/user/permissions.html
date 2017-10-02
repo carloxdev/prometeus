@@ -2,6 +2,8 @@
 
 {% load static from staticfiles %}
 
+{% load custom_tags %}
+
 {% block title %} GCM - Permisos de usuario {% endblock title %}
 
 {% block css %}
@@ -28,19 +30,17 @@
         </div>
 
         <div class="col-xs-12 col-sm-8 col-sm-offset-4">
+            <form class="" action="" method="post"> {% csrf_token %}
 
-            {{ form.my_field }}
+                {% include 'tags/messages.html' %}
 
-            <!-- <select multiple="multiple" id="permisos" name="my-select[]">
-                <option value='elem_4'>EMPLEADO</option>
-                <option value='elem_1'>CALIDAD</option>
-                <option value='elem_2'>MARKETING</option>
-                <option value='elem_3'>NOMINA</option>
-                <option value='elem_4'>SEGURIDAD</option>
-            </select> -->
+                {% tag_form_errors form %}
 
-            <br>
-            <a href="{% url 'security:user_edit' 0 %}" class="btn btn-primary">Guardar</a>
+                {{ form.groups }}
+
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+
         </div>
     </div>
 

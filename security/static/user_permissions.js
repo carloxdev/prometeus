@@ -10,10 +10,10 @@
 \*-----------------------------------------------*/
 
 $(document).ready(function () {
-  
-    $portada = $('#portada')
 
-    $('#permisos').multiSelect()
+    $grupos = $('#id_groups')
+
+    $grupos.multiSelect()
 
 
 
@@ -29,7 +29,7 @@ $(document).ready(function () {
             OBJETO: PostThree
 \*-----------------------------------------------*/
 
-// function PostThree() { 
+// function PostThree() {
 
 //     this.id = $('#myTree')
 
@@ -42,9 +42,5 @@ $(document).ready(function () {
 //     // };
 
 //     this.id.tree()
-        
+
 // }
-
-
-
-

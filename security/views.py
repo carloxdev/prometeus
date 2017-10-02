@@ -301,12 +301,25 @@ class UserPermissions(GroupLoginRequiredMixin, View):
 
     def get(self, _request, _pk):
 
-        form = UserGroupForm()
+        form = UserGroupForm(instance=UserBusiness.get(_pk))
 
         context = {
             'form': form
         }
 
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, _pk):
+        form = UserGroupForm(
+            data=_request.POST,
+            instance=UserBusiness.get(_pk))
+        if form.is_valid():
+            form.save()
+            messages.success(_request, "Se actualizaron los grupos del usuario")
+
+        context = {
+            'form': form
+        }
         return render(_request, self.template_name, context)
 
 

@@ -316,5 +316,10 @@ class ProfilePasswordForm(PasswordChangeForm):
     )
 
 
-class UserGroupForm(Form):
-    pass
+class UserGroupForm(ModelForm):
+
+    class Meta:
+        model = User
+        fields = (
+            'groups',
+        )
