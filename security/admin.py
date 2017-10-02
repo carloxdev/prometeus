@@ -13,12 +13,14 @@ from import_export import resources
 from import_export import fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
+from import_export.widgets import DateWidget
 
 # Own's Libraries
 from .models import Profile
 
 
 class UserResource(resources.ModelResource):
+
     class Meta:
         model = User
         exclude = ('id', )
@@ -30,7 +32,7 @@ class UserResource(resources.ModelResource):
             'is_active',
         )
         skip_unchanged = True
-        import_id_fields = ['username']
+        import_id_fields = ['username', ]
         export_order = (
             'username',
             'first_name',
@@ -104,8 +106,8 @@ class CustomUserAdmin(ImportExportModelAdmin, UserAdmin):
 
 class ProfileResource(resources.ModelResource):
 
-    user_username = fields.Field(
-        column_name='user_username',
+    username = fields.Field(
+        column_name='username',
         attribute="user",
         widget=ForeignKeyWidget(User, 'username')
     )
@@ -115,7 +117,7 @@ class ProfileResource(resources.ModelResource):
         skip_unchanged = True
         exclude = ('id', )
         fields = (
-            'user_username',
+            'username',
             'recruited_date',
             'birth_date',
             'gender',
@@ -124,9 +126,13 @@ class ProfileResource(resources.ModelResource):
             'phone',
             'address',
         )
-        import_id_fields = ['user_username']
+        import_id_fields = ['username']
+        widgets = {
+            'recruited_date': {'format': '%d/%m/%Y'},
+            'birth_date': {'format': '%d/%m/%Y'},
+        }
         export_order = (
-            'user_username',
+            'username',
             'recruited_date',
             'birth_date',
             'gender',
