@@ -22,9 +22,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.views import PasswordResetConfirmView
 from django.contrib.auth.views import PasswordResetCompleteView
-from django.contrib.auth.views import PasswordChangeView
+# from django.contrib.auth.views import PasswordChangeView
 
-from django.views.generic import ListView
+# from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic.base import View
 
@@ -35,13 +35,15 @@ from home.mixins import GroupLoginRequiredMixin
 from .business import UserBusiness
 
 from .forms import LoginForm
-from .forms import PasswordResetRequestForm
-from .forms import PasswordResetConfirmForm
+from .forms import PasswordRequestForm
+from .forms import PasswordConfirmForm
 from .forms import UserAddForm
 from .forms import UserEditForm
 from .forms import UserProfileForm
 from .forms import UserPasswordForm
 from .forms import ProfilePasswordForm
+
+from .forms import UserGroupForm
 
 
 class Login(View):
@@ -89,13 +91,13 @@ class Login(View):
         return render(_request, self.template_name, context)
 
 
-class PasswordResetRequest(View):
+class PasswordRequest(View):
 
     template_name = "password/request.html"
 
     def get(self, _request):
 
-        form = PasswordResetRequestForm()
+        form = PasswordRequestForm()
 
         context = {
             'form': form
@@ -105,7 +107,7 @@ class PasswordResetRequest(View):
 
     def post(self, _request):
 
-        form = PasswordResetRequestForm(_request.POST)
+        form = PasswordRequestForm(_request.POST)
 
         if form.is_valid():
 
@@ -115,7 +117,7 @@ class PasswordResetRequest(View):
             )
 
             return redirect(reverse(
-                'security:password_reset_message',
+                'security:password_message',
                 kwargs={'_pk': user.pk}
             ))
 
@@ -126,7 +128,7 @@ class PasswordResetRequest(View):
         return render(_request, self.template_name, context)
 
 
-class PasswordResetMessage(View):
+class PasswordMessage(View):
 
     template_name = "password/message.html"
 
@@ -141,13 +143,13 @@ class PasswordResetMessage(View):
         return render(_request, self.template_name, context)
 
 
-class PasswordResetConfirm(PasswordResetConfirmView):
-    form_class = PasswordResetConfirmForm
+class PasswordConfirm(PasswordResetConfirmView):
+    form_class = PasswordConfirmForm
     template_name = 'password/confirm.html'
-    success_url = reverse_lazy('security:password_reset_done')
+    success_url = reverse_lazy('security:password_done')
 
 
-class PasswordResetDone(PasswordResetCompleteView):
+class PasswordDone(PasswordResetCompleteView):
     template_name = 'password/done.html'
 
 
@@ -294,11 +296,18 @@ class UserPassword(GroupLoginRequiredMixin, View):
 
 
 class UserPermissions(GroupLoginRequiredMixin, View):
-    template_name = "user_permissions.html"
+    template_name = "user/permissions.html"
     group = ['security', ]
 
     def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
+
+        form = UserGroupForm()
+
+        context = {
+            'form': form
+        }
+
+        return render(_request, self.template_name, context)
 
 
 @method_decorator(login_required, name='dispatch')

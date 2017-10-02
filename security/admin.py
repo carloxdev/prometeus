@@ -8,6 +8,13 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
+# Import-Export
+from import_export import resources
+from import_export import fields
+from import_export.admin import ImportExportModelAdmin
+from import_export.widgets import ForeignKeyWidget
+
+
 # Own's Libraries
 from .models import Profile
 
@@ -71,6 +78,88 @@ class CustomUserAdmin(UserAdmin):
         if not obj:
             return list()
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
+
+
+class ProfileResource(resources.ModelResource):
+
+    user_username = fields.Field(
+
+        attribute="user",
+        widget=ForeignKeyWidget(User, 'username')
+    )
+
+    user_first_name = fields.Field(
+
+        attribute="user",
+        widget=ForeignKeyWidget(User, 'first_name')
+    )
+
+    user_last_name = fields.Field(
+
+        attribute="user",
+        widget=ForeignKeyWidget(User, 'last_name')
+    )
+
+    user_email = fields.Field(
+
+        attribute="user",
+        widget=ForeignKeyWidget(User, 'email')
+    )
+
+    user_is_active = fields.Field(
+
+        attribute="user",
+        widget=ForeignKeyWidget(User, 'is_active')
+    )
+
+    class Meta:
+        model = Profile
+        exclude = ('id', )
+        # skip_unchanged = True
+        fields = (
+            'user_username',
+            'user_first_name',
+            'user_last_name',
+            'user_email',
+            'user_is_active',
+            'recruited_date',
+            'birth_date',
+            'gender',
+            'job_title',
+            'department',
+            'phone',
+            'address',
+        )
+        import_id_fields = ['user_username', ]
+        export_order = (
+            'user_username',
+            'user_first_name',
+            'user_last_name',
+            'user_email',
+            'user_is_active',
+            'recruited_date',
+            'birth_date',
+            'gender',
+            'job_title',
+            'department',
+            'phone',
+            'address',
+        )
+
+
+@admin.register(Profile)
+class AdminProfile(ImportExportModelAdmin):
+    resource_class = ProfileResource
+    list_display = (
+        'user',
+        'recruited_date',
+        'birth_date',
+        'gender',
+        'job_title',
+        'department',
+        'phone',
+        'address',
+    )
 
 
 admin.site.unregister(User)
