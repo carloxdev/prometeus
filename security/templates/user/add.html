@@ -6,6 +6,14 @@
 
 {% block title %} GCM - Nuevo Usuario {% endblock title %}
 
+{% block css %}
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'tags.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'messages.css' %}"/>
+
+{% endblock %}
+
 {% block content %}
 
     <div class="row">
@@ -19,7 +27,7 @@
                     </ol>
                 </h3>
             </header>
-            <hr class="own-article-line">
+            <hr>
         </div>
 
         <div class="col-xs-12">

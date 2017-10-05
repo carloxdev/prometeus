@@ -1,20 +1,4 @@
 
-
-.own-seccion-titulo {
-	margin-bottom: 3em;
-	padding-right: 0;
-	padding-left: 0;
-}
-
-	.own-titulo {
-		color: #3C4349;
-	}
-
-	.own-boton-agregar {
-		font-size: 12px;
-	}
-
-
 .own-record-titles {
 	display: none;
 }
@@ -114,17 +98,9 @@
 		color: white !important;
 	}
 
-		.own-link-text {
-			color: #57617B !important;
-		}
-
 		.own-link-icon {
 			color: #BAC1CC !important;
 		}
-
-	.own-paginacion {
-		margin: 0 auto 1em;
-	}
 
 
 /* Small Devices, Tablets */
@@ -139,10 +115,6 @@
 	.own-record {
 		border: 1px solid #E5E5E5 !important;
 		margin-bottom: .9em;
-	}
-
-	.own-paginacion {
-		margin: 1.3em 0;
 	}
 
 	.own-record-titles {
