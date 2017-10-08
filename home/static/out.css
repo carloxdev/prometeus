@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro|Open+Sans');
 
-
 html, body {
     height: 100%;
-    /*font-size: 16px;*/
-    /*font-family: 'Roboto', sans-serif;*/
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    /*background-color: #f7f7f7;*/
+    background-color: #0c6262;
 }
 
 h1, h2, h3, h4 {
@@ -12,6 +13,7 @@ h1, h2, h3, h4 {
 }
 
 /* ---------------------- Out ---------------------- */
+
 
 .own-wrap {
   min-height: 100%;
@@ -21,6 +23,36 @@ h1, h2, h3, h4 {
       overflow: visible;
       padding-bottom:2.7em; /* this needs to be bigger than footer height*/
     }
+
+        .own-navbar {
+            background-color: white;
+        }
+
+            .own-navbar-brand {
+                padding: 5px 15px;
+            }
+
+            .own-image {
+                width: 150px;
+                height: 40px;
+            }
+
+        .own-panel-primary {
+            /*border-color: #DE6324 !important;*/
+            border: 0;
+            /*border-color: white !important;*/
+        }
+
+            .own-panel-heading {
+                background-color: #DE6324 !important;
+                color: white;
+            }
+
+                .own-btn-primary {
+                    background-color: #0C6262;
+                    color: white;
+                }
+
 
 
 .own-page-footer {
@@ -35,4 +67,14 @@ h1, h2, h3, h4 {
 	padding: .7em;
   	clear:both;
 
+    background-color: white;
+}
+
+
+/* ---------------------- Media Class ---------------------- */
+@media (min-width: 750px) {
+
+    .own-navbar {
+        border-radius: 0px;
+    }
 }

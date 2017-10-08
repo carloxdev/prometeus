@@ -36,7 +36,7 @@
 
             <div class="own-main">
 
-                <nav class="navbar navbar-default">
+                <nav class="navbar navbar-default own-navbar">
                     <div class="container-fluid">
                         <div class="navbar-header">
                             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu">
@@ -45,43 +45,43 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="{% url 'home:index' %}">
-                                GCM Empleados
+                            <a class="navbar-brand own-navbar-brand" href="{% url 'home:index' %}">
+                                <img alt="Brand" src="{% static 'images/logos/logo-medium.png' %}" class="img-responsive own-image">
                             </a>
                         </div>
 
                         <div class="collapse navbar-collapse" id="menu">
-                            <ul class="nav navbar-nav navbar-right">
+                            <ul class="nav navbar-nav own-navbar-nav navbar-right">
 
                                 {% if user.is_authenticated %}
 
-                                <li><a href="{% url 'payroll:voucher_list' %}">Comprobantes</a></li>
-                                <li><a href="{% url 'payroll:benefit_list' %}">Prestaciones</a></li>
-                                <li><a href="{% url 'labor:incident_list' %}">Incidencias</a></li>
-                                <li><a href="{% url 'editorial:new_list' %}">Noticias</a></li>
+                                <li><a class="own-menu-opt" href="{% url 'payroll:voucher_list' %}">Comprobantes</a></li>
+                                <li><a class="own-menu-opt" href="{% url 'payroll:benefit_list' %}">Prestaciones</a></li>
+                                <li><a class="own-menu-opt" href="{% url 'labor:incident_list' %}">Incidencias</a></li>
+                                <li><a class="own-menu-opt" href="{% url 'editorial:new_list' %}">Noticias</a></li>
 
                                 <li class="dropdown own-dropdown">
 
                                     {% if user.username == "admin" %}
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ADMINISTRADOR<span class="caret"></span></a>
+                                        <a class="own-menu-opt" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ADMINISTRADOR<span class="caret"></span></a>
                                     {% else %}
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username|upper }}<span class="caret"></span></a>
+                                        <a class="own-menu-opt" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username|upper }}<span class="caret"></span></a>
                                     {% endif %}
                                     <ul class="dropdown-menu">
 
                                         {% if user.is_superuser or user|filter_has_group:"security" %}
 
-                                            <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
-                                            <li><a href="{% url 'management:email' %} ">Correo</a></li>
+                                            <li><a class="own-menu-opt" href="{% url 'security:user_list' %}">Usuarios</a></li>
+                                            <li><a class="own-menu-opt" href="{% url 'management:email' %} ">Correo</a></li>
                                             <li role="separator" class="divider"></li>
-                                            <li><a href="{% url 'management:task_list' %}">Bandeja</a></li>
+                                            <li><a class="own-menu-opt" href="{% url 'management:task_list' %}">Bandeja</a></li>
                                         {% else %}
-                                            <li><a href="{% url 'security:profile' user.pk %}">Mi Perfil</a></li>
+                                            <li><a class="own-menu-opt" href="{% url 'security:profile' user.pk %}">Mi Perfil</a></li>
                                         {% endif %}
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="{% url 'security:logout' %}" class="btn btn-default btn-sm navbar-btn own-btn-logout">
+                                    <a href="{% url 'security:logout' %}" class="btn btn-danger btn-sm navbar-btn own-btn-menu own-btn-menu-out">
                                         <i class="fa fa-sign-out" aria-hidden="true"></i>
                                         Salir
                                     </a>
@@ -90,7 +90,7 @@
                                 {% else %}
 
                                 <li>
-                                    <a href="{% url 'security:login' %}" class="btn btn-default btn-sm navbar-btn own-btn-logout">
+                                    <a href="{% url 'security:login' %}" class="btn btn-primary btn-sm navbar-btn own-btn-menu own-btn-menu-in">
                                         <i class="fa fa-sign-in" aria-hidden="true"></i>
                                         Ingresar
                                     </a>
@@ -116,7 +116,7 @@
         </div>
 
         <footer class="text-center own-page-footer">
-            GSM Derechos Reservados.
+            GCM Derechos Reservados.
         </footer>
 
         <!-- jQuery-->

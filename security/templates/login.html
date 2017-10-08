@@ -11,15 +11,14 @@
     <!-- Own's Styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'login.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'tags.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'messages.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
     <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 own-loginbox">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
+        <div class="panel own-panel-primary">
+            <div class="panel-heading own-panel-heading">
                 <div class="panel-title">Bienvenido a GCM Empleados</div>
             </div>
             <div class="panel-body own-panel-body" >
@@ -42,7 +41,7 @@
 
                     <div class="form-group own-buttons">
                         <div class="col-sm-12 controls">
-                            <button type="submut" class="btn btn-success">
+                            <button type="submut" class="btn btn-primary">
                                 <i class="fa fa-sign-in" aria-hidden="true"></i>
                                 Ingresar
                             </button>
