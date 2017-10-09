@@ -96,6 +96,10 @@ h1, h2, h3 {
                     min-height: 100%;
                 }
 
+                .own-breadcrumb-init {
+                    font-size: 14px;
+                }
+
 .own-page-footer {
 
 	position: relative;

@@ -5,6 +5,8 @@
 
 {% load custom_tags %}
 
+{% load humanize %}
+
 {% block title %} GCM - Noticia {% endblock title %}
 
 {% block css %}
@@ -22,8 +24,13 @@
             <header>
                 <h3>
                     <ol class="breadcrumb">
-                      <li><a href="{% url 'home:index' %}">Inicio</a></li>
-                      <li> {{ record.title }} </li>
+                        <li class="own-breadcrumb-init">
+                            <a href="{% url 'home:index' %}">
+                                <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                                Inicio
+                            </a>
+                        </li>
+                        <li> {{ record.title }} </li>
                     </ol>
                 </h3>
             </header>
@@ -42,6 +49,10 @@
                 {% autoescape off %}
                     {{ record.content|linebreaks }}
                 {% endautoescape %}
+
+                <div class="own-little-info">
+                    Creado <strong>{{ record.created_date|naturaltime }}</strong>.
+                </div>
 
                 <div class="text-center">
                     <a href="{% url 'editorial:post_edit' record.pk %}" class="btn btn-primary">

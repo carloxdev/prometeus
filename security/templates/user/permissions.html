@@ -25,8 +25,8 @@
             <header>
                 <h3>
                     <ol class="breadcrumb">
-                        <li><a href="{% url 'security:user_list' %}">Usuarios</a></li>
-                        <li><a href="{% url 'security:user_edit' form.instance.pk %}">{{form.instance.username}}</a></li>
+                        <li class="own-breadcrumb-init"><a href="{% url 'security:user_list' %}">Usuarios</a></li>
+                        <li class="own-breadcrumb-init"><a href="{% url 'security:user_edit' form.instance.pk %}">{{form.instance.username}}</a></li>
                         <li>Permisos</li>
                     </ol>
                 </h3>
