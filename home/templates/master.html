@@ -61,7 +61,7 @@
 
 
                                 {% if user.is_superuser or user|filter_has_group:"ADMINISTRADOR" or user|filter_has_group:"NOTICIAS_ADM" %}
-                                    <li><a class="own-menu-opt" href="{% url 'editorial:new_list' %}">Noticias</a></li>
+                                    <li><a class="own-menu-opt" href="{% url 'editorial:post_list' %}">Noticias</a></li>
                                 {% endif %}
 
                                 <li class="dropdown own-dropdown">

@@ -44,7 +44,7 @@ class UserBusiness(object):
 
     @classmethod
     def get_Paginated(self, _users, _current_page):
-        paginator = Paginator(_users, 10)
+        paginator = Paginator(_users, 20)
         current_pagina = _current_page
 
         try:

@@ -60,6 +60,15 @@ def tag_image(_field, _object):
     return context
 
 
+@register.inclusion_tag('tags/image_nopreview.html', takes_context=False)
+def tag_image_nopreview(_field):
+
+    context = {
+        'field': _field
+    }
+    return context
+
+
 @register.inclusion_tag('tags/form_errors.html', takes_context=False)
 def tag_form_errors(_form):
 

@@ -2,15 +2,34 @@
 
 # Python's Libraries
 from __future__ import unicode_literals
+import os
 
 # Django's Libraries
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
+from django.conf import settings
 
 # Own's Libraries
 from home.utilities import Helper
+
+
+def get_ImagePath_Profile(_instance, _filename):
+
+    if (_instance):
+        upload_dir = os.path.join(
+            'images',
+            'profile',
+            str(_instance.pk)
+        )
+
+        extension = os.path.splitext(_filename)[1]
+
+        filename = "%s_image%s" % (_instance.pk, extension)
+
+    return os.path.join(upload_dir, filename)
 
 
 class Profile(models.Model):
@@ -29,7 +48,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=144, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     photo = models.ImageField(
-        upload_to=Helper.get_ImagePath_Profile,
+        upload_to=get_ImagePath_Profile,
         blank=True,
         validators=[
             Helper.validate_Img_Extension,

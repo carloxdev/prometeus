@@ -1,0 +1,31 @@
+{% load static from staticfiles %}
+
+<label class="control-label" for="{{field.id_for_label}}">
+    {{ field.label }}
+
+    {% if field.field.required is False %}
+        <span class="own-optional">(opcional)</span>
+    {% endif %}
+</label>
+
+
+{% if field.errors %}
+
+    <div class="form-group has-error has-feedback">
+        {{ field }}
+        <div class="help-block with-errors">
+            <ul class="list-unstyled">
+                {% for error in field.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="form-group">
+        {{ field }}
+    </div>
+
+{% endif %}

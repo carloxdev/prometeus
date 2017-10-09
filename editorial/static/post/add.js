@@ -2,8 +2,7 @@
 
 $(document).ready(function () {
 
-    $fecha = $('#fecha')
-
-    $fecha.datepicker()
+    $content = $('#id_content')
+    $content.summernote({ height: 300 });
 
 })

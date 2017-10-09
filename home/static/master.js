@@ -1,36 +1,15 @@
-/*-----------------------------------------------*\
-            GLOBAL VARIABLES
-\*-----------------------------------------------*/
 
-// OBJS
+/* ------------------------ LOAD ------------------------ */
 
-
-/*-----------------------------------------------*\
-            LOAD
-\*-----------------------------------------------*/
-
-// $(document).ready(function () {
-//     three = new PostThree() 
-// })
-
-
-
-/*-----------------------------------------------*\
-            OBJETO: PostThree
-\*-----------------------------------------------*/
-
-// function PostThree() { 
-
-//     this.id = $('#myTree')
-
-//     this.init_Components()
-// }
-// PostThree.prototype.init_Components = function () {
-
-//     // dataSource = function(parentData, callback){
-//     //   //...
-//     // };
-
-//     this.id.tree()
-        
-// }
+$(document).ready(function () {
+    window.paceOptions = {
+        // Disable the 'elements' source
+        elements: true,
+        // Only show the progress on regular and ajax-y page navigation,
+        // not every request
+        restartOnRequestAfter: true,
+        ajax: {
+          trackMethods: ['GET', 'POST', 'DELETE', 'PUT', 'PATCH']
+        }
+    }
+})

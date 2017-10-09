@@ -1,0 +1,77 @@
+{% extends 'master.html' %}
+
+{% load static from staticfiles %}
+
+{% load custom_tags %}
+
+{% block title %} GCM - Nuevo Noticia {% endblock title %}
+
+{% block css %}
+
+    <!-- Summernote -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/summernote/0.8.3/summernote.css' %}"/>
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/tags.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/forms.css' %}"/>
+
+{% endblock css %}
+
+{% block content %}
+
+    <div class="row">
+
+        <div class="col-xs-12">
+            <header>
+                <h3>
+                    <ol class="breadcrumb">
+                      <li><a href="{% url 'editorial:post_list' %}">Noticias</a></li>
+                      <li>Crear Noticia</li>
+                    </ol>
+                </h3>
+            </header>
+            <hr>
+        </div>
+
+        <div class="col-xs-12">
+
+            <div class="own-form-title">
+                Proporciona los siguientes datos:
+            </div>
+
+            <form action="" method="post" class="well" enctype="multipart/form-data"> {% csrf_token %}
+
+                {% include 'tags/messages.html' %}
+
+                {% tag_form_errors form %}
+
+                {% tag_field form.title %}
+
+                {% tag_image_nopreview form.image %}
+
+                {% tag_field form.content %}
+
+                <div class="text-center">
+                    <a href="{% url 'editorial:post_list' %}" class="btn btn-default">Cancelar</a>
+                    <button type="submit" class="btn btn-success">
+                        Crear noticia
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <!-- Bootstrap Filestyle -->
+    <script type="text/javascript" src="{% static 'libs/bootstrap-filestyle/1.2.1/src/bootstrap-filestyle.min.js' %}"></script>
+
+    <!-- Summernote -->
+    <script type="text/javascript" src="{% static 'libs/summernote/0.8.3/summernote.min.js' %}"></script>
+
+    <!-- Own's Scripts -->
+    <script type="text/javascript" src="{% static 'post/add.js' %}"></script>
+
+{% endblock scripts %}
