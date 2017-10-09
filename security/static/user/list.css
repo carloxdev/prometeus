@@ -60,7 +60,10 @@
 		}
 
 		.own-data-normalvalue {
-			/*color: #60656B;*/
+			color: #60656B;
+		}
+
+		.own-data-comandvalue {
 			color: white;
 		}
 

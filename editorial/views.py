@@ -12,15 +12,16 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 
 # Own's Libraries
+from home.mixins import GroupLoginRequiredMixin
 from .business import PostBusiness
 
 from .forms import PostAddForm
 from .forms import PostEditForm
 
 
-class PostList(View):
-
+class PostList(GroupLoginRequiredMixin, View):
     template_name = 'post/list.html'
+    group = ['NOTICIAS_ADM', ]
 
     def get(self, _request):
         query = _request.GET.get('q')
@@ -34,23 +35,9 @@ class PostList(View):
         return render(_request, self.template_name, context)
 
 
-class PostView(View):
-
-    template_name = 'post/view.html'
-
-    def get(self, _request, _pk):
-        post = PostBusiness.get(_pk)
-
-        context = {
-            'record': post
-        }
-
-        return render(_request, self.template_name, context)
-
-
-class PostAdd(View):
-
+class PostAdd(GroupLoginRequiredMixin, View):
     template_name = 'post/add.html'
+    group = ['NOTICIAS_ADM', ]
 
     def get(self, _request):
         form = PostAddForm()
@@ -80,9 +67,10 @@ class PostAdd(View):
         return render(_request, self.template_name, context)
 
 
-class PostEdit(View):
+class PostEdit(GroupLoginRequiredMixin, View):
 
     template_name = 'post/edit.html'
+    group = ['NOTICIAS_ADM', ]
 
     def get(self, _request, _pk):
 
@@ -114,6 +102,22 @@ class PostEdit(View):
         context = {
             'form': form
         }
+        return render(_request, self.template_name, context)
+
+
+class PostView(View):
+
+    template_name = 'post/view.html'
+
+    def get(self, _request, _pk):
+        post = PostBusiness.get(_pk)
+        last_post = PostBusiness.get_Last(post)
+
+        context = {
+            'record': post,
+            'other_records': last_post
+        }
+
         return render(_request, self.template_name, context)
 
 

@@ -155,7 +155,7 @@ class PasswordDone(PasswordResetCompleteView):
 
 class UserList(GroupLoginRequiredMixin, View):
     template_name = "user/list.html"
-    group = ['security', ]
+    group = ['SEGURIDAD', ]
 
     def get(self, _request):
 
@@ -189,7 +189,7 @@ class UserListExport(GroupLoginRequiredMixin, View):
 
 class UserAdd(GroupLoginRequiredMixin, View):
     template_name = "user/add.html"
-    group = ['security', ]
+    group = ['SEGURIDAD', ]
 
     def get(self, _request):
         form = UserAddForm()
@@ -215,7 +215,7 @@ class UserAdd(GroupLoginRequiredMixin, View):
 
 class UserEdit(GroupLoginRequiredMixin, View):
     template_name = "user/edit.html"
-    group = ['security', ]
+    group = ['SEGURIDAD', ]
 
     def get(self, _request, _pk):
         # print _request.GET['new']
@@ -242,7 +242,7 @@ class UserEdit(GroupLoginRequiredMixin, View):
 
 class UserProfile(GroupLoginRequiredMixin, View):
     template_name = "user/profile.html"
-    group = ['security', ]
+    group = ['SEGURIDAD', ]
 
     def get(self, _request, _pk):
         form = UserProfileForm(instance=UserBusiness.get_Profile(_pk))
@@ -271,7 +271,7 @@ class UserProfile(GroupLoginRequiredMixin, View):
 
 class UserPassword(GroupLoginRequiredMixin, View):
     template_name = "user/password.html"
-    group = ['security', ]
+    group = ['SEGURIDAD', ]
 
     def get(self, _request, _pk):
         form = UserPasswordForm(user=UserBusiness.get(_pk))
@@ -297,7 +297,7 @@ class UserPassword(GroupLoginRequiredMixin, View):
 
 class UserPermissions(GroupLoginRequiredMixin, View):
     template_name = "user/permissions.html"
-    group = ['security', ]
+    group = ['SEGURIDAD', ]
 
     def get(self, _request, _pk):
 

@@ -140,7 +140,7 @@
                                 </span>
                                 <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                                 <span class="own-data-normalvalue">
-                                    {{user.last_login|timesince}}
+                                    {{user.last_login|naturaltime}}
                                 </span>
                             </div>
 
@@ -148,7 +148,7 @@
                             <a href="{% url 'security:user_edit' user.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
 
                                 <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
-                                <span class="own-data-normalvalue">
+                                <span class="own-data-normalvalue own-data-comandvalue">
                                     Editar
                                 </span>
                             </a>

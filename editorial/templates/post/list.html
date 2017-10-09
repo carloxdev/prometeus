@@ -4,30 +4,31 @@
 
 {% block title %} GCM - Noticias {% endblock title %}
 
+{% block css %}
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/colors.css' %}"/>
+
+{% endblock css %}
+
+
 {% block content %}
 
     <header>
         <h3 class="own-titulo">Administrar Noticias</h3>
     </header>
-
     <hr>
-
     <nav>
-
         <div class="row">
-
             <div class="col-xs-12 col-sm-6">
                 <a href="{% url 'editorial:post_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                     Agregar Noticia
                 </a>
             </div>
-
             <br class="visible-xs">
             <br class="visible-xs">
-
             <form class="col-xs-12 col-sm-6" action="" method="get">
-
                 <div class="input-group">
                     <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
 
@@ -38,7 +39,6 @@
                       </button>
                     </span>
                 </div>
-
             </form>
         </div>
     </nav>
@@ -51,7 +51,7 @@
             <div class="list-group">
                 {% for record in records %}
                     <a href="{% url 'editorial:post_edit' record.pk %}" class="list-group-item">
-                        <span class="badge own-warning">
+                        <span class="badge {% if record.status == 'EDT' %} own-color-warning {% else %} own-color-success {% endif %}">
                             <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                             <span class="hidden-xs">{{ record.get_status_display }}</span>
                         </span>

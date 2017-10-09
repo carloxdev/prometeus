@@ -7,3 +7,12 @@
     border-radius: 0 0 4px 4px;
     background-color: white;
 }
+
+.own-link-item {
+    font-size: 12px;
+}
+
+.own-panel-title {
+    font-size:14px;
+    font-weight: bold;
+}

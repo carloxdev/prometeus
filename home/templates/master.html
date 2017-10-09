@@ -60,7 +60,7 @@
                                 <li><a class="own-menu-opt" href="{% url 'labor:incident_list' %}">Incidencias</a></li> -->
 
 
-                                {% if user.is_superuser or user|filter_has_group:"ADMINISTRADOR" or user|filter_has_group:"NOTICIAS_ADM" %}
+                                {% if user.is_superuser or user|filter_has_group:"NOTICIAS_ADM" %}
                                     <li><a class="own-menu-opt" href="{% url 'editorial:post_list' %}">Noticias</a></li>
                                 {% endif %}
 
@@ -73,7 +73,7 @@
                                     {% endif %}
                                     <ul class="dropdown-menu own-dropdown-menu">
 
-                                        {% if user.is_superuser or user|filter_has_group:"ADMINISTRADOR" %}
+                                        {% if user.is_superuser %}
 
                                             <li><a class="own-submenu-opt" href="{% url 'security:user_list' %}">Usuarios</a></li>
                                             <!-- <li><a class="own-submenu-opt" href="{% url 'management:email' %} ">Correo</a></li>

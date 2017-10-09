@@ -2,7 +2,6 @@
 
 # Django's Libraries
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
 
 from django.db.models import Q
 
@@ -25,8 +24,8 @@ class PostBusiness(object):
     def get_FilterBy(self, _value):
         if _value:
             post = Post.objects.filter(
-                Q(title__icontains=query) |
-                Q(content__icontains=query)
+                Q(title__icontains=_value) |
+                Q(content__icontains=_value)
             ).order_by("-created_date")
         else:
             post = Post.objects.all().order_by("-created_date")
@@ -46,3 +45,8 @@ class PostBusiness(object):
             _posts = paginator.page(paginator.num_page)
 
         return _posts
+
+    @classmethod
+    def get_Last(self, _post):
+        posts = Post.objects.all().exclude(pk=_post.pk).order_by("-created_date")[:10]
+        return posts
