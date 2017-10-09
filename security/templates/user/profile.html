@@ -15,8 +15,8 @@
 
     <!-- Own's Styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'tags.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'messages.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'menubar.css' %}"/>    
+    <link rel="stylesheet" type="text/css" href="{% static 'menubar.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'links.css' %}"/>
 
 {% endblock css %}
 
@@ -95,11 +95,11 @@
                     <h3 class="panel-title">Otras Acciones:</h3>
                 </div>
                 <ul class="list-group">
-                    <a class="list-group-item text-center" href="{% url 'security:user_password' form.instance.pk %}">
+                    <a class="list-group-item own-link-item text-center" href="{% url 'security:user_password' form.instance.pk %}">
                         <i class="fa fa-key" aria-hidden="true"></i>
                         Cambiar Contraseña
                     </a>
-                    <a class="list-group-item text-center" href="{% url 'security:user_permissions' form.instance.pk %}">
+                    <a class="list-group-item own-link-item text-center" href="{% url 'security:user_permissions' form.instance.pk %}">
                         <i class="fa fa-lock" aria-hidden="true"></i>
                         Editar Permisos
                     </a>

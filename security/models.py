@@ -29,7 +29,7 @@ class Profile(models.Model):
     phone = models.CharField(max_length=144, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
     photo = models.ImageField(
-        upload_to='perfil/photos',
+        upload_to=Helper.get_ImagePath_Profile,
         blank=True,
         validators=[
             Helper.validate_Img_Extension,

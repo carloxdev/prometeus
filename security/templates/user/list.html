@@ -158,13 +158,13 @@
                     {% endfor %}
 
                     <div class="text-center">
-                        <ul class="pagination pagination-sm no-margin legal-paginador">
+                        <ul class="pagination pagination-sm no-margin">
                             {% if users.has_previous %}
                                 <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
                             {% endif %}
 
                             {% for i in users.paginator.page_range %}
-                                <li {% if users.number == i %} class="active" {% endif %}>
+                                <li {% if users.number == i %} class="active own-active" {% endif %}>
                                     <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
                                 </li>
                             {% endfor %}

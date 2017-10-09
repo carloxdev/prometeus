@@ -36,44 +36,65 @@ h1, h2, h3 {
                 height: 40px;
             }
 
-        .own-menu-opt {
-            color: #0c6262 !important;
-        }
-
-            .own-panel-heading {
-                background-color: #DE6324 !important;
-                color: white;
+            .own-menu-opt {
+                color: #0c6262 !important;
+                /*font-family: 'Source Sans Pro', sans-serif;*/
+                /*font-family: 'Roboto', sans-serif;*/
+                font-family: 'Open Sans', sans-serif;
             }
 
-                .own-btn-primary {
-                    background-color: #0C6262;
+            .own-menu-opt:hover {
+                background-color: #0c6262 !important;
+                color: white !important;
+            }
+
+            .own-submenu-opt {
+                font-family: 'Open Sans', sans-serif;
+                color: white !important;
+            }
+
+            .own-submenu-opt:hover {
+                background-color: #0c6262 !important;
+            }
+
+                .own-panel-heading {
+                    background-color: #DE6324 !important;
                     color: white;
                 }
+
+                    .own-btn-primary {
+                        background-color: #0C6262;
+                        color: white;
+                    }
 
         .own-dropdown {
             margin-right: 0.4em;
         }
 
-            .own-btn-menu {
-                padding-top: 4px !important;
-                padding-bottom: 4px !important;
-                margin-left: 70px;
-                margin-right: 70px;
-                color: white !important;
+            .own-dropdown-menu {
+                background-color: #de6324 !important;
             }
 
-            .own-btn-menu-out:hover {
-                color: #ce3d3e !important;
-            }
+                .own-btn-menu {
+                    padding-top: 4px !important;
+                    padding-bottom: 4px !important;
+                    margin-left: 70px;
+                    margin-right: 70px;
+                    color: white !important;
+                }
 
-            .own-btn-menu-in:hover {
-                color: #2965a7 !important;
-            }
+                .own-btn-menu-out:hover {
+                    color: #ce3d3e !important;
+                }
 
-            .own-page-content {
-            	margin-bottom: 2em;
-                min-height: 100%;
-            }
+                .own-btn-menu-in:hover {
+                    color: #2965a7 !important;
+                }
+
+                .own-page-content {
+                	margin-bottom: 2em;
+                    min-height: 100%;
+                }
 
 .own-page-footer {
 

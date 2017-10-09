@@ -32,3 +32,27 @@ class Helper(object):
         if filesize > bits_limit:
             raise ValidationError("Tamaño máximo permitido %sMB" %
                                   str(megabyte_limit))
+
+    @classmethod
+    def get_ImagePath_Profile(_instance, _filename):
+
+        if (_instance):
+            upload_dir = os.path.join(
+                'images',
+                'profile',
+                _instance.pk
+            )
+
+        return os.path.join(upload_dir, _filename)
+
+    @classmethod
+    def get_ImagePath_Post(_instance, _filename):
+
+        if (_instance):
+            upload_dir = os.path.join(
+                'images',
+                'post',
+                _instance.pk
+            )
+
+        return os.path.join(upload_dir, _filename)

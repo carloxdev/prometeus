@@ -47,7 +47,7 @@
     }
 
     .own-review-menu li.active {
-        background: #F5F5F5;
+        background: white;
         color: #666B71;
-        border-bottom: 3px solid #AC4539;
+        border-bottom: 3px solid #de6324;
     }

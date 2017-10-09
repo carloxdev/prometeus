@@ -1,0 +1,3 @@
+Naranja: #de6324;
+
+Azulito: #0c6262;
