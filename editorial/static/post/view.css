@@ -1,0 +1,9 @@
+
+.own-image {
+    border-radius: 4px 4px 0 0;
+}
+
+.own-content {
+    border-radius: 0 0 4px 4px;
+    background-color: white;
+}

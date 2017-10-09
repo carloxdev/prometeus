@@ -4,14 +4,12 @@
 from __future__ import unicode_literals
 
 # Django's Libraries
-from django.shortcuts import render
 from django.views.generic.base import View
 from django.core.urlresolvers import reverse
+from django.contrib import messages
 
 from django.shortcuts import render
 from django.shortcuts import redirect
-
-from django.contrib import messages
 
 # Own's Libraries
 from .business import PostBusiness
