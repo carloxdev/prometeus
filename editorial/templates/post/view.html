@@ -40,6 +40,13 @@
                 {% autoescape off %}
                     {{ record.content|linebreaks }}
                 {% endautoescape %}
+
+                <div class="text-center">
+                    <a href="{% url 'editorial:post_edit' record.pk %}" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        Editar Noticia
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -48,15 +55,22 @@
                 <div class="panel-heading">
                     <h3 class="panel-title">Otras Noticias:</h3>
                 </div>
-                <ul class="list-group">
-                    <a class="list-group-item own-link-item text-center" href="#">
-                        <i class="fa fa-key" aria-hidden="true"></i>
-                        Titulo de otras noticias
-                    </a>
-                </ul>
+                {% if other_posts %}
+                    <ul class="list-group">
+                    {% for post in others_posts %}
+                        <a class="list-group-item own-link-item" href="#">
+                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                            Titulo de otras noticias
+                        </a>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="panel-body">
+                      <h4 class="text-center">Sin noticias que mostrar</h4>
+                    </div>
+                {% endif %}
             </div>
         </div>
-
     </div>
 
 {% endblock content %}
