@@ -4,5 +4,8 @@ $(document).ready(function() {
     $carrusel.slick({
         autoplay: true,
         autoplay: 3000,
+        infinite: true,
+        dots: true,
+
     })
 })
