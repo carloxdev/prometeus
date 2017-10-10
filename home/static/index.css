@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro|Open+Sans');
+
 .own-carrusel-news {
     margin-bottom: 2em;
 }
 
 
 .own-title-news {
-    background: #4C79C4;
+    background: #0f5050;
     border-radius: 4px;
     padding: .4em 0 .4em 0;
     color: white;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 
@@ -38,10 +41,15 @@
 
 .own-banners-link-incident:hover {
     text-decoration: none;
-    color: 775B29;
+    color: #775B29;
 }
 
-@media (min-width: 750px) { 
+.own-little-info {
+    color: #7E848C;
+    font-size: .9em;
+}
+
+@media (min-width: 750px) {
 
     .own-banners {
         padding: .3em 0 .3em 0;

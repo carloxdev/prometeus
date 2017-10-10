@@ -97,7 +97,7 @@ class PostEdit(GroupLoginRequiredMixin, View):
             post.updated_by = _request.user.profile
             post.save()
 
-            messages.success(_request, "El post fue actualizado correctamente")
+            messages.success(_request, "La Noticia fue actualizada correctamente")
 
         context = {
             'form': form

@@ -33,6 +33,11 @@ class PostBusiness(object):
         return post
 
     @classmethod
+    def get_Published(self):
+        posts = Post.objects.filter(status="PUB").order_by("-created_date")
+        return posts
+
+    @classmethod
     def get_Paginated(self, _posts, _current_page):
         paginator = Paginator(_posts, 20)
         current_pagina = _current_page
