@@ -1,0 +1,72 @@
+{% extends 'master.html' %}
+
+{% load static from staticfiles %}
+
+{% load custom_tags %}
+
+{% load humanize %}
+
+{% block title %} GCM - Inicio {% endblock title %}
+
+{% block css %}
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/slick/1.8.0/slick.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/slick/1.8.0/slick-theme.css' %}"/>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'default.css' %}"/>
+
+{% endblock css %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-xs-12 text-center">
+            <h4 class="own-title-page">
+                Enterate - Noticias recientes GCM
+            </h4>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            {% if records %}
+                <div id="carrusel">
+                    {% for record in records %}
+                    <a href="{% url 'editorial:post_view' record.pk %}">
+                        <img src="{{ record.image.url }}" alt="portada">
+                        <div class="caption">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-9">
+                                    <h4 class="own-title">{{ record.title }}</h4>
+                                </div>
+                                <div class="hidden-xs col-sm-3">
+                                    <span class="pull-right own-little-info">
+                                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                        {{ record.created_date|naturaltime|default:"" }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+
+            {% else %}
+                <h2 class="text-center">Aun sin noticias publicadas</h2>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <!-- Bootstrap Filestyle -->
+    <script type="text/javascript" src="{% static 'libs/slick/1.8.0/slick.min.js' %}"></script>
+
+    <!-- Own's Libraries -->
+    <script type="text/javascript" src="{% static 'default.js' %}"></script>
+
+{% endblock scripts %}

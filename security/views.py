@@ -33,6 +33,7 @@ from home.utilities import Helper
 from home.mixins import GroupLoginRequiredMixin
 
 from .business import UserBusiness
+from editorial.business import PostBusiness
 
 from .forms import LoginForm
 from .forms import PasswordRequestForm
@@ -46,6 +47,21 @@ from .forms import ProfilePasswordForm
 from .forms import UserGroupForm
 
 
+@method_decorator(login_required, name='dispatch')
+class Index(View):
+    template_name = "index.html"
+
+    def get(self, _request):
+        posts = PostBusiness.get_Published()
+        posts_paginated = PostBusiness.get_Paginated(posts, _request.GET.get('page'))
+
+        context = {
+            'records': posts_paginated
+        }
+
+        return render(_request, self.template_name, context)
+
+
 class Login(View):
 
     template_name = 'login.html'
@@ -53,7 +69,7 @@ class Login(View):
     def get(self, _request):
 
         if _request.user.is_authenticated():
-            return redirect(reverse('home:index'))
+            return redirect(reverse('security:index'))
 
         else:
             form = LoginForm()
@@ -77,7 +93,7 @@ class Login(View):
 
             if user is not None:
                 login(_request, user)
-                return redirect(reverse('home:index'))
+                return redirect(reverse('security:index'))
             else:
                 messages.error(
                     _request,

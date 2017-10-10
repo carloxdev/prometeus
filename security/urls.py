@@ -6,6 +6,7 @@ from django.conf.urls import url
 from django.contrib.auth.views import LogoutView
 
 # Own's Libraries
+from .views import Index
 from .views import Login
 
 from .views import PasswordRequest
@@ -28,6 +29,7 @@ from .views import UserPermissions
 
 
 urlpatterns = [
+    url(r'^index/$', Index.as_view(), name="index"),
     url(r'^login/$', Login.as_view(), name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
 

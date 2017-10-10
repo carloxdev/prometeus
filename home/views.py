@@ -10,8 +10,8 @@ from django.views.generic.base import View
 from editorial.business import PostBusiness
 
 
-class Index(View):
-    template_name = "index.html"
+class Default(View):
+    template_name = "default.html"
 
     def get(self, _request):
         posts = PostBusiness.get_Published()

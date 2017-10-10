@@ -4,9 +4,9 @@
 from django.conf.urls import url
 
 # Own's Libraries
-from .views import Index
+from .views import Default
 
 
 urlpatterns = [
-    url(r'^$', Index.as_view(), name="index"),
+    url(r'^$', Default.as_view(), name="default"),
 ]

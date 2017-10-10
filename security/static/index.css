@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro|Open+Sans');
 
 .own-carrusel-news {
     margin-bottom: 2em;
 }
-
 
 .own-title-news {
     background: #0f5050;
@@ -12,7 +10,6 @@
     color: white;
     font-family: 'Source Sans Pro', sans-serif;
 }
-
 
 .own-banners-link-voucher {
     text-decoration: none;
