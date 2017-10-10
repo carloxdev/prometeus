@@ -37,10 +37,10 @@
                             <img src="{{ record.image.url }}" alt="Nature" style="width:100%">
                             <div class="caption">
                                 <div class="row">
-                                    <div class="col-xs-9">
+                                    <div class="col-xs-12 col-sm-9">
                                         <h4 class="">{{ record.title }}</h4>
                                     </div>
-                                    <div class="col-xs-3">
+                                    <div class="hidden-xs col-sm-3">
                                         <span class="pull-right own-little-info">
                                             <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                                             {{ record.created_date|naturaltime|default:"" }}

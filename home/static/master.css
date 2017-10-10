@@ -12,6 +12,10 @@ h1, h2, h3 {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
+hr {
+     margin-top: 0px;
+}
+
 /* ---------------------- Master ---------------------- */
 
 .own-wrap {
@@ -96,9 +100,13 @@ h1, h2, h3 {
                     min-height: 100%;
                 }
 
-                .own-breadcrumb-init {
-                    font-size: 14px;
+                .own-breadcrumb {
+                    margin-bottom: 0px;
                 }
+
+                    .own-breadcrumb-init {
+                        font-size: 14px;
+                    }
 
 .own-page-footer {
 
