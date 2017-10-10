@@ -140,7 +140,7 @@
                                 </span>
                                 <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                                 <span class="own-data-normalvalue">
-                                    {{user.last_login|naturaltime}}
+                                    {{user.last_login|naturaltime|default:"" }}
                                 </span>
                             </div>
 
