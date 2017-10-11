@@ -24,3 +24,8 @@ body {
 .slick-dots {
     color: white;
 }
+
+.own-portada {
+    object-fit: fill;
+    width: 100%;
+}

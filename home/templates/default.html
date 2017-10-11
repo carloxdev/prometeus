@@ -35,7 +35,7 @@
                     {% for record in records %}
                     <div>
                         <a href="{% url 'editorial:post_view' record.pk %}">
-                            <img src="{{ record.image.url }}" alt="portada">
+                            <img src="{{ record.image.url }}" alt="portada" class="own-portada">
                             <div class="row">
                                 <div class="col-xs-12 col-sm-9">
                                     <h4 class="own-title">{{ record.title }}</h4>

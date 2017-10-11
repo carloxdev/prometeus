@@ -7,8 +7,8 @@ $(document).ready(function() {
         infinite: true,
         dots: true,
 
-        centerMode: true,
-        centerPadding: '0px',
+        // centerMode: true,
+        // centerPadding: '-10px',
 
         responsive: [
             // {
