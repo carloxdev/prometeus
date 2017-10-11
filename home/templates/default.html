@@ -33,20 +33,23 @@
             {% if records %}
                 <div id="carrusel">
                     {% for record in records %}
-                    <a href="{% url 'editorial:post_view' record.pk %}">
-                        <img src="{{ record.image.url }}" alt="portada">
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-9">
-                                <h4 class="own-title">{{ record.title }}</h4>
+                    <div>
+                        <a href="{% url 'editorial:post_view' record.pk %}">
+                            <img src="{{ record.image.url }}" alt="portada">
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-9">
+                                    <h4 class="own-title">{{ record.title }}</h4>
+                                </div>
+                                <div class="hidden-xs col-sm-3">
+                                    <span class="pull-right own-little-info">
+                                        <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                                        {{ record.created_date|naturaltime|default:"" }}
+                                    </span>
+                                </div>
                             </div>
-                            <div class="hidden-xs col-sm-3">
-                                <span class="pull-right own-little-info">
-                                    <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                                    {{ record.created_date|naturaltime|default:"" }}
-                                </span>
-                            </div>
-                        </div>
-                    </a>
+                        </a>
+
+                    </div>
                     {% endfor %}
                 </div>
 
