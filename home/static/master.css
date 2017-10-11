@@ -139,4 +139,17 @@ hr {
         margin-right: auto;
         color: white !important;
     }
+
+    .own-dropdown-menu {
+        background-color: white !important;
+    }
+
+        .own-dropdown-menu  a {
+            color: black !important;
+        }
+
+        .own-dropdown-menu  a:hover {
+            color: white !important;
+        }
+
 }
