@@ -5,8 +5,13 @@ from __future__ import unicode_literals
 
 # Django's Libraries
 from django.shortcuts import render
-from django.views.generic.base import View
+from django.shortcuts import redirect
 
+from django.views.generic.base import View
+from django.core.urlresolvers import reverse
+
+
+# Own's Libraries
 from editorial.business import PostBusiness
 
 
@@ -14,8 +19,12 @@ class Default(View):
     template_name = "default.html"
 
     def get(self, _request):
-        posts = PostBusiness.get_Published()
-        posts_paginated = PostBusiness.get_Paginated(posts, _request.GET.get('page'))
+
+        if _request.user.is_authenticated():
+            return redirect(reverse('security:index'))
+        else:
+            posts = PostBusiness.get_Published()
+            posts_paginated = PostBusiness.get_Paginated(posts, _request.GET.get('page'))
 
         context = {
             'records': posts_paginated

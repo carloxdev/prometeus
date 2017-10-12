@@ -164,7 +164,7 @@ class UserAddForm(UserCreationForm):
         self.fields['username'].help_text = "Longitud máxima 150 caracteres alfanuméricos. Letras, dígitos y @/./+/-/_ únicamente."
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
-        self.fields['email'].required = True
+        # self.fields['email'].required = True
 
         self.fields['password1'].help_text = mark_safe("<ul><li>La contraseña no puede ser similar a su otra información personal.</li><li>La contraseña debe contener al menos 8 caracteres.</li><li>La contraseña no puede ser una contraseña común.</li><li>La contraseña no puede ser enteramente numérica.</li></ul>")
         self.fields['password1'].widget.attrs['class'] = 'form-control'
@@ -206,7 +206,7 @@ class UserEditForm(ModelForm):
         self.fields['username'].help_text = "Longitud máxima 150 caracteres alfanuméricos. Letras, dígitos y @/./+/-/_ únicamente."
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
-        self.fields['email'].required = True
+        # self.fields['email'].required = True
 
 
 class UserProfileForm(ModelForm):
