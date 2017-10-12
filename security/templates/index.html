@@ -11,69 +11,72 @@
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'index.min.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-xs-12 text-center">
-            <h4 class="own-title-news">
-                Enterate - Noticias recientes GCM
-            </h4>
+    <div class="container own-page-content">
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <h4 class="own-title-news">
+                    Enterate - Noticias recientes GCM
+                </h4>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
+        <div class="row">
 
-        <div class="col-xs-12 own-other-news">
+            <div class="col-xs-12 own-other-news">
 
-            {% if records %}
+                {% if records %}
 
-                {% for record in records %}
-                    <div class="thumbnail">
-                        <a href="{% url 'editorial:post_view' record.pk %}">
-                            <img src="{{ record.image.url }}" alt="Nature" style="width:100%">
-                            <div class="caption">
-                                <div class="row">
-                                    <div class="col-xs-12 col-sm-9">
-                                        <h4 class="">{{ record.title }}</h4>
-                                    </div>
-                                    <div class="hidden-xs col-sm-3">
-                                        <span class="pull-right own-little-info">
-                                            <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
-                                            {{ record.created_date|naturaltime|default:"" }}
-                                        </span>
+                    {% for record in records %}
+                        <div class="thumbnail">
+                            <a href="{% url 'editorial:post_view' record.pk %}">
+                                <img src="{{ record.image.url }}" alt="Nature" style="width:100%">
+                                <div class="caption">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-9">
+                                            <h4 class="">{{ record.title }}</h4>
+                                        </div>
+                                        <div class="hidden-xs col-sm-3">
+                                            <span class="pull-right own-little-info">
+                                                <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+                                                {{ record.created_date|naturaltime|default:"" }}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </a>
+                            </a>
 
+                        </div>
+                    {% endfor %}
+
+                    <div class="text-center">
+                        <ul class="pagination pagination-sm no-margin">
+                            {% if users.has_previous %}
+                                <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                            {% endif %}
+
+                            {% for i in users.paginator.page_range %}
+                                <li {% if users.number == i %} class="active own-active" {% endif %}>
+                                    <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
+                                </li>
+                            {% endfor %}
+
+                            {% if users.has_next %}
+                                <li><a href="?page={{ users.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                            {% endif %}
+                        </ul>
                     </div>
-                {% endfor %}
 
-                <div class="text-center">
-                    <ul class="pagination pagination-sm no-margin">
-                        {% if users.has_previous %}
-                            <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
-                        {% endif %}
+                {% else %}
+                    <h2 class="text-center">Aun sin noticias publicadas</h2>
+                {% endif %}
 
-                        {% for i in users.paginator.page_range %}
-                            <li {% if users.number == i %} class="active own-active" {% endif %}>
-                                <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
-                            </li>
-                        {% endfor %}
-
-                        {% if users.has_next %}
-                            <li><a href="?page={{ users.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
-
-            {% else %}
-                <h2 class="text-center">Aun sin noticias publicadas</h2>
-            {% endif %}
+            </div>
 
         </div>
 

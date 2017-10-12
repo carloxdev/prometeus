@@ -4,17 +4,19 @@
 
 {% block content %}
 
-    <br><br>
+    <div class="container own-page-content">
+        <br><br>
 
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
-        <div class="well">
-            <h4 class="text-center">
-                Las instrucciones para restablecer su contraseña se envio al correo {{ email }}
-            </h4>
+            <div class="well">
+                <h4 class="text-center">
+                    Las instrucciones para restablecer su contraseña se envio al correo {{ email }}
+                </h4>
 
-            <div class="text-center">
-                <a href="{% url 'security:login' %}" class="btn btn-default">Ir a login</a>
+                <div class="text-center">
+                    <a href="{% url 'security:login' %}" class="btn btn-default">Ir a login</a>
+                </div>
             </div>
         </div>
     </div>

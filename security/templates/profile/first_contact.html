@@ -7,49 +7,51 @@
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/tags.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/tags.min.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
-    <br><br>
+    <div class="container own-page-content">
 
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <br><br>
 
-        <div class="well">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
-            <form action="" method="POST"> {% csrf_token %}
+            <div class="well">
 
-                <h2 class="text-center">
-                    Bienvenido
-                </h2>
-                <h4 class="text-center">
-                    Para estar siempre en contacto y disfrutar de todas las caracteristicas del portal
-                </h4>
+                <form action="" method="POST"> {% csrf_token %}
 
-                <h4 class="text-center">
-                    Propociona la siguiente informacion
-                </h4>
+                    <h2 class="text-center">
+                        Bienvenido
+                    </h2>
+                    <h4 class="text-center">
+                        Para estar siempre en contacto y disfrutar de todas las caracteristicas del portal
+                    </h4>
 
-                <br>
+                    <h4 class="text-center">
+                        Propociona la siguiente informacion
+                    </h4>
 
-                {% include 'tags/messages.html' %}
+                    <br>
 
-                {% tag_form_errors form %}
+                    {% include 'tags/messages.html' %}
 
-                {% tag_field form.email %}
+                    {% tag_form_errors form %}
 
-                {% tag_field form.phone %}
+                    {% tag_field form.email %}
 
-                <div class="text-center">
-                    <button type="submit" class="btn btn-primary">
-                        Guardar contraseña
-                    </button>
-                </div>
-            </form>
+                    {% tag_field form.phone %}
 
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                            Guardar contraseña
+                        </button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
-
 {% endblock content %}

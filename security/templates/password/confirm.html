@@ -8,53 +8,54 @@
 
 {% block css %}
 
-    <link rel="stylesheet" type="text/css" href="{% static 'tags.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'tags.min.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
-    <br><br>
+    <div class="container own-page-content">
+        <br><br>
 
-    <div class="col-xs-12 col-sm-10 col-sm-offset-1">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
 
-        <div class="well">
-        {% if validlink %}
+            <div class="well">
+            {% if validlink %}
 
-            <form action="" method="POST"> {% csrf_token %}
+                <form action="" method="POST"> {% csrf_token %}
 
+                    <h4 class="text-center">
+                        Especifique su nueva contraseña
+                    </h4>
+
+                    <br>
+
+                    {% include 'tags/messages.html' %}
+
+                    {% tag_form_errors form %}
+
+                    {% tag_field form.password1 %}
+
+                    {% tag_field form.password2 %}
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                            Guardar contraseña
+                        </button>
+                    </div>
+                </form>
+
+            {% else %}
                 <h4 class="text-center">
-                    Especifique su nueva contraseña
+                    El link es invalido, posiblemente ya ha sido utilizado.
+                    Por favor solicite uno nuevo.
                 </h4>
 
-                <br>
-
-                {% include 'tags/messages.html' %}
-
-                {% tag_form_errors form %}
-
-                {% tag_field form.password1 %}
-
-                {% tag_field form.password2 %}
-
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary">
-                        Guardar contraseña
-                    </button>
+                    <a href="{% url 'security:password_request' %}" class="btn btn-default">Recuperar Contraseña</a>
                 </div>
-            </form>
-
-        {% else %}
-            <h4 class="text-center">
-                El link es invalido, posiblemente ya ha sido utilizado.
-                Por favor solicite uno nuevo.
-            </h4>
-
-            <div class="text-center">
-                <a href="{% url 'security:password_request' %}" class="btn btn-default">Recuperar Contraseña</a>
+            {% endif %}
             </div>
-        {% endif %}
         </div>
     </div>
-
 {% endblock content %}

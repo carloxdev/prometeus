@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'libs/awesome-icons/4.7.0/css/font-awesome.min.css' %}">
 
         <!-- Own's Styles -->
-        <link rel="stylesheet" type="text/css" href="{% static 'master.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'master.min.css' %}"/>
 
         {% block css %}
 
@@ -107,16 +107,11 @@
                     </div>
                 </nav>
 
-                <div class="container own-page-content">
+                {% block content %}
 
-                    {% block content %}
-
-                    {% endblock content %}
-                </div>
+                {% endblock content %}
 
             </div>
-
-
         </div>
 
         <footer class="text-center own-page-footer">
@@ -133,7 +128,7 @@
         <script type="text/javascript" data-pace-options='{ "startOnPageLoad": false }' src="{% static 'libs/pace/1.0.0/pace.min.js' %}"></script>
 
         <!-- Own's Libraries -->
-        <script type="text/javascript" src="{% static 'master.js' %}"></script>
+        <script type="text/javascript" src="{% static 'master.min.js' %}"></script>
 
         {% block scripts %}
 

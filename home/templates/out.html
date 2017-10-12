@@ -21,7 +21,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'libs/awesome-icons/4.7.0/css/font-awesome.min.css' %}">
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'out.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'out.min.css' %}">
 
     {% block css %}
 
@@ -52,16 +52,11 @@
                   </div>
               </nav>
 
-              <div class="container own-page-content">
+            {% block content %}
 
-                  {% block content %}
-
-                  {% endblock content %}
-              </div>
+            {% endblock content %}
 
           </div>
-
-
       </div>
 
       <footer class="text-center own-page-footer">

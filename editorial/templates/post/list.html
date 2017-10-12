@@ -7,80 +7,81 @@
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/colors.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/colors.min.css' %}"/>
 
 {% endblock css %}
 
-
 {% block content %}
 
-    <header>
-        <h3 class="own-titulo">Administrar Noticias</h3>
-    </header>
-    <hr>
-    <nav>
-        <div class="row">
-            <div class="col-xs-12 col-sm-6">
-                <a href="{% url 'editorial:post_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
-                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    Agregar Noticia
-                </a>
-            </div>
-            <br class="visible-xs">
-            <br class="visible-xs">
-            <form class="col-xs-12 col-sm-6" action="" method="get">
-                <div class="input-group">
-                    <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
-
-                    <span class="input-group-btn">
-                      <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                        <span class="hidden-xs">Buscar</span>
-                      </button>
-                    </span>
-                </div>
-            </form>
-        </div>
-    </nav>
-
-    <br>
-
-    {% if records %}
-
-        <article>
-            <div class="list-group">
-                {% for record in records %}
-                    <a href="{% url 'editorial:post_edit' record.pk %}" class="list-group-item">
-                        <span class="badge {% if record.status == 'EDT' %} own-color-warning {% else %} own-color-success {% endif %}">
-                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                            <span class="hidden-xs">{{ record.get_status_display }}</span>
-                        </span>
-                        {{ record.title }}
+    <div class="container own-page-content">
+        <header>
+            <h3 class="own-titulo">Administrar Noticias</h3>
+        </header>
+        <hr>
+        <nav>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <a href="{% url 'editorial:post_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Agregar Noticia
                     </a>
-                {% endfor %}
+                </div>
+                <br class="visible-xs">
+                <br class="visible-xs">
+                <form class="col-xs-12 col-sm-6" action="" method="get">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
+
+                        <span class="input-group-btn">
+                          <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <span class="hidden-xs">Buscar</span>
+                          </button>
+                        </span>
+                    </div>
+                </form>
             </div>
-        </article>
+        </nav>
 
-        <div class="text-center">
-            <ul class="pagination pagination-sm no-margin">
-                {% if users.has_previous %}
-                    <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
-                {% endif %}
+        <br>
 
-                {% for i in users.paginator.page_range %}
-                    <li {% if users.number == i %} class="active own-active" {% endif %}>
-                        <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
-                    </li>
-                {% endfor %}
+        {% if records %}
 
-                {% if users.has_next %}
-                    <li><a href="?page={{ users.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
-                {% endif %}
-            </ul>
-        </div>
+            <article>
+                <div class="list-group">
+                    {% for record in records %}
+                        <a href="{% url 'editorial:post_edit' record.pk %}" class="list-group-item">
+                            <span class="badge {% if record.status == 'EDT' %} own-color-warning {% else %} own-color-success {% endif %}">
+                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                <span class="hidden-xs">{{ record.get_status_display }}</span>
+                            </span>
+                            {{ record.title }}
+                        </a>
+                    {% endfor %}
+                </div>
+            </article>
 
-    {% else %}
-        <h1 class="text-center">Aun no se escribe ninguna noticia</h1>
-    {% endif %}
+            <div class="text-center">
+                <ul class="pagination pagination-sm no-margin">
+                    {% if users.has_previous %}
+                        <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                    {% endif %}
+
+                    {% for i in users.paginator.page_range %}
+                        <li {% if users.number == i %} class="active own-active" {% endif %}>
+                            <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+
+                    {% if users.has_next %}
+                        <li><a href="?page={{ users.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+        {% else %}
+            <h1 class="text-center">Aun no se escribe ninguna noticia</h1>
+        {% endif %}
+    </div>
 
 {% endblock content %}

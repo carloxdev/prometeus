@@ -12,73 +12,75 @@
     <link rel="stylesheet" type="text/css" href="{% static 'libs/summernote/0.8.3/summernote.css' %}"/>
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/tags.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/links.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/tags.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/links.min.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-xs-12">
-            <header>
-                <h3>
-                    <ol class="breadcrumb own-breadcrumb">
-                      <li class="own-breadcrumb-init"><a href="{% url 'editorial:post_list' %}">Noticias</a></li>
-                      <li>{{ form.instance.title }}</li>
-                    </ol>
-                </h3>
-            </header>
-            <hr>
+    <div class="container own-page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h3>
+                        <ol class="breadcrumb own-breadcrumb">
+                          <li class="own-breadcrumb-init"><a href="{% url 'editorial:post_list' %}">Noticias</a></li>
+                          <li>{{ form.instance.title }}</li>
+                        </ol>
+                    </h3>
+                </header>
+                <hr>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
 
-            <form class="" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
+                <form class="" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
 
-                <div class="panel panel-default">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Informacion de la Noticia</h3>
+                        </div>
+                        <div class="panel-body">
+
+                            {% include 'tags/messages.html' %}
+
+                            {% tag_form_errors form %}
+
+                            {% tag_field form.title %}
+
+                            {% tag_image_nopreview form.image %}
+
+                            {% tag_field form.content %}
+
+                            {% tag_field form.status %}
+
+                        </div>
+                        <div class="panel-footer text-center">
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <div class="panel panel-default affix-top">
                     <div class="panel-heading">
-                        <h3 class="panel-title">Informacion de la Noticia</h3>
+                        <h3 class="panel-title">Otras Acciones:</h3>
                     </div>
-                    <div class="panel-body">
-
-                        {% include 'tags/messages.html' %}
-
-                        {% tag_form_errors form %}
-
-                        {% tag_field form.title %}
-
-                        {% tag_image_nopreview form.image %}
-
-                        {% tag_field form.content %}
-
-                        {% tag_field form.status %}
-
-                    </div>
-                    <div class="panel-footer text-center">
-                        <button type="submit" class="btn btn-success">
-                            <span class="glyphicon glyphicon-ok"></span>
-                            Guardar
-                        </button>
-                    </div>
+                    <ul class="list-group">
+                        <a class="list-group-item own-link-item text-center" href="{% url 'editorial:post_view' form.instance.pk %}">
+                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                            Ir a Preview
+                        </a>
+                    </ul>
                 </div>
-
-            </form>
-        </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
-            <div class="panel panel-default affix-top">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Otras Acciones:</h3>
-                </div>
-                <ul class="list-group">
-                    <a class="list-group-item own-link-item text-center" href="{% url 'editorial:post_view' form.instance.pk %}">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                        Ir a Preview
-                    </a>
-                </ul>
             </div>
         </div>
     </div>
@@ -92,8 +94,9 @@
 
     <!-- Summernote -->
     <script type="text/javascript" src="{% static 'libs/summernote/0.8.3/summernote.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'libs/summernote/0.8.3/lang/summernote-es-ES.js' %}"></script>
 
     <!-- Own's Scripts -->
-    <script type="text/javascript" src="{% static 'post/edit.js' %}"></script>
+    <script type="text/javascript" src="{% static 'post/edit.min.js' %}"></script>
 
 {% endblock scripts %}

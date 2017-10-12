@@ -7,116 +7,117 @@
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'profile/view.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'profile/view.min.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-xs-12">
-            <header>
-                <h3>Datos del Empleado</h3>
-            </header>
-            <hr>
+    <div class="container own-page-content">
+        <div class="row">
+            <div class="col-xs-12">
+                <header>
+                    <h3>Datos del Empleado</h3>
+                </header>
+                <hr>
+        	</div>
+
+            <div class="col-xs-12">
+
+    			<div class="panel panel-default">
+    				<div class="panel-heading">
+    					<h4>{{profile.user.get_full_name}}</h4>
+    				</div>
+    				<div class="panel-body">
+    					<div class="row">
+
+    						<div class="col-xs-12 col-sm-4" align="center">
+                                {%if profile.photo %}
+                                    <img  src="{{ profile.photo.url }}" class="img-circle img-responsive" alt="photo">
+                                {% else %}
+                                    <img  src="{% static "images/decorators/no-image-user.jpg" %}" class="img-circle img-responsive" alt="photo">
+                                {% endif %}
+
+    						</div>
+
+    						<div class="col-xs-12 col-sm-8">
+    							<table class="table own-table">
+    								<tbody>
+                                        <tr>
+    										<td class="text-right">
+    											<span class="glyphicon glyphicon-lock own-table-iconito" aria-hidden="true"></span>
+    											<span class="own-table-title">Puesto:</span>
+    										</td>
+    										<td class="own-table-info own-table-value">{{profile.job_title|default:""}}</td>
+    									</tr>
+    									<tr>
+    										<td class="text-right">
+    											<span class="glyphicon glyphicon-lock own-table-iconito" aria-hidden="true"></span>
+    											<span class="own-table-title">Departamento:</span>
+    										</td>
+    										<td class="own-table-value">{{profile.department|default:""}}</td>
+    									</tr>
+    									<tr>
+    										<td class="text-right">
+    											<span class="glyphicon glyphicon-calendar own-table-iconito" aria-hidden="true"></span>
+    											<span class="own-table-title">Contratacion:</span>
+    										</td>
+    										<td class="own-table-value">{{profile.recruited_date|default:""}}</td>
+    									</tr>
+    									<tr>
+    										<td class="text-right">
+    											<span class="glyphicon glyphicon-gift own-table-iconito" aria-hidden="true"></span>
+    											<span class="own-table-title">Cumpleaños:</span>
+    										</td>
+    										<td class="own-table-value">{{profile.birth_date|default:""}}</td>
+    									</tr>
+    									<tr>
+    										<td class="text-right">
+    											<span class="glyphicon glyphicon-heart own-table-iconito" aria-hidden="true"></span>
+    											<span class="own-table-title">Genero:</span>
+    										</td>
+    										<td class="own-table-value">{{profile.get_gender_display|default:""}}</td>
+    									</tr>
+    									<tr>
+    										<td class="text-right">
+    											<span class="glyphicon glyphicon-home own-table-iconito" aria-hidden="true"></span>
+    											<span class="own-table-title">Direccion:</span>
+    										</td>
+    										<td class="own-table-value">{{profile.address|default:""}}</td>
+    									</tr>
+    									<tr>
+    										<td class="text-right">
+    											<span class="glyphicon glyphicon-envelope own-table-iconito" aria-hidden="true"></span>
+    											<span class="own-table-title">Email:</span>
+    										</td>
+    										<td><a href="mailto:{{profile.user.email}}">{{profile.user.email|default:""}}</a></td>
+    									</tr>
+    									<tr>
+    										<td class="text-right">
+    											<span class="glyphicon glyphicon-earphone own-table-iconito" aria-hidden="true"></span>
+    											<span class="own-table-title">Telefono:</span>
+    										</td>
+    										<td>
+                                                {{profile.phone|default:""}}
+    										</td>
+
+    									</tr>
+
+    								</tbody>
+    							</table>
+    						</div>
+    					</div>
+    				</div>
+                    <div class="panel-footer text-center">
+                        <a href="{% url 'security:profile_password' profile.pk %}" class="btn btn-primary">
+                            <i class="fa fa-key" aria-hidden="true"></i>
+                            Cambiar Contraseña
+                        </a>
+                    </div>
+
+    			</div>
+    		</div>
     	</div>
-
-        <div class="col-xs-12">
-
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4>{{profile.user.get_full_name}}</h4>
-				</div>
-				<div class="panel-body">
-					<div class="row">
-
-						<div class="col-xs-12 col-sm-4" align="center">
-                            {%if profile.photo %}
-                                <img  src="{{ profile.photo.url }}" class="img-circle img-responsive" alt="photo">
-                            {% else %}
-                                <img  src="{% static "images/decorators/no-image-user.jpg" %}" class="img-circle img-responsive" alt="photo">
-                            {% endif %}
-
-						</div>
-
-						<div class="col-xs-12 col-sm-8">
-							<table class="table own-table">
-								<tbody>
-                                    <tr>
-										<td class="text-right">
-											<span class="glyphicon glyphicon-lock own-table-iconito" aria-hidden="true"></span>
-											<span class="own-table-title">Puesto:</span>
-										</td>
-										<td class="own-table-info own-table-value">{{profile.job_title|default:""}}</td>
-									</tr>
-									<tr>
-										<td class="text-right">
-											<span class="glyphicon glyphicon-lock own-table-iconito" aria-hidden="true"></span>
-											<span class="own-table-title">Departamento:</span>
-										</td>
-										<td class="own-table-value">{{profile.department|default:""}}</td>
-									</tr>
-									<tr>
-										<td class="text-right">
-											<span class="glyphicon glyphicon-calendar own-table-iconito" aria-hidden="true"></span>
-											<span class="own-table-title">Contratacion:</span>
-										</td>
-										<td class="own-table-value">{{profile.recruited_date|default:""}}</td>
-									</tr>
-									<tr>
-										<td class="text-right">
-											<span class="glyphicon glyphicon-gift own-table-iconito" aria-hidden="true"></span>
-											<span class="own-table-title">Cumpleaños:</span>
-										</td>
-										<td class="own-table-value">{{profile.birth_date|default:""}}</td>
-									</tr>
-									<tr>
-										<td class="text-right">
-											<span class="glyphicon glyphicon-heart own-table-iconito" aria-hidden="true"></span>
-											<span class="own-table-title">Genero:</span>
-										</td>
-										<td class="own-table-value">{{profile.get_gender_display|default:""}}</td>
-									</tr>
-									<tr>
-										<td class="text-right">
-											<span class="glyphicon glyphicon-home own-table-iconito" aria-hidden="true"></span>
-											<span class="own-table-title">Direccion:</span>
-										</td>
-										<td class="own-table-value">{{profile.address|default:""}}</td>
-									</tr>
-									<tr>
-										<td class="text-right">
-											<span class="glyphicon glyphicon-envelope own-table-iconito" aria-hidden="true"></span>
-											<span class="own-table-title">Email:</span>
-										</td>
-										<td><a href="mailto:{{profile.user.email}}">{{profile.user.email|default:""}}</a></td>
-									</tr>
-									<tr>
-										<td class="text-right">
-											<span class="glyphicon glyphicon-earphone own-table-iconito" aria-hidden="true"></span>
-											<span class="own-table-title">Telefono:</span>
-										</td>
-										<td>
-                                            {{profile.phone|default:""}}
-										</td>
-
-									</tr>
-
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-                <div class="panel-footer text-center">
-                    <a href="{% url 'security:profile_password' profile.pk %}" class="btn btn-primary">
-                        <i class="fa fa-key" aria-hidden="true"></i>
-                        Cambiar Contraseña
-                    </a>
-                </div>
-
-			</div>
-		</div>
-	</div>
-
+    </div>
 
 {% endblock content %}
