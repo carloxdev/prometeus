@@ -1,26 +1,47 @@
-
-
 .own-loginbox {
     margin-top:50px;
 }
 
-    .own-panel-body {
-        padding: 15px 15px 0;
+    .own-panel {
+        border: 0;
     }
 
-        .own-fields {
-            margin-bottom: 25px
+        .own-panel-heading {
+            background-color: #DE6324 !important;
+            color: white;
         }
 
-        .own-buttons {
-            margin-top: 10px;
-            margin-bottom: 0px;
+        .own-panel-body {
+            padding: 15px 15px 0;
         }
 
-        .own-forgetpass {
-            float:right;
-            font-size: 80%;
-            position: relative;
-            top:-25px;
-            right:7px;
-        }
+            .own-fields {
+                margin-bottom: 25px
+            }
+
+            .own-button {
+                width: 10em;
+                background-color: #0C6262;
+                color: white;
+            }
+
+            .own-button:hover {
+                background-color: white;
+                color: #0C6262 !important;
+            }
+
+            .own-forgetpass {
+                font-size: .75em;
+                margin-top: 3em;
+                margin-bottom: .7em;
+                text-align: center;
+            }
+
+
+
+@media (min-width: 768px) {
+
+    .own-panel-title {
+        font-size: 1.3em;
+    }
+}

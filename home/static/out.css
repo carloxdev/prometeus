@@ -1,32 +1,27 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro|Open+Sans');
-
-html, body {
-    height: 100%;
-    font-size: 16px;
-    font-family: 'Roboto', sans-serif;
-    /*background-color: #f7f7f7;*/
-    background-color: #0c6262;
-}
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro|Open+Sans');
 
 h1, h2, h3, h4 {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
-hr {
-     margin-top: 0px;
+html, body {
+    height: 100%;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    background-color: #0c6262;
 }
 
-
-/* ---------------------- Out ---------------------- */
-
+hr {
+    margin-top: 0px;
+}
 
 .own-wrap {
-  min-height: 100%;
+    min-height: 100%;
 }
 
     .own-main {
-      overflow: visible;
-      padding-bottom:2.7em; /* this needs to be bigger than footer height*/
+        overflow: visible;
+        padding-bottom:2.7em; /* this needs to be bigger than footer height*/
     }
 
         .own-navbar {
@@ -34,31 +29,25 @@ hr {
         }
 
             .own-navbar-brand {
-                padding: 5px 15px;
+                padding: .3em .9em;
             }
 
-            .own-logo {
-                width: 150px;
-                height: 40px;
-            }
-
-        .own-panel-primary {
-            /*border-color: #DE6324 !important;*/
-            border: 0;
-            /*border-color: white !important;*/
-        }
-
-            .own-panel-heading {
-                background-color: #DE6324 !important;
-                color: white;
-            }
-
-                .own-btn-primary {
-                    background-color: #0C6262;
-                    color: white;
+                .own-logo {
+                    width: 9em;
+                    height: 2.3em;
                 }
 
+            .own-btn-menu {
+                padding-top: .25em !important;
+                padding-bottom: .25em !important;
+                margin-left: 5em;
+                margin-right: 5em;
+                color: white !important;
+            }
 
+            .own-btn-menu-in:hover {
+                color: #2965a7 !important;
+            }
 
 .own-page-footer {
 
@@ -75,11 +64,15 @@ hr {
     background-color: white;
 }
 
+@media (min-width: 768px) {
 
-/* ---------------------- Media Class ---------------------- */
-@media (min-width: 750px) {
+        .own-navbar {
+            border-radius: 0;
+        }
 
-    .own-navbar {
-        border-radius: 0px;
-    }
+            .own-btn-menu {
+                margin-left: auto;
+                margin-right: auto;
+                color: white !important;
+            }
 }

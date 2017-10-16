@@ -16,12 +16,6 @@
         <!-- Bootstrap -->
         <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap/3.3.7/css/bootstrap.min.css' %}"/>
 
-        <!-- Pace -->
-        <link rel="stylesheet" type="text/css" href="{% static 'libs/pace/1.0.0/pace.theme.css' %}"/>
-
-        <!-- Awesome Icons -->
-        <link rel="stylesheet" type="text/css" href="{% static 'libs/awesome-icons/4.7.0/css/font-awesome.min.css' %}">
-
         <!-- Own's Styles -->
         <link rel="stylesheet" type="text/css" href="{% static 'master.min.css' %}"/>
 
@@ -31,11 +25,8 @@
 
     </head>
     <body class="fuelux">
-
         <div class="own-wrap">
-
             <div class="own-main">
-
                 <nav class="navbar navbar-default own-navbar">
                     <div class="container-fluid">
                         <div class="navbar-header">
@@ -51,36 +42,36 @@
                         </div>
 
                         <div class="collapse navbar-collapse" id="menu">
-                            <ul class="nav navbar-nav own-navbar-nav navbar-right">
+                            <ul class="nav navbar-nav navbar-right">
 
                                 {% if user.is_authenticated %}
 
-                                <!-- <li><a class="own-menu-opt" href="{% url 'payroll:voucher_list' %}">Comprobantes</a></li>
-                                <li><a class="own-menu-opt" href="{% url 'payroll:benefit_list' %}">Prestaciones</a></li>
-                                <li><a class="own-menu-opt" href="{% url 'labor:incident_list' %}">Incidencias</a></li> -->
+                                <!-- <li><a class="own-menu-option" href="{% url 'payroll:voucher_list' %}">Comprobantes</a></li>
+                                <li><a class="own-menu-option" href="{% url 'payroll:benefit_list' %}">Prestaciones</a></li>
+                                <li><a class="own-menu-option" href="{% url 'labor:incident_list' %}">Incidencias</a></li> -->
 
 
                                 {% if user.is_superuser or user|filter_has_group:"NOTICIAS_ADM" %}
-                                    <li><a class="own-menu-opt" href="{% url 'editorial:post_list' %}">Noticias</a></li>
+                                    <li><a class="own-menu-option" href="{% url 'editorial:post_list' %}">Noticias</a></li>
                                 {% endif %}
 
                                 <li class="dropdown own-dropdown">
 
                                     {% if user.username == "admin" %}
-                                        <a class="own-menu-opt" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ADMINISTRADOR<span class="caret"></span></a>
+                                        <a class="own-menu-option" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ADMINISTRADOR<span class="caret"></span></a>
                                     {% else %}
-                                        <a class="own-menu-opt" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username|upper }}<span class="caret"></span></a>
+                                        <a class="own-menu-option" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username|upper }}<span class="caret"></span></a>
                                     {% endif %}
                                     <ul class="dropdown-menu own-dropdown-menu">
 
                                         {% if user.is_superuser %}
 
-                                            <li><a class="own-submenu-opt" href="{% url 'security:user_list' %}">Usuarios</a></li>
-                                            <!-- <li><a class="own-submenu-opt" href="{% url 'management:email' %} ">Correo</a></li>
+                                            <li><a class="own-submenu-option" href="{% url 'security:user_list' %}">Usuarios</a></li>
+                                            <!-- <li><a class="own-submenu-option" href="{% url 'management:email' %} ">Correo</a></li>
                                             <li role="separator" class="divider"></li>
-                                            <li><a class="own-submenu-opt" href="{% url 'management:task_list' %}">Bandeja</a></li> -->
+                                            <li><a class="own-submenu-option" href="{% url 'management:task_list' %}">Bandeja</a></li> -->
                                         {% else %}
-                                            <li><a class="own-submenu-opt" href="{% url 'security:profile' user.pk %}">Mi Perfil</a></li>
+                                            <li><a class="own-submenu-option" href="{% url 'security:profile' user.pk %}">Mi Perfil</a></li>
                                         {% endif %}
                                     </ul>
                                 </li>
@@ -101,7 +92,6 @@
                                 </li>
 
                                 {% endif %}
-
                             </ul>
                         </div>
                     </div>
@@ -123,9 +113,6 @@
 
         <!-- Bootstrap-->
         <script type="text/javascript" src="{% static 'libs/bootstrap/3.3.7/js/bootstrap.min.js' %}"></script>
-
-        <!-- Pace -->
-        <script type="text/javascript" data-pace-options='{ "startOnPageLoad": false }' src="{% static 'libs/pace/1.0.0/pace.min.js' %}"></script>
 
         <!-- Own's Libraries -->
         <script type="text/javascript" src="{% static 'master.min.js' %}"></script>

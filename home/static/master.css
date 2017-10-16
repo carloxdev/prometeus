@@ -1,30 +1,27 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto|Source+Sans+Pro|Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro|Open+Sans');
 
+h1, h2, h3, h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+}
 
 html, body {
     height: 100%;
-    /*font-size: 16px;*/
-    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
     background-color: #f7f7f7;
-}
-
-h1, h2, h3 {
-    font-family: 'Source Sans Pro', sans-serif;
 }
 
 hr {
      margin-top: 0px;
 }
 
-/* ---------------------- Master ---------------------- */
-
 .own-wrap {
   min-height: 100%;
 }
 
     .own-main {
-      overflow: visible;
-      padding-bottom:2.7em; /* this needs to be bigger than footer height*/
+        overflow: visible;
+        padding-bottom:2.7em; /* this needs to be bigger than footer height*/
     }
 
         .own-navbar {
@@ -32,58 +29,48 @@ hr {
         }
 
             .own-navbar-brand {
-                padding: 5px 15px;
+                padding: .3em .9em;
             }
 
-            .own-logo {
-                width: 150px;
-                height: 40px;
-            }
-
-            .own-menu-opt {
-                color: #0c6262 !important;
-                /*font-family: 'Source Sans Pro', sans-serif;*/
-                /*font-family: 'Roboto', sans-serif;*/
-                font-family: 'Open Sans', sans-serif;
-            }
-
-            .own-menu-opt:hover {
-                background-color: #0c6262 !important;
-                color: white !important;
-            }
-
-            .own-submenu-opt {
-                font-family: 'Open Sans', sans-serif;
-                color: white !important;
-            }
-
-            .own-submenu-opt:hover {
-                background-color: #0c6262 !important;
-            }
-
-                .own-panel-heading {
-                    background-color: #DE6324 !important;
-                    color: white;
+                .own-logo {
+                    width: 9em;
+                    height: 2.3em;
                 }
 
-                    .own-btn-primary {
-                        background-color: #0C6262;
-                        color: white;
-                    }
-
-        .own-dropdown {
-            margin-right: 0.4em;
-        }
-
-            .own-dropdown-menu {
-                background-color: #de6324 !important;
+            .own-dropdown {
+                margin-right: 0.4em;
             }
 
+                .own-dropdown-menu {
+                    background-color: #de6324 !important;
+                }
+
+                    .own-menu-option {
+                        color: #0c6262 !important;
+                        /*font-family: 'Source Sans Pro', sans-serif;*/
+                        /*font-family: 'Roboto', sans-serif;*/
+                        font-family: 'Open Sans', sans-serif;
+                    }
+
+                    .own-menu-option:hover {
+                        background-color: #0c6262 !important;
+                        color: white !important;
+                    }
+
+                        .own-submenu-option {
+                            font-family: 'Open Sans', sans-serif;
+                            color: white !important;
+                        }
+
+                        .own-submenu-option:hover {
+                            background-color: #0c6262 !important;
+                        }
+
                 .own-btn-menu {
-                    padding-top: 4px !important;
-                    padding-bottom: 4px !important;
-                    margin-left: 70px;
-                    margin-right: 70px;
+                    padding-top: .25em !important;
+                    padding-bottom: .25em !important;
+                    margin-left: 5em;
+                    margin-right: 5em;
                     color: white !important;
                 }
 
@@ -95,18 +82,23 @@ hr {
                     color: #2965a7 !important;
                 }
 
-                .own-page-content {
-                	margin-bottom: 2em;
-                    min-height: 100%;
+                .own-panel-heading {
+                    background-color: #DE6324 !important;
+                    color: white;
                 }
 
-                .own-breadcrumb {
-                    margin-bottom: 0px;
-                }
-
-                    .own-breadcrumb-init {
-                        font-size: 14px;
+                    .own-btn-primary {
+                        background-color: #0C6262;
+                        color: white;
                     }
+
+        .own-breadcrumb {
+            margin-bottom: 0px;
+        }
+
+            .own-breadcrumb-init {
+                font-size: 14px;
+            }
 
 .own-page-footer {
 
@@ -125,31 +117,28 @@ hr {
 }
 
 
+@media (min-width: 768px) {
 
-/* ---------------------- Media Class ---------------------- */
-
-@media (min-width: 750px) {
-
-    .own-navbar {
-        border-radius: 0px;
-    }
-
-    .own-btn-menu {
-        margin-left: auto;
-        margin-right: auto;
-        color: white !important;
-    }
-
-    .own-dropdown-menu {
-        background-color: white !important;
-    }
-
-        .own-dropdown-menu  a {
-            color: black !important;
+        .own-navbar {
+            border-radius: 0;
         }
 
-        .own-dropdown-menu  a:hover {
-            color: white !important;
-        }
+            .own-btn-menu {
+                margin-left: auto;
+                margin-right: auto;
+                color: white !important;
+            }
+
+                .own-dropdown-menu {
+                    background-color: white !important;
+                }
+
+                    .own-dropdown-menu  a {
+                        color: black !important;
+                    }
+
+                    .own-dropdown-menu  a:hover {
+                        color: white !important;
+                    }
 
 }

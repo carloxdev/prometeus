@@ -10,22 +10,23 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
 }
 
-.own-title {
-    font-family: 'Source Sans Pro', sans-serif;
-    color: white;
-}
+    .own-carusel {
+        padding-left: 3em;
+        padding-right: 3em;
+    }
 
-.own-little-info {
-    margin-top: .7em;
-    color: white;
-    font-size: .9em;
-}
+        .own-img-carusel {
+            object-fit: fill;
+            width: 100%;
+        }
 
-.slick-dots {
-    color: white;
-}
+            .own-post-title {
+                font-family: 'Source Sans Pro', sans-serif;
+                color: white;
+            }
 
-.own-portada {
-    object-fit: fill;
-    width: 100%;
-}
+                .own-post-info {
+                    margin-top: .7em;
+                    color: white;
+                    font-size: .9em;
+                }

@@ -1,8 +1,6 @@
-{% extends 'master.html' %}
+{% extends 'out.html' %}
 
 {% load static from staticfiles %}
-
-{% load custom_tags %}
 
 {% load humanize %}
 
@@ -10,17 +8,19 @@
 
 {% block css %}
 
-    <!-- Own's Styles -->
+    <!-- Slick -->
     <link rel="stylesheet" type="text/css" href="{% static 'libs/slick/1.8.0/slick.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'libs/slick/1.8.0/slick-theme.css' %}"/>
 
+    <!-- Own's Styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'default.min.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
-    <div class="container own-page-content">
+    <div class="container-fluid">
+
         <div class="row">
             <div class="col-xs-12 text-center">
                 <h4 class="own-title-page">
@@ -30,19 +30,19 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-xs-12 own-carusel">
                 {% if records %}
                     <div id="carrusel">
                         {% for record in records %}
                         <div>
                             <a href="{% url 'editorial:post_view' record.pk %}">
-                                <img src="{{ record.image.url }}" alt="portada" class="own-portada">
+                                <img src="{{ record.image.url }}" alt="portada" class="own-img-carusel">
                                 <div class="row">
                                     <div class="col-xs-12 col-sm-9">
-                                        <h4 class="own-title">{{ record.title }}</h4>
+                                        <h4 class="own-post-title">{{ record.title }}</h4>
                                     </div>
                                     <div class="hidden-xs col-sm-3">
-                                        <span class="pull-right own-little-info">
+                                        <span class="pull-right own-post-info">
                                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                                             {{ record.created_date|naturaltime|default:"" }}
                                         </span>
@@ -66,7 +66,7 @@
 
 {% block scripts %}
 
-    <!-- Bootstrap Filestyle -->
+    <!-- Slick -->
     <script type="text/javascript" src="{% static 'libs/slick/1.8.0/slick.min.js' %}"></script>
 
     <!-- Own's Libraries -->

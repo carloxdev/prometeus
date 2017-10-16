@@ -1,24 +1,18 @@
 {% load static from staticfiles %}
 
-{% load custom_tags %}
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="Portal Empleados de GCM">
+    <meta name="author" content="Carlos Andres Martinez Jimenez">
 
     <title> {% block title %} {% endblock title %} </title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap/3.3.7/css/bootstrap.min.css' %}">
-
-    <!-- Pace -->
-    <link rel="stylesheet" href="{% static 'libs/pace/1.0.0/pace.theme.css' %}" type="text/css"/>
-
-    <!-- Awesome Icons -->
-    <link rel="stylesheet" type="text/css" href="{% static 'libs/awesome-icons/4.7.0/css/font-awesome.min.css' %}">
 
     <!-- Own's Styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'out.min.css' %}">
@@ -36,45 +30,52 @@
 
   </head>
   <body>
+        <div class="own-wrap">
+            <div class="own-main">
+                <nav class="navbar navbar-default own-navbar">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menu">
+                                <span class="sr-only">Menu</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand own-navbar-brand" href="{% url 'home:default' %}">
+                                <img alt="Brand" src="{% static 'images/logos/logo-medium.png' %}" class="img-responsive own-logo">
+                            </a>
+                        </div>
+                        <div class="collapse navbar-collapse" id="menu">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="{% url 'security:login' %}" class="btn btn-primary btn-sm navbar-btn own-btn-menu own-btn-menu-in">
+                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                        Ingresar
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
 
-      <div class="own-wrap">
+                {% block content %}
 
-          <div class="own-main">
+                {% endblock content %}
+            </div>
+        </div>
 
-              <nav class="navbar own-navbar">
-                  <div class="container-fluid">
-                      <div class="navbar-header">
-                          <a class="navbar-brand own-navbar-brand" href="{% url 'home:default' %}">
-                              <img alt="Brand" src="{% static 'images/logos/logo-medium.png' %}" class="img-responsive own-logo">
-                          </a>
-                      </div>
+        <footer class="text-center own-page-footer">
+            GCM Derechos Reservados.
+        </footer>
 
-                  </div>
-              </nav>
+        <!-- jQuery-->
+        <script type="text/javascript" src="{% static 'libs/jquery/2.2.4/jquery.min.js' %}"></script>
 
-            {% block content %}
+        <!-- Bootstrap-->
+        <script type="text/javascript" src="{% static 'libs/bootstrap/3.3.7/js/bootstrap.min.js' %}"></script>
 
-            {% endblock content %}
+        {% block scripts %}
 
-          </div>
-      </div>
-
-      <footer class="text-center own-page-footer">
-          GCM Derechos Reservados.
-      </footer>
-
-    <!-- jQuery -->
-    <script src="{% static 'libs/jquery/2.2.4/jquery.min.js' %}"> </script>
-
-    <!-- Bootstrap -->
-    <script src="{% static 'libs/bootstrap/3.3.7/js/bootstrap.min.js' %}"></script>
-
-    <!-- Pace -->
-    <script type="text/javascript" data-pace-options='{ "startOnPageLoad": false }' src="{% static 'libs/pace/1.0.0/pace.min.js' %}"></script>
-
-    {% block scripts %}
-
-    {% endblock scripts %}
-
-  </body>
+        {% endblock scripts %}
+    </body>
 </html>

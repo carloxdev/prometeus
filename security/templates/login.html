@@ -10,47 +10,37 @@
 
     <!-- Own's Styles -->
     <link rel="stylesheet" type="text/css" href="{% static 'login.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'own-theme/tags.min.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
-    <div class="container own-page-content">
-        <div class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2 own-loginbox">
-            <div class="panel own-panel-primary">
+    <div class="container">
+        <div id="loginbox" class="mainbox own-loginbox col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3">
+            <div class="panel own-panel">
                 <div class="panel-heading own-panel-heading">
                     <div class="panel-title">Bienvenido a GCM Empleados</div>
                 </div>
                 <div class="panel-body own-panel-body" >
-
                     {% include 'messages.html' %}
-
                     <form method="post"> {% csrf_token %}
-
                         {% tag_form_errors form %}
-
                         <div class="input-group own-fields">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             {{ form.username }}
                         </div>
-
                         <div class="input-group own-fields">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                             {{ form.password }}
                         </div>
-
-                        <div class="form-group own-buttons">
-                            <div class="col-sm-12 controls">
-                                <button type="submut" class="btn btn-primary">
-                                    <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                    Ingresar
-                                </button>
+                        <div class="row">
+                            <div class="col-xs-12 text-center">
+                                <button type="submit" class="btn btn-primary own-button">Ingresar</button>
+                            </div>
+                            <div class="col-xs-12 own-forgetpass">
+                                <a href="{% url 'security:password_request' %}">¿Olvidaste la Contraseña?</a>
                             </div>
                         </div>
-
-                        <a class="own-forgetpass" href="{% url 'security:password_request' %}">¿Olvidaste la Contraseña?</a>
-
                     </form>
                 </div>
             </div>
