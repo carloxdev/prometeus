@@ -10,7 +10,6 @@ from django.shortcuts import redirect
 from django.views.generic.base import View
 from django.core.urlresolvers import reverse
 
-
 # Own's Libraries
 from editorial.business import PostBusiness
 

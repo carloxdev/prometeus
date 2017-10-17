@@ -45,26 +45,30 @@ hr {
                     background-color: #de6324 !important;
                 }
 
-                    .own-menu-option {
-                        color: #0c6262 !important;
-                        /*font-family: 'Source Sans Pro', sans-serif;*/
-                        /*font-family: 'Roboto', sans-serif;*/
-                        font-family: 'Open Sans', sans-serif;
+                    .own-dropdown-menu a {
+                        /*color: black !important;*/
                     }
 
-                    .own-menu-option:hover {
-                        background-color: #0c6262 !important;
-                        color: white !important;
+                    .own-dropdown-menu a:hover {
+                        /*color: white !important;*/
                     }
 
-                        .own-submenu-option {
-                            font-family: 'Open Sans', sans-serif;
+                        .own-menu-option {
+                            color: #0c6262 !important;
+                        }
+
+                        .own-menu-option:hover {
+                            background-color: #0c6262 !important;
                             color: white !important;
                         }
 
-                        .own-submenu-option:hover {
-                            background-color: #0c6262 !important;
-                        }
+                            .own-submenu-option {
+                                color: white !important;
+                            }
+
+                            .own-submenu-option:hover {
+                                background-color: #0c6262 !important;
+                            }
 
                 .own-btn-menu {
                     padding-top: .25em !important;
@@ -133,11 +137,11 @@ hr {
                     background-color: white !important;
                 }
 
-                    .own-dropdown-menu  a {
+                    .own-dropdown-menu a {
                         color: black !important;
                     }
 
-                    .own-dropdown-menu  a:hover {
+                    .own-dropdown-menu a:hover {
                         color: white !important;
                     }
 

@@ -8,7 +8,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-# Import-Export
+# Third-party Libraries
 from import_export import resources
 from import_export import fields
 from import_export.admin import ImportExportModelAdmin
