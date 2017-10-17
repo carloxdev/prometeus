@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Django's Libraries
-from django.core.exceptions import ImproperlyConfigured, PermissionDenied
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.contrib.auth.models import User

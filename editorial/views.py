@@ -12,7 +12,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 
 # Own's Libraries
-from home.mixins import GroupLoginRequiredMixin
+from security.mixins import GroupLoginRequiredMixin
 from .business import PostBusiness
 
 from .forms import PostAddForm

@@ -30,7 +30,7 @@ from django.views.generic.base import View
 
 # Own's Libraries
 from home.utilities import Helper
-from home.mixins import GroupLoginRequiredMixin
+from security.mixins import GroupLoginRequiredMixin
 
 from .business import UserBusiness
 from editorial.business import PostBusiness

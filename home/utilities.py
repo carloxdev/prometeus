@@ -2,7 +2,6 @@
 
 # Python's Libraries
 import urllib
-import os
 
 # Django's Libraries
 from django.core.exceptions import ValidationError
@@ -33,27 +32,3 @@ class Helper(object):
         if filesize > bits_limit:
             raise ValidationError("Tamaño máximo permitido %sMB" %
                                   str(megabyte_limit))
-
-    # @classmethod
-    # def get_ImagePath_Post(self, _instance, _filename):
-    #
-    #     if (_instance):
-    #         upload_dir = os.path.join(
-    #             'images',
-    #             'post',
-    #             str(_instance.pk)
-    #         )
-    #
-    #     return os.path.join(upload_dir, _filename)
-
-    # @classmethod
-    # def get_ImagePath_Profile(self, _instance, _filename):
-    #
-    #     if (_instance):
-    #         upload_dir = os.path.join(
-    #             'images',
-    #             'profile',
-    #             str(_instance.pk)
-    #         )
-    #
-    #     return os.path.join(upload_dir, _filename)

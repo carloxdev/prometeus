@@ -8,9 +8,9 @@ import os
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
-from django.db.models.signals import pre_save
+# from django.db.models.signals import pre_save
 from django.dispatch import receiver
-from django.conf import settings
+# from django.conf import settings
 
 # Own's Libraries
 from home.utilities import Helper
