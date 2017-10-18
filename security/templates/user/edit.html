@@ -30,8 +30,8 @@
                 <header>
                     <h3>
                         <ol class="breadcrumb own-breadcrumb">
-                          <li class="own-breadcrumb-init"><a href="{% url 'security:user_list' %}">Usuarios</a></li>
-                          <li>{{form.instance.username}}</li>
+                            <li class="own-breadcrumb-init"><a href="{% url 'security:user_list' %}">Usuarios</a></li>
+                            <li>{{form.instance.username}}</li>
                         </ol>
                     </h3>
                 </header>
@@ -49,35 +49,23 @@
 
         <div class="row">
             <div class="col-xs-12 col-md-8 col-lg-9">
-
                 <form class="" action="" method="post"> {% csrf_token %}
-
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3 class="panel-title">Informacion de la cuenta</h3>
                         </div>
                         <div class="panel-body">
-
                             {% include 'messages.html' %}
-
                             {% tag_form_errors form %}
-
                             {% tag_field form.username %}
-
                             {% tag_field form.first_name %}
-
                             {% tag_field form.last_name %}
-
                             {% tag_field form.email %}
-
                             <div class="form-group">
                                 <label class="checkbox-inline">{{form.is_active}} {{form.is_active.label}}</label>
-
                                 <label class="checkbox-inline">{{form.is_superuser}} {{form.is_superuser.label}}</label>
-
                                 <label class="checkbox-inline">{{form.is_staff}} {{form.is_staff.label}}</label>
                             </div>
-
                         </div>
                         <div class="panel-footer text-center">
                             <button type="submit" class="btn btn-success">
