@@ -7,8 +7,9 @@ from django.forms import ValidationError
 
 from django.forms import CharField
 from django.forms import DateField
-# from django.forms import EmailField
+from django.forms import EmailField
 from django.forms import ChoiceField
+from django.forms import BooleanField
 # FilteredSelectMultiple
 
 from django.forms import TextInput
@@ -46,6 +47,22 @@ class LoginForm(Form):
 
     password = CharField(
         widget=PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'contraseña'
+        })
+    )
+
+
+class WelcomeForm(Form):
+
+    email = EmailField(
+        widget=EmailInput(attrs={
+            'class': 'form-control'
+        })
+    )
+
+    phone = CharField(
+        widget=TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'contraseña'
         })
@@ -130,6 +147,31 @@ class PasswordConfirmForm(AdminPasswordChangeForm):
         label='Confirmar contraseña',
         widget=PasswordInput(
             attrs={'class': 'form-control'}
+        )
+    )
+
+
+class ProfilePasswordForm(PasswordChangeForm):
+
+    old_password = CharField(
+        label='Contraseña Actual',
+        widget=PasswordInput(
+            attrs={'class': 'form-control input-xs', 'autofocus': True}
+        )
+    )
+
+    new_password1 = CharField(
+        label='Nueva contraseña',
+        help_text=mark_safe("<ul><li>La contraseña no puede ser similar a su otra información personal.</li><li>La contraseña debe contener al menos 8 caracteres.</li><li>La contraseña no puede ser una contraseña común.</li><li>La contraseña no puede ser enteramente numérica.</li></ul>"),
+        widget=PasswordInput(
+            attrs={'class': 'form-control input-xs'}
+        )
+    )
+    new_password2 = CharField(
+        label='Confirmar contraseña',
+        help_text="Para verificar, introduzca la misma contraseña que introdujo antes.",
+        widget=PasswordInput(
+            attrs={'class': 'form-control input-xs'}
         )
     )
 
@@ -289,31 +331,23 @@ class UserPasswordForm(AdminPasswordChangeForm):
             attrs={'class': 'form-control input-xs'}
         )
     )
-
-
-class ProfilePasswordForm(PasswordChangeForm):
-
-    old_password = CharField(
-        label='Contraseña Actual',
-        widget=PasswordInput(
-            attrs={'class': 'form-control input-xs', 'autofocus': True}
-        )
+    reset_password = BooleanField(
+        label='solicitar cambiar al iniciar sesion',
     )
 
-    new_password1 = CharField(
-        label='Nueva contraseña',
-        help_text=mark_safe("<ul><li>La contraseña no puede ser similar a su otra información personal.</li><li>La contraseña debe contener al menos 8 caracteres.</li><li>La contraseña no puede ser una contraseña común.</li><li>La contraseña no puede ser enteramente numérica.</li></ul>"),
-        widget=PasswordInput(
-            attrs={'class': 'form-control input-xs'}
-        )
-    )
-    new_password2 = CharField(
-        label='Confirmar contraseña',
-        help_text="Para verificar, introduzca la misma contraseña que introdujo antes.",
-        widget=PasswordInput(
-            attrs={'class': 'form-control input-xs'}
-        )
-    )
+    def __init__(self, *args, **kwargs):
+        super(UserPasswordForm, self).__init__(*args, **kwargs)
+        self.fields['reset_password'].required = False
+
+    def save(self, commit=True):
+        """Save the new password."""
+        password = self.cleaned_data["password1"]
+        reset_password = self.cleaned_data["reset_password"]
+        self.user.set_password(password)
+        self.user.profile.reset_password = reset_password
+        if commit:
+            self.user.save()
+        return self.user
 
 
 class UserGroupForm(ModelForm):

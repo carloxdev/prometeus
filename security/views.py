@@ -36,6 +36,7 @@ from .business import UserBusiness
 from editorial.business import PostBusiness
 
 from .forms import LoginForm
+from .forms import WelcomeForm
 from .forms import PasswordRequestForm
 from .forms import PasswordConfirmForm
 from .forms import UserAddForm
@@ -128,10 +129,27 @@ class Welcome(View):
     template_name = "profile/welcome.html"
 
     def get(self, _request):
-        return render(_request, self.template_name, {})
+        form = WelcomeForm()
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
 
     def post(self, _request):
-        return render(_request, self.template_name, {})
+        form = WelcomeForm(data=_request.POST)
+        user = _request.user
+        if form.is_valid():
+            form_data = form.cleaned_data
+            user.email = form_data.get("email")
+            user.profile.phone = form_data.get("phone")
+            user.profile.first_login = False
+            user.save()
+            return redirect(reverse('security:index'))
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
 
 
 class PasswordRequest(View):
@@ -194,6 +212,76 @@ class PasswordConfirm(PasswordResetConfirmView):
 
 class PasswordDone(PasswordResetCompleteView):
     template_name = 'password/done.html'
+
+
+@method_decorator(login_required, name='dispatch')
+class Profile(View):
+    template_name = "profile/view.html"
+
+    def get(self, _request, _pk):
+        profile = UserBusiness.get_Profile(_pk)
+        context = {
+            'profile': profile
+        }
+        return render(_request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
+class ProfilePassword(View):
+    template_name = "profile/password.html"
+
+    def get(self, _request, _pk):
+        form = ProfilePasswordForm(user=UserBusiness.get(_pk))
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, _pk):
+        form = ProfilePasswordForm(
+            data=_request.POST,
+            user=UserBusiness.get(_pk))
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(_request, form.user)
+            return redirect(reverse('security:profile_password_done'))
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
+class ProfilePasswordChoose(View):
+    template_name = "profile/password_choose.html"
+
+    def get(self, _request, _pk):
+        form = UserPasswordForm(user=UserBusiness.get(_pk))
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, _pk):
+        user = UserBusiness.get(_pk)
+        form = UserPasswordForm(data=_request.POST, user=user)
+        if form.is_valid():
+            form.save()
+            user.profile.reset_password = False
+            user.profile.save()
+            update_session_auth_hash(_request, form.user)
+            return redirect(reverse('security:index'))
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
+class ProfilePasswordDone(TemplateView):
+    template_name = "profile/password_done.html"
 
 
 class UserList(GroupLoginRequiredMixin, View):
@@ -324,12 +412,15 @@ class UserPassword(GroupLoginRequiredMixin, View):
         return render(_request, self.template_name, context)
 
     def post(self, _request, _pk):
-
+        user = UserBusiness.get(_pk)
         form = UserPasswordForm(
             data=_request.POST,
-            user=UserBusiness.get(_pk))
+            user=user,
+        )
+
         if form.is_valid():
             form.save()
+            form = UserPasswordForm(user=user)
             messages.success(_request, "Se actualizo la contraseña con exito")
 
         context = {
@@ -364,73 +455,3 @@ class UserPermissions(GroupLoginRequiredMixin, View):
             'form': form
         }
         return render(_request, self.template_name, context)
-
-
-@method_decorator(login_required, name='dispatch')
-class Profile(View):
-    template_name = "profile/view.html"
-
-    def get(self, _request, _pk):
-        profile = UserBusiness.get_Profile(_pk)
-        context = {
-            'profile': profile
-        }
-        return render(_request, self.template_name, context)
-
-
-@method_decorator(login_required, name='dispatch')
-class ProfilePassword(View):
-    template_name = "profile/password.html"
-
-    def get(self, _request, _pk):
-        form = ProfilePasswordForm(user=UserBusiness.get(_pk))
-        context = {
-            'form': form
-        }
-        return render(_request, self.template_name, context)
-
-    def post(self, _request, _pk):
-        form = ProfilePasswordForm(
-            data=_request.POST,
-            user=UserBusiness.get(_pk))
-        if form.is_valid():
-            form.save()
-            update_session_auth_hash(_request, form.user)
-            return redirect(reverse('security:profile_password_done'))
-
-        context = {
-            'form': form
-        }
-        return render(_request, self.template_name, context)
-
-
-@method_decorator(login_required, name='dispatch')
-class ProfilePasswordChoose(View):
-    template_name = "profile/password_choose.html"
-
-    def get(self, _request, _pk):
-        form = UserPasswordForm(user=UserBusiness.get(_pk))
-        context = {
-            'form': form
-        }
-        return render(_request, self.template_name, context)
-
-    def post(self, _request, _pk):
-        user = UserBusiness.get(_pk)
-        form = UserPasswordForm(data=_request.POST, user=user)
-        if form.is_valid():
-            form.save()
-            user.profile.reset_password = False
-            user.profile.save()
-            update_session_auth_hash(_request, form.user)
-            return redirect(reverse('security:index'))
-
-        context = {
-            'form': form
-        }
-        return render(_request, self.template_name, context)
-
-
-@method_decorator(login_required, name='dispatch')
-class ProfilePasswordDone(TemplateView):
-    template_name = "profile/password_done.html"
