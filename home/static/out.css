@@ -37,12 +37,21 @@ hr {
                     height: 2.3em;
                 }
 
+            .own-menu-option {
+                color: #0c6262 !important;
+            }
+                
+
             .own-btn-menu {
                 padding-top: .25em !important;
                 padding-bottom: .25em !important;
                 margin-left: 5em;
                 margin-right: 5em;
                 color: white !important;
+            }
+
+            .own-btn-menu-out:hover {
+                color: #ce3d3e !important;
             }
 
             .own-btn-menu-in:hover {

@@ -47,21 +47,6 @@ from .forms import ProfilePasswordForm
 from .forms import UserGroupForm
 
 
-@method_decorator(login_required, name='dispatch')
-class Index(View):
-    template_name = "index.html"
-
-    def get(self, _request):
-        posts = PostBusiness.get_Published()
-        posts_paginated = PostBusiness.get_Paginated(posts, _request.GET.get('page'))
-
-        context = {
-            'records': posts_paginated
-        }
-
-        return render(_request, self.template_name, context)
-
-
 class Login(View):
 
     template_name = 'login.html'
@@ -92,8 +77,21 @@ class Login(View):
             user = authenticate(_request, username=account, password=password)
 
             if user is not None:
+
+                if user.last_login is None:
+                    user.profile.first_login = True
+
                 login(_request, user)
-                return redirect(reverse('security:index'))
+                user.profile.save()
+                update_session_auth_hash(_request, user)
+
+                if user.profile.reset_password:
+                    return redirect(reverse(
+                        'security:profile_password_choose',
+                        kwargs={'_pk': user.pk}
+                    ))
+                else:
+                    return redirect(reverse('security:index'))
             else:
                 messages.error(
                     _request,
@@ -105,6 +103,35 @@ class Login(View):
         }
 
         return render(_request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
+class Index(View):
+    template_name = "index.html"
+
+    def get(self, _request):
+
+        if _request.user.profile.first_login:
+            return redirect(reverse('security:welcome'))
+        posts = PostBusiness.get_Published()
+        posts_paginated = PostBusiness.get_Paginated(posts, _request.GET.get('page'))
+
+        context = {
+            'records': posts_paginated
+        }
+
+        return render(_request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
+class Welcome(View):
+    template_name = "profile/welcome.html"
+
+    def get(self, _request):
+        return render(_request, self.template_name, {})
+
+    def post(self, _request):
+        return render(_request, self.template_name, {})
 
 
 class PasswordRequest(View):
@@ -370,6 +397,33 @@ class ProfilePassword(View):
             form.save()
             update_session_auth_hash(_request, form.user)
             return redirect(reverse('security:profile_password_done'))
+
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+
+@method_decorator(login_required, name='dispatch')
+class ProfilePasswordChoose(View):
+    template_name = "profile/password_choose.html"
+
+    def get(self, _request, _pk):
+        form = UserPasswordForm(user=UserBusiness.get(_pk))
+        context = {
+            'form': form
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, _pk):
+        user = UserBusiness.get(_pk)
+        form = UserPasswordForm(data=_request.POST, user=user)
+        if form.is_valid():
+            form.save()
+            user.profile.reset_password = False
+            user.profile.save()
+            update_session_auth_hash(_request, form.user)
+            return redirect(reverse('security:index'))
 
         context = {
             'form': form

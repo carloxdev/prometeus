@@ -50,12 +50,25 @@
                         </div>
                         <div class="collapse navbar-collapse" id="menu">
                             <ul class="nav navbar-nav navbar-right">
-                                <li>
-                                    <a href="{% url 'security:login' %}" class="btn btn-primary btn-sm navbar-btn own-btn-menu own-btn-menu-in">
-                                        <i class="fa fa-sign-in" aria-hidden="true"></i>
-                                        Ingresar
-                                    </a>
-                                </li>
+                                {% if user.is_authenticated %}
+                                    <li>
+                                        <a href="#" class="own-menu-option">{{ user.username|upper }}</a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'security:logout' %}" class="btn btn-danger btn-sm navbar-btn own-btn-menu own-btn-menu-out">
+                                            <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                            Salir
+                                        </a>
+                                    </li>
+                                    
+                                {% else %}
+                                    <li>
+                                        <a href="{% url 'security:login' %}" class="btn btn-primary btn-sm navbar-btn own-btn-menu own-btn-menu-in">
+                                            <i class="fa fa-sign-in" aria-hidden="true"></i>
+                                            Ingresar
+                                        </a>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>

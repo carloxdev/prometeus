@@ -6,8 +6,9 @@ from django.conf.urls import url
 from django.contrib.auth.views import LogoutView
 
 # Own's Libraries
-from .views import Index
 from .views import Login
+from .views import Index
+from .views import Welcome
 
 from .views import PasswordRequest
 from .views import PasswordMessage
@@ -23,6 +24,7 @@ from .views import UserPassword
 
 from .views import Profile
 from .views import ProfilePassword
+from .views import ProfilePasswordChoose
 from .views import ProfilePasswordDone
 
 from .views import UserPermissions
@@ -31,6 +33,7 @@ from .views import UserPermissions
 urlpatterns = [
     url(r'^index/$', Index.as_view(), name="index"),
     url(r'^login/$', Login.as_view(), name="login"),
+    url(r'^welcome/$', Welcome.as_view(), name="welcome"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
 
     url(r'^password/request/$', PasswordRequest.as_view(), name="password_request"),
@@ -50,6 +53,6 @@ urlpatterns = [
 
     url(r'^profile/(?P<_pk>\d+)/$', Profile.as_view(), name="profile"),
     url(r'^profile/(?P<_pk>\d+)/password/$', ProfilePassword.as_view(), name="profile_password"),
+    url(r'^profile/(?P<_pk>\d+)/password/choose/$', ProfilePasswordChoose.as_view(), name="profile_password_choose"),
     url(r'^profile/password/done/$', ProfilePasswordDone.as_view(), name="profile_password_done"),
-
 ]

@@ -47,49 +47,48 @@
         <div class="row">
             <form class="" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
 
-                <div class="col-xs-12 col-md-8 col-lg-9">
+                <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Informacion del empleado </h3>
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Informacion del empleado </h3>
-
-                            </div>
-                            <div class="panel-body">
-
-                                {% include 'messages.html' %}
-
-                                {% tag_form_errors form %}
-
-                                {% tag_field form.recruited_date %}
-
-                                {% tag_field form.birth_date %}
-
-                                {% tag_radio form.gender %}
-
-                                {% tag_field form.job_title %}
-
-                                {% tag_field form.department %}
-
-                                {% tag_field form.phone %}
-
-                                {% tag_field form.address %}
-
-                            </div>
-                            <div class="panel-footer text-center">
-                                <button type="submit" class="btn btn-success">
-                                    <span class="glyphicon glyphicon-ok"></span>
-                                    Guardar
-                                </button>
-                            </div>
                         </div>
-                </div>
+                        <div class="panel-body">
 
-                <div class="col-xs-12 col-sm-4 col-lg-3">
-                    {% tag_image form.photo form.instance.photo %}
+                            {% include 'messages.html' %}
+
+                            {% tag_form_errors form %}
+
+                            {% tag_field form.recruited_date %}
+
+                            {% tag_field form.birth_date %}
+
+                            {% tag_radio form.gender %}
+
+                            {% tag_field form.job_title %}
+
+                            {% tag_field form.department %}
+
+                            {% tag_field form.phone %}
+
+                            {% tag_field form.address %}
+
+                        </div>
+                        <div class="panel-footer text-center">
+                            <button type="submit" class="btn btn-success">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                Guardar
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </form>
 
-            <div class="col-xs-12 col-md-4 col-lg-3">
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                {% tag_image form.photo form.instance.photo %}
+            </div>
+
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="panel panel-default affix-top">
                     <div class="panel-heading">
                         <h3 class="panel-title">Otras Acciones:</h3>

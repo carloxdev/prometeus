@@ -55,6 +55,8 @@ class Profile(models.Model):
             Helper.validate_Size
         ]
     )
+    reset_password = models.BooleanField(default=False)
+    first_login = models.BooleanField(default=False)
 
 
 @receiver(post_save, sender=User)
