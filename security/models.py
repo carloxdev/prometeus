@@ -8,6 +8,7 @@ import os
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
+from django_resized import ResizedImageField
 # from django.db.models.signals import pre_save
 from django.dispatch import receiver
 # from django.conf import settings
@@ -47,8 +48,9 @@ class Profile(models.Model):
     department = models.CharField(max_length=144, null=True, blank=True)
     phone = models.CharField(max_length=144, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
-    photo = models.ImageField(
+    photo = ResizedImageField(
         upload_to=get_ImagePath_Profile,
+        quality=75,
         blank=True,
         validators=[
             Helper.validate_Img_Extension,
