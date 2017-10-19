@@ -56,12 +56,14 @@ class LoginForm(Form):
 class WelcomeForm(Form):
 
     email = EmailField(
+        label='Email',
         widget=EmailInput(attrs={
             'class': 'form-control'
         })
     )
 
     phone = CharField(
+        label='Telefono',
         widget=TextInput(attrs={
             'class': 'form-control',
             'placeholder': 'contraseña'

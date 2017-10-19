@@ -383,7 +383,6 @@ class UserProfile(GroupLoginRequiredMixin, View):
         return render(_request, self.template_name, context)
 
     def post(self, _request, _pk):
-
         form = UserProfileForm(
             _request.POST,
             _request.FILES,

@@ -44,9 +44,9 @@
             </li>
         </ul>
 
+
         <div class="row">
             <form class="" action="" method="post" enctype="multipart/form-data"> {% csrf_token %}
-
                 <div class="col-xs-12 col-sm-12 col-md-8 col-lg-9">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -82,12 +82,13 @@
                         </div>
                     </div>
                 </div>
-            </form>
+
 
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 {% tag_image form.photo form.instance.photo %}
             </div>
 
+            </form>
             <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
                 <div class="panel panel-default affix-top">
                     <div class="panel-heading">

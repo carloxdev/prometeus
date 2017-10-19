@@ -3,6 +3,7 @@ backports.shutil-get-terminal-size==1.0.0
 decorator==4.1.2
 diff-match-patch==20121119
 Django==1.11.2
+django-cleanup==1.0.1
 django-import-export==0.5.1
 enum34==1.1.6
 et-xmlfile==1.0.1
