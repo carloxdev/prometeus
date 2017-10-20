@@ -10,6 +10,9 @@ from django.dispatch import receiver
 from django.db.models.signals import pre_delete
 from django.conf import settings
 
+# Third-party Libraries
+from django_resized import ResizedImageField
+
 # Own's Libraries
 from home.utilities import Helper
 from security.models import Profile
@@ -39,8 +42,9 @@ class Post(models.Model):
     )
 
     title = models.CharField(max_length=120)
-    image = models.ImageField(
+    image = ResizedImageField(
         upload_to=get_ImagePath_Post,
+        quality=75,
         blank=True,
         validators=[
             Helper.validate_Img_Extension,
