@@ -51,7 +51,7 @@
                 <div class="list-group">
                     {% for record in records %}
                         <a href="{% url 'editorial:post_edit' record.pk %}" class="list-group-item">
-                            <span class="badge {% if record.status == 'EDT' %} own-color-warning {% else %} own-color-success {% endif %}">
+                            <span class="badge own-color {% if record.status == 'EDT' %} own-color-warning {% else %} own-color-success {% endif %}">
                                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                                 <span class="hidden-xs">{{ record.get_status_display }}</span>
                             </span>

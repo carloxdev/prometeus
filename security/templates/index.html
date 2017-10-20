@@ -28,14 +28,14 @@
 
         <div class="row">
 
-            <div class="col-xs-12 own-other-news">
+            <div class="col-xs-12">
 
                 {% if records %}
 
                     {% for record in records %}
                         <div class="thumbnail">
                             <a href="{% url 'editorial:post_view' record.pk %}">
-                                <img src="{{ record.image.url }}" alt="Nature" style="width:100%">
+                                <img src="{{ record.image.url }}" alt="Nature" class="own-portada">
                                 <div class="caption">
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-9">
@@ -73,7 +73,7 @@
                     </div>
 
                 {% else %}
-                    <h2 class="text-center">Aun sin noticias publicadas</h2>
+                    <h2 class="text-center">Sin noticias publicadas</h2>
                 {% endif %}
 
             </div>

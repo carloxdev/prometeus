@@ -1,4 +1,8 @@
 
+.own-color {
+    min-width: 30px;
+}
+
 .own-color-success {
     background-color: #57B754;
 }

@@ -4,10 +4,13 @@
 
 
 .own-select-header {
+    font-size: 1em;
+    /*padding-top: .5em;
+    padding-bottom: .5em;*/
+    padding: .5em;
     background-color: #0c6262;
     color: white;
-    height: 2em;
-    font-family: 'Open Sans', sans-serif;
+    /*height: 2em;*/
     border-top: 1px solid #C1C1C1;
     border-left: 1px solid #C1C1C1;
     border-right: 1px solid #C1C1C1;
