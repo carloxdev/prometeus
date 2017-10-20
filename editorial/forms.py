@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 # Django's Libraries
-from django.forms import Form
 from django.forms import ModelForm
-from django.forms import ValidationError
+# from django.forms import Form
+# from django.forms import ValidationError
 
 from django.forms import Select
 from django.forms import TextInput
@@ -15,6 +15,11 @@ from .models import Post
 
 
 class PostAddForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PostAddForm, self).__init__(*args, **kwargs)
+        self.fields['title'].required = True
+        self.fields['image'].required = True
 
     class Meta:
         model = Post
@@ -42,6 +47,11 @@ class PostAddForm(ModelForm):
 
 
 class PostEditForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(PostEditForm, self).__init__(*args, **kwargs)
+        self.fields['title'].required = True
+        self.fields['image'].required = True
 
     class Meta:
         model = Post
