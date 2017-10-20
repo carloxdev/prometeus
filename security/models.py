@@ -54,6 +54,7 @@ class Profile(models.Model):
         upload_to=get_ImagePath_Profile,
         quality=75,
         blank=True,
+        keep_meta=False,
         validators=[
             Helper.validate_Img_Extension,
             Helper.validate_Size
