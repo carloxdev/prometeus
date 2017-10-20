@@ -15,172 +15,163 @@
 
 {% block content %}
 
-    <div class="container ">
+    <div class="container-fluid">
+       <header>
+            <h3>Administrar Usuarios</h3>
+        </header>
+        <hr>
+        <nav>
+            <div class="row">
+                <form action="" method="get">
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="{% url 'security:user_add' %}" class="btn btn-primary">
+                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            Crear Usuario
+                        </a>
+
+                        <a href="{% url 'security:user_list_export' request.GET.q %}" class="btn btn-default">
+                            Exportar
+                            <span class="glyphicon glyphicon-download-alt"></span>
+                        </a>
+                    </div>
+
+                    <br class="visible-xs">
+                    <br class="visible-xs">
+
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
+
+                            <span class="input-group-btn">
+                              <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                                <span class="hidden-xs">Buscar</span>
+                              </button>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </nav>
+
+        <br>
+        <br class="hidden-xs">
+
         <div class="container-fluid">
 
-               <header>
-                    <h3>Administrar Usuarios</h3>
-                </header>
+            {% if users %}
 
-                <hr>
+                <div class="row own-record-titles">
 
-                <nav>
+                    <div class="col-sm-4 col-md-6">USUARIO</div>
 
-                    <div class="row">
+                    <div class="col-sm-1 col-md-1">ESTADO</div>
 
-                        <form action="" method="get">
+                    <div class="col-sm-3 col-md-2">REGISTRO</div>
 
-                            <div class="col-xs-12 col-sm-6">
-                                <a href="{% url 'security:user_add' %}" class="btn btn-primary">
-                                    <i class="fa fa-user-plus" aria-hidden="true"></i>
-                                    Crear Usuario
-                                </a>
+                    <div class="col-sm-3 col-md-2">ULTIMO LOGIN</div>
 
-                                <a href="{% url 'security:user_list_export' request.GET.q %}" class="btn btn-default">
-                                    Exportar
-                                    <span class="glyphicon glyphicon-download-alt"></span>
-                                </a>
-                            </div>
-
-                            <br class="visible-xs">
-                            <br class="visible-xs">
-
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
-
-                                    <span class="input-group-btn">
-                                      <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
-                                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                        <span class="hidden-xs">Buscar</span>
-                                      </button>
-                                    </span>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </nav>
-
-                <br>
-                <br class="hidden-xs">
-
-                <div class="container-fluid">
-
-                    {% if users %}
-
-                        <div class="row own-record-titles">
-
-                            <div class="col-sm-4 col-md-6">USUARIO</div>
-
-                            <div class="col-sm-1 col-md-1">ESTADO</div>
-
-                            <div class="col-sm-3 col-md-2">REGISTRO</div>
-
-                            <div class="col-sm-3 col-md-2">ULTIMO LOGIN</div>
-
-                            <div class="col-sm-1 col-md-1"></div>
-
-                        </div>
-
-                        {% for user in users %}
-
-                            <div class="row own-record" >
-
-                                <!-- Clave y Estado -->
-                                <div class="visible-xs col-sm-5 own-column-pk {% if user.is_active %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
-                                    {{user.username}}
-
-                                    <span class="own-column-conten pull-right">
-                                        {% if user.is_active %}
-                                            <span class="glyphicon glyphicon-ok-sign own-data-activeicon" aria-hidden="true"></span>
-                                        {% else %}
-                                            <span class="glyphicon glyphicon-minus-sign own-data-disableicon" aria-hidden="true"></span>
-                                        {% endif %}
-                                    </span>
-                                </div>
-
-                                <!-- Clave y Descripcion -->
-                                <div class="col-sx-12 col-sm-4 col-md-6 own-column-main own-column--border">
-
-                                    <div class="row">
-                                        <div class="hidden-xs col-sm-12 col-md-3">
-                                            <strong>{{user.username|upper}}</strong>
-                                        </div>
-                                        <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                            {{user.get_full_name}}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Estado -->
-                                <div class="hidden-xs col-sm-1 own-column own-column--center own-column--border own-column-estado">
-                                    <span class="own-column-conten">
-                                        {% if user.is_active %}
-                                            <span class="glyphicon glyphicon-ok-sign own-data-icon-active" aria-hidden="true"></span>
-                                        {% else %}
-                                            <span class="glyphicon glyphicon-minus-sign own-data-icon-disable" aria-hidden="true"></span>
-                                        {% endif %}
-                                    </span>
-                                </div>
-
-                                <!-- Created By -->
-                                <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column--border">
-                                    <span class="own-data-label" >
-                                        Registro:
-                                    </span>
-                                    <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
-                                    <span class="own-data-normalvalue">
-                                        {{user.date_joined|date:"d M Y"}}
-                                    </span>
-                                </div>
-
-                                <!-- Last Login -->
-                                <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column--border">
-                                    <span class="own-data-label" >
-                                        Ultimo Login:
-                                    </span>
-                                    <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
-                                    <span class="own-data-normalvalue">
-                                        {{user.last_login|naturaltime|default:"" }}
-                                    </span>
-                                </div>
-
-                                <!-- Comand -->
-                                <a href="{% url 'security:user_edit' user.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
-
-                                    <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
-                                    <span class="own-data-normalvalue own-data-comandvalue">
-                                        Editar
-                                    </span>
-                                </a>
-
-                            </div>
-
-                        {% endfor %}
-
-                        <div class="text-center">
-                            <ul class="pagination pagination-sm no-margin">
-                                {% if users.has_previous %}
-                                    <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
-                                {% endif %}
-
-                                {% for i in users.paginator.page_range %}
-                                    <li {% if users.number == i %} class="active own-active" {% endif %}>
-                                        <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
-                                    </li>
-                                {% endfor %}
-
-                                {% if users.has_next %}
-                                    <li><a href="?page={{ users.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
-                                {% endif %}
-                            </ul>
-                        </div>
-
-                    {% else %}
-                        <h1 class="text-center">No se encontraron usuarios</h1>
-                    {% endif %}
+                    <div class="col-sm-1 col-md-1"></div>
 
                 </div>
+
+                {% for user in users %}
+
+                    <div class="row own-record" >
+
+                        <!-- Clave y Estado -->
+                        <div class="visible-xs col-sm-5 own-column-pk {% if user.is_active %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
+                            {{user.username}}
+
+                            <span class="own-column-conten pull-right">
+                                {% if user.is_active %}
+                                    <span class="glyphicon glyphicon-ok-sign own-data-activeicon" aria-hidden="true"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-minus-sign own-data-disableicon" aria-hidden="true"></span>
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <!-- Clave y Descripcion -->
+                        <div class="col-sx-12 col-sm-4 col-md-6 own-column-main own-column--border">
+
+                            <div class="row">
+                                <div class="hidden-xs col-sm-12 col-md-3">
+                                    <strong>{{user.username|upper}}</strong>
+                                </div>
+                                <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
+                                    {{user.get_full_name}}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="hidden-xs col-sm-1 own-column own-column--center own-column--border own-column-estado">
+                            <span class="own-column-conten">
+                                {% if user.is_active %}
+                                    <span class="glyphicon glyphicon-ok-sign own-data-icon-active" aria-hidden="true"></span>
+                                {% else %}
+                                    <span class="glyphicon glyphicon-minus-sign own-data-icon-disable" aria-hidden="true"></span>
+                                {% endif %}
+                            </span>
+                        </div>
+
+                        <!-- Created By -->
+                        <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column--border">
+                            <span class="own-data-label" >
+                                Registro:
+                            </span>
+                            <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+                            <span class="own-data-normalvalue">
+                                {{user.date_joined|date:"d M Y"}}
+                            </span>
+                        </div>
+
+                        <!-- Last Login -->
+                        <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column--border">
+                            <span class="own-data-label" >
+                                Ultimo Login:
+                            </span>
+                            <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+                            <span class="own-data-normalvalue">
+                                {{user.last_login|naturaltime|default:"" }}
+                            </span>
+                        </div>
+
+                        <!-- Comand -->
+                        <a href="{% url 'security:user_edit' user.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+
+                            <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
+                            <span class="own-data-normalvalue own-data-comandvalue">
+                                Editar
+                            </span>
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+
+                <div class="text-center">
+                    <ul class="pagination pagination-sm no-margin">
+                        {% if users.has_previous %}
+                            <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                        {% endif %}
+
+                        {% for i in users.paginator.page_range %}
+                            <li {% if users.number == i %} class="active own-active" {% endif %}>
+                                <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
+                            </li>
+                        {% endfor %}
+
+                        {% if users.has_next %}
+                            <li><a href="?page={{ users.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            {% else %}
+                <h1 class="text-center">No se encontraron usuarios</h1>
+            {% endif %}
 
         </div>
     </div>

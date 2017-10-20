@@ -8,21 +8,17 @@
     background-color: white;
 }
 
-.own-link-item {
-    font-size: 12px;
-}
+    .own-little-info {
+        color: #7E848C;
+        font-size: .9em;
+    }
+
+        .own-little-info strong {
+            color: #494C51;
+            font-size: 1em;
+        }
 
 .own-panel-title {
     font-size:14px;
     font-weight: bold;
 }
-
-.own-little-info {
-    color: #7E848C;
-    font-size: .9em;
-}
-
-    .own-little-info strong {
-        color: #494C51;
-        font-size: 1em;
-    }

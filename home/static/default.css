@@ -7,13 +7,7 @@ body {
     border-radius: 4px;
     padding: .4em 0 .4em 0;
     color: white;
-    font-family: 'Source Sans Pro', sans-serif;
 }
-
-    .own-carusel {
-        padding-left: 3em;
-        padding-right: 3em;
-    }
 
         .own-img-carusel {
             object-fit: fill;
@@ -21,7 +15,6 @@ body {
         }
 
             .own-post-title {
-                font-family: 'Source Sans Pro', sans-serif;
                 color: white;
             }
 
@@ -37,3 +30,11 @@ body {
         .own-empty-message {
             color: white;
         }
+
+
+@media (min-width: 768px) {
+    .own-carusel {
+        padding-left: 3em;
+        padding-right: 3em;
+    }
+}
