@@ -58,7 +58,8 @@ class WelcomeForm(Form):
     email = EmailField(
         label='Email',
         widget=EmailInput(attrs={
-            'class': 'form-control'
+            'class': 'form-control',
+            'placeholder': 'cuenta@ecomtrading.com'
         })
     )
 
@@ -66,7 +67,7 @@ class WelcomeForm(Form):
         label='Telefono',
         widget=TextInput(attrs={
             'class': 'form-control',
-            'placeholder': 'contraseña'
+            'placeholder': '2299589328'
         })
     )
 

@@ -79,12 +79,7 @@ class Login(View):
 
             if user is not None:
 
-                if user.last_login is None:
-                    user.profile.first_login = True
-
                 login(_request, user)
-                user.profile.save()
-                update_session_auth_hash(_request, user)
 
                 if user.profile.reset_password:
                     return redirect(reverse(
