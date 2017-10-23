@@ -23,15 +23,12 @@ def get_ImagePath_Post(_instance, _filename):
     if (_instance):
         upload_dir = os.path.join(
             'images',
-            'post',
-            str(_instance.pk)
+            'posts'
         )
-
-        extension = os.path.splitext(_filename)[1]
-
-        filename = "%s_image%s" % (_instance.pk, extension)
-
-    return os.path.join(upload_dir, filename)
+        # extension = os.path.splitext(_filename)[1]
+        #
+        # filename = "%s_image%s" % (_instance.pk, extension)
+    return os.path.join(upload_dir, _filename)
 
 
 class Post(models.Model):
@@ -66,8 +63,8 @@ class Post(models.Model):
         return self.title
 
 
-@receiver(pre_delete, sender=Post)
-def delete_Photo(sender, instance, using, **kwargs):
-    file_path = settings.BASE_DIR + "/media/" + "%s" % (instance.image)
-    if os.path.isfile(file_path):
-        os.remove(file_path)
+# @receiver(pre_delete, sender=Post)
+# def delete_Photo(sender, instance, using, **kwargs):
+#     file_path = settings.BASE_DIR + "/media/" + "%s" % (instance.image)
+#     if os.path.isfile(file_path):
+#         os.remove(file_path)
