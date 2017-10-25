@@ -13,5 +13,13 @@
 
         .own-little-info {
             color: #7E848C;
-            font-size: .9em;
+            font-size: .8em;
         }
+
+
+@media (min-width: 992px) {
+
+        .own-little-info {
+            font-size: .95em;
+        }
+}
