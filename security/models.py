@@ -45,7 +45,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     recruited_date = models.DateField(null=True, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    gender = models.CharField(choices=GENEROS, max_length=144, null=True, blank=True)
+    gender = models.CharField(
+        choices=GENEROS, max_length=144, null=True, blank=True
+    )
     job_title = models.CharField(max_length=144, null=True, blank=True)
     department = models.CharField(max_length=144, null=True, blank=True)
     phone = models.CharField(max_length=144, null=True, blank=True)
@@ -62,6 +64,9 @@ class Profile(models.Model):
     )
     reset_password = models.BooleanField(default=True)
     first_login = models.BooleanField(default=True)
+
+    def __unicode__(self):
+        return self.user.get_full_name()
 
 
 @receiver(post_save, sender=User)

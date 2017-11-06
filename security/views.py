@@ -110,7 +110,10 @@ class Index(View):
         if _request.user.profile.first_login:
             return redirect(reverse('security:welcome'))
         posts = PostBusiness.get_Published()
-        posts_paginated = PostBusiness.get_Paginated(posts, _request.GET.get('page'))
+        posts_paginated = PostBusiness.get_Paginated(
+            posts,
+            _request.GET.get('page')
+        )
 
         context = {
             'records': posts_paginated
@@ -289,7 +292,10 @@ class UserList(GroupLoginRequiredMixin, View):
 
         users = UserBusiness.get_FilterBy(query)
 
-        users_paginated = UserBusiness.get_Paginated(users, _request.GET.get('page'))
+        users_paginated = UserBusiness.get_Paginated(
+            users,
+            _request.GET.get('page')
+        )
 
         context = {
             'users': users_paginated
@@ -358,7 +364,10 @@ class UserEdit(GroupLoginRequiredMixin, View):
 
         if form.is_valid():
             form.save()
-            messages.success(_request, "El usuario fue actualizado correctamente")
+            messages.success(
+                _request,
+                "El usuario fue actualizado correctamente"
+            )
 
         context = {
             'form': form
@@ -386,7 +395,10 @@ class UserProfile(GroupLoginRequiredMixin, View):
 
         if form.is_valid():
             form.save()
-            messages.success(_request, "La informacion de Empleado fue actualizada correctamente")
+            messages.success(
+                _request,
+                "La informacion de Empleado fue actualizada correctamente"
+            )
 
         context = {
             'form': form
@@ -443,7 +455,10 @@ class UserPermissions(GroupLoginRequiredMixin, View):
             instance=UserBusiness.get(_pk))
         if form.is_valid():
             form.save()
-            messages.success(_request, "Se actualizaron los grupos del usuario")
+            messages.success(
+                _request,
+                "Se actualizaron los grupos del usuario"
+            )
 
         context = {
             'form': form

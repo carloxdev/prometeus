@@ -13,7 +13,7 @@ from import_export import resources
 from import_export import fields
 from import_export.admin import ImportExportModelAdmin
 from import_export.widgets import ForeignKeyWidget
-from import_export.widgets import DateWidget
+# from import_export.widgets import DateWidget
 
 # Own's Libraries
 from .models import Profile
