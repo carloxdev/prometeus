@@ -7,12 +7,13 @@
     }
 
         .own-panel-heading {
-            background-color: #DE6324 !important;
+            background-color: #1F7C43 !important;
             color: white;
         }
 
         .own-panel-body {
             padding: 15px 15px 0;
+            border: 1px solid #e7e7e7;
         }
 
             .own-fields {
@@ -21,13 +22,13 @@
 
             .own-button {
                 width: 10em;
-                background-color: #0C6262;
+                background-color: #1F7C43;
                 color: white;
             }
 
             .own-button:hover {
                 background-color: white;
-                color: #0C6262 !important;
+                color: #1F7C43 !important;
             }
 
             .own-forgetpass {

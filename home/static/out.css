@@ -8,7 +8,7 @@ html, body {
     height: 100%;
     font-size: 16px;
     font-family: 'Rubik', sans-serif;
-    background-color: #0c6262;
+    background-color: #f7f7f7;
 }
 
 hr {
@@ -38,7 +38,7 @@ hr {
                 }
 
             .own-menu-option {
-                color: #0c6262 !important;
+                color: #1F7C43 !important;
             }
 
 
@@ -47,6 +47,7 @@ hr {
                 padding-bottom: .25em !important;
                 margin-left: 5em;
                 margin-right: 5em;
+                background-color: #1F7C43;
                 color: white !important;
             }
 

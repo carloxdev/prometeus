@@ -26,7 +26,10 @@ class PostList(GroupLoginRequiredMixin, View):
     def get(self, _request):
         query = _request.GET.get('q')
         posts = PostBusiness.get_FilterBy(query)
-        posts_paginated = PostBusiness.get_Paginated(posts, _request.GET.get('page'))
+        posts_paginated = PostBusiness.get_Paginated(
+            posts,
+            _request.GET.get('page')
+        )
 
         context = {
             'records': posts_paginated
@@ -97,7 +100,10 @@ class PostEdit(GroupLoginRequiredMixin, View):
             post.updated_by = _request.user.profile
             post.save()
 
-            messages.success(_request, "La Noticia fue actualizada correctamente")
+            messages.success(
+                _request,
+                "La Noticia fue actualizada correctamente"
+            )
 
         context = {
             'form': form

@@ -54,11 +54,11 @@ hr {
                     }
 
                         .own-menu-option {
-                            color: #0c6262 !important;
+                            color: #1F7C43 !important;
                         }
 
                         .own-menu-option:hover {
-                            background-color: #0c6262 !important;
+                            background-color: #1F7C43 !important;
                             color: white !important;
                         }
 
@@ -67,7 +67,7 @@ hr {
                             }
 
                             .own-submenu-option:hover {
-                                background-color: #0c6262 !important;
+                                background-color: #1F7C43 !important;
                             }
 
                 .own-btn-menu {

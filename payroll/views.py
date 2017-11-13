@@ -5,21 +5,44 @@ from __future__ import unicode_literals
 
 # Django's Libraries
 from django.shortcuts import render
+from django.views.generic import CreateView
 from django.views.generic.base import View
+from django.urls import reverse_lazy
+
+# Own's Libraries
+from security.mixins import GroupLoginRequiredMixin
+from .business import SolicitudComprobanteBusiness as VoucherBusiness
+
+from .models import SolicitudComprobante
+from .forms import SolicitudComprobanteForm
 
 
-class VoucherList(View):
-    template_name = "voucher_list.html"
+class VoucherList(GroupLoginRequiredMixin, View):
+    template_name = "voucher/list.html"
+    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
     def get(self, _request):
-        return render(_request, self.template_name, {})
+        query = _request.GET.get('q')
+        vouchers = VoucherBusiness.get_FilterBy(query, _request.user.profile)
+        vouchers_paginated = VoucherBusiness.get_Paginated(
+            vouchers,
+            _request.GET.get('page')
+        )
+        context = {
+            'vouchers': vouchers_paginated
+        }
+        return render(_request, self.template_name, context)
 
 
-class VoucherAdd(View):
-    template_name = "voucher_add.html"
+class VoucherAdd(GroupLoginRequiredMixin, CreateView):
+    template_name = "voucher/add.html"
+    model = SolicitudComprobante
+    form_class = SolicitudComprobanteForm
+    success_url = reverse_lazy('payroll:voucher_list')
 
-    def get(self, _request):
-        return render(_request, self.template_name, {})
+    # def form_valid(self, form):
+    #     form.instance.created_by = self.request.user.profile
+    #     return super(VoucherAdd, self).form_valid(form)
 
 
 class VoucherAddSuccess(View):

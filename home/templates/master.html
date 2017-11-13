@@ -64,16 +64,25 @@
 
                                 <li class="dropdown own-dropdown">
 
-                                    {% if user.username == "admin" %}
-                                        <a class="own-menu-option" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">ADMINISTRADOR<span class="caret"></span></a>
-                                    {% else %}
-                                        <a class="own-menu-option" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ user.username|upper }}<span class="caret"></span></a>
-                                    {% endif %}
+                                    <a class="own-menu-option"
+                                    href="#"
+                                    class="dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    role="button"
+                                    aria-haspopup="true"
+                                    aria-expanded="false">
+                                        {{ user.username|upper }}
+                                        <span class="caret"></span>
+                                    </a>
                                     <ul class="dropdown-menu own-dropdown-menu">
 
                                         {% if user.is_superuser %}
 
-                                            <li><a class="own-submenu-option" href="{% url 'security:user_list' %}">Usuarios</a></li>
+                                            <li>
+                                                <a class="own-submenu-option" href="{% url 'security:user_list' %}">
+                                                    Usuarios
+                                                </a>
+                                            </li>
                                             <!-- <li><a class="own-submenu-option" href="{% url 'management:email' %} ">Correo</a></li>
                                             <li role="separator" class="divider"></li>
                                             <li><a class="own-submenu-option" href="{% url 'management:task_list' %}">Bandeja</a></li> -->

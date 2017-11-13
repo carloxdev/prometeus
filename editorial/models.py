@@ -6,9 +6,6 @@ import os
 
 # Django's Libraries
 from django.db import models
-from django.dispatch import receiver
-from django.db.models.signals import pre_delete
-from django.conf import settings
 
 # Third-party Libraries
 from django_resized import ResizedImageField
@@ -25,9 +22,6 @@ def get_ImagePath_Post(_instance, _filename):
             'images',
             'posts'
         )
-        # extension = os.path.splitext(_filename)[1]
-        #
-        # filename = "%s_image%s" % (_instance.pk, extension)
     return os.path.join(upload_dir, _filename)
 
 
@@ -51,9 +45,17 @@ class Post(models.Model):
     content = models.TextField(blank=True)
 
     status = models.CharField(max_length=3, choices=STATUS, default="EDT")
-    created_by = models.ForeignKey(Profile, related_name='post_created_by', null=True)
+    created_by = models.ForeignKey(
+        Profile,
+        related_name='post_created_by',
+        null=True
+    )
     created_date = models.DateTimeField(auto_now=False, auto_now_add=True)
-    updated_by = models.ForeignKey(Profile, related_name='post_updated_by', null=True)
+    updated_by = models.ForeignKey(
+        Profile,
+        related_name='post_updated_by',
+        null=True
+    )
     updated_date = models.DateTimeField(auto_now=True, auto_now_add=False)
 
     def __unicode__(self):
@@ -61,10 +63,3 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
-
-
-# @receiver(pre_delete, sender=Post)
-# def delete_Photo(sender, instance, using, **kwargs):
-#     file_path = settings.BASE_DIR + "/media/" + "%s" % (instance.image)
-#     if os.path.isfile(file_path):
-#         os.remove(file_path)

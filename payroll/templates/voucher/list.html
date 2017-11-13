@@ -4,12 +4,12 @@
 
 {% load humanize %}
 
-{% block title %} GCM - Usuarios {% endblock title %}
+{% block title %} GCM - Comprobantes {% endblock title %}
 
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" href="{% static 'user/list.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'voucher/list.min.css' %}" />
 
 {% endblock css %}
 
@@ -17,89 +17,81 @@
 
     <div class="container-fluid">
         <header>
-            <h3>Administrar Usuarios</h3>
+            <h3 class="own-titulo">Comprobantes</h3>
         </header>
         <hr>
         <nav>
             <div class="row">
-                <form action="" method="get">
-                    <div class="col-xs-12 col-sm-6">
-                        <a href="{% url 'security:user_add' %}" class="btn btn-primary">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i>
-                            Crear Usuario
-                        </a>
+                <div class="col-xs-12 col-sm-6">
+                    <a href="{% url 'payroll:voucher_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Solicitar
+                    </a>
+                </div>
+                <br class="visible-xs">
+                <br class="visible-xs">
+                <form class="col-xs-12 col-sm-6" action="" method="GET">
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
 
-                        <a href="{% url 'security:user_list_export' request.GET.q %}" class="btn btn-default">
-                            Exportar
-                            <span class="glyphicon glyphicon-download-alt"></span>
-                        </a>
-                    </div>
-
-                    <br class="visible-xs">
-                    <br class="visible-xs">
-
-                    <div class="col-xs-12 col-sm-6">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
-
-                            <span class="input-group-btn">
-                              <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
-                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                                <span class="hidden-xs">Buscar</span>
-                              </button>
-                            </span>
-                        </div>
+                        <span class="input-group-btn">
+                          <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
+                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <span class="hidden-xs">Buscar</span>
+                          </button>
+                        </span>
                     </div>
                 </form>
             </div>
         </nav>
-
         <br>
         <br class="hidden-xs">
 
         <div class="container-fluid">
-
-            {% if users %}
+            {% if vouchers %}
 
                 <div class="row own-record-titles">
 
-                    <div class="col-sm-4 col-md-6">USUARIO</div>
+                    <div class="col-sm-4 col-md-6">TIPO</div>
 
                     <div class="col-sm-1 col-md-1">ESTADO</div>
 
-                    <div class="col-sm-3 col-md-2">REGISTRO</div>
+                    <div class="col-sm-3 col-md-2">FECHA INFORMACION</div>
 
-                    <div class="col-sm-3 col-md-2">ULTIMO LOGIN</div>
+                    <div class="col-sm-3 col-md-2">FECHA SOLICITUD</div>
 
                     <div class="col-sm-1 col-md-1"></div>
-
                 </div>
 
-                {% for user in users %}
-                    <div class="row own-record" >
+                {% for voucher in vouchers %}
+                    <div class="row own-record">
 
-                        <!-- Clave y Estado -->
-                        <div class="visible-xs col-sm-5 own-column-pk {% if user.is_active %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
-                            {{user.username}}
-
+                        <!-- Tipo y Estado -->
+                        <div class="visible-xs col-sm-5 own-column-pk {% if voucher.is_complete %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
+                            {{voucher.tipo}}
                             <span class="own-column-conten pull-right">
-                                {% if user.is_active %}
+                                {% if voucher.is_complete %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-activeicon" aria-hidden="true"></span>
                                 {% else %}
-                                    <span class="glyphicon glyphicon-minus-sign own-data-disableicon" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-time own-data-disableicon" aria-hidden="true"></span>
                                 {% endif %}
+
+
                             </span>
                         </div>
 
-                        <!-- Clave y Descripcion -->
+                        <!-- Tipo y Nombre -->
                         <div class="col-sx-12 col-sm-4 col-md-6 own-column-main own-column--border">
 
                             <div class="row">
                                 <div class="hidden-xs col-sm-12 col-md-3">
-                                    <strong>{{user.username|upper}}</strong>
+                                    {{voucher.tipo}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                    {{user.get_full_name}}
+                                    <a href=" {% url 'security:profile' voucher.created_by.pk %}">
+                                        {{ voucher.created_by }}
+                                    </a>
+
                                 </div>
                             </div>
                         </div>
@@ -107,7 +99,7 @@
                         <!-- Estado -->
                         <div class="hidden-xs col-sm-1 own-column text-center own-column--border own-column-estado">
                             <span class="own-column-conten">
-                                {% if user.is_complete %}
+                                {% if voucher.is_complete %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-icon-active" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-minus-sign own-data-icon-disable" aria-hidden="true"></span>
@@ -115,30 +107,30 @@
                             </span>
                         </div>
 
-                        <!-- Created By -->
-                        <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column--border">
+                        <!-- Fecha Informacion -->
+                        <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column-range own-column--border">
                             <span class="own-data-label" >
-                                Registro:
+                                Fecha Información:
                             </span>
                             <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue">
-                                {{user.date_joined|date:"d M Y"}}
+                                {{voucher.fecha_inicial|date:"d M Y"}} - {{voucher.fecha_final|date:"d M Y"}}
                             </span>
                         </div>
 
-                        <!-- Last Login -->
+                        <!-- Fecha Solicitud -->
                         <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column--border">
                             <span class="own-data-label" >
-                                Ultimo Login:
+                                Fecha Solicitud:
                             </span>
                             <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue">
-                                {{user.last_login|naturaltime|default:"" }}
+                                {{voucher.created_date|naturaltime|default:"" }}
                             </span>
                         </div>
 
                         <!-- Comand -->
-                        <a href="{% url 'security:user_edit' user.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+                        <a href="{% url 'payroll:voucher_edit' voucher.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
 
                             <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue own-data-comandvalue">
@@ -147,31 +139,31 @@
                         </a>
 
                     </div>
-
                 {% endfor %}
 
                 <div class="text-center">
                     <ul class="pagination pagination-sm no-margin">
-                        {% if users.has_previous %}
-                            <li><a href="?{{ page_request_var }}={{ users.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                        {% if vouchers.has_previous %}
+                            <li><a href="?{{ page_request_var }}={{ vouchers.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
                         {% endif %}
 
-                        {% for i in users.paginator.page_range %}
-                            <li {% if users.number == i %} class="active own-active" {% endif %}>
+                        {% for i in vouchers.paginator.page_range %}
+                            <li {% if vouchers.number == i %} class="active own-active" {% endif %}>
                                 <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
                             </li>
                         {% endfor %}
 
-                        {% if users.has_next %}
-                            <li><a href="?page={{ users.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                        {% if vouchers.has_next %}
+                            <li><a href="?page={{ vouchers.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
                         {% endif %}
                     </ul>
                 </div>
 
             {% else %}
-                <h1 class="text-center">No se encontraron usuarios</h1>
+                <h1 class="text-center">Sin solicitudes</h1>
             {% endif %}
-
         </div>
+
     </div>
+
 {% endblock content %}

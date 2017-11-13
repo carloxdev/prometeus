@@ -13,7 +13,7 @@ from security.models import Profile
 
 class TipoComprobante(models.Model):
     nombre = models.CharField(max_length=50, blank=False, unique=True)
-    descripcion = models.CharField(max_length=144, blank=True, unique=True)
+    descripcion = models.CharField(max_length=144, blank=True, null=True)
 
     created_by = models.ForeignKey(
         Profile,
@@ -56,8 +56,9 @@ class SolicitudComprobante(models.Model):
     )
     fecha_inicial = models.DateField()
     fecha_final = models.DateField()
-    motivo = models.CharField(max_length=144, blank=True)
-    respuesta = models.CharField(max_length=144, blank=True)
+    motivo = models.TextField(max_length=144, blank=True)
+    respuesta = models.TextField(max_length=144, blank=True)
+    is_complete = models.BooleanField(default=False)
     created_by = models.ForeignKey(
         Profile,
         related_name='sc_creador',
