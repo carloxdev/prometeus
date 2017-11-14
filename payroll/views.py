@@ -11,10 +11,10 @@ from django.urls import reverse_lazy
 
 # Own's Libraries
 from security.mixins import GroupLoginRequiredMixin
-from .business import SolicitudComprobanteBusiness as VoucherBusiness
+from .business import VoucherRequisitionBusiness as VoucherBusiness
 
-from .models import SolicitudComprobante
-from .forms import SolicitudComprobanteForm
+from .models import VoucherRequisition
+from .forms import VoucherRequisitionAddForm
 
 
 class VoucherList(GroupLoginRequiredMixin, View):
@@ -23,21 +23,24 @@ class VoucherList(GroupLoginRequiredMixin, View):
 
     def get(self, _request):
         query = _request.GET.get('q')
-        vouchers = VoucherBusiness.get_FilterBy(query, _request.user.profile)
-        vouchers_paginated = VoucherBusiness.get_Paginated(
-            vouchers,
+        requisitions = VoucherBusiness.get_FilterBy(
+            query,
+            _request.user.profile
+        )
+        requisitions_paginated = VoucherBusiness.get_Paginated(
+            requisitions,
             _request.GET.get('page')
         )
         context = {
-            'vouchers': vouchers_paginated
+            'requisitions': requisitions_paginated
         }
         return render(_request, self.template_name, context)
 
 
 class VoucherAdd(GroupLoginRequiredMixin, CreateView):
     template_name = "voucher/add.html"
-    model = SolicitudComprobante
-    form_class = SolicitudComprobanteForm
+    model = VoucherRequisition
+    form_class = VoucherRequisitionAddForm
     success_url = reverse_lazy('payroll:voucher_list')
 
     # def form_valid(self, form):

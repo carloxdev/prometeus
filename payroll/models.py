@@ -6,18 +6,19 @@ from __future__ import unicode_literals
 # Django's Libraries
 from django.db import models
 from django.utils.translation import ugettext_lazy as lazy
+from django.conf import settings
 
 # Own's Libraries
 from security.models import Profile
 
 
-class TipoComprobante(models.Model):
-    nombre = models.CharField(max_length=50, blank=False, unique=True)
-    descripcion = models.CharField(max_length=144, blank=True, null=True)
+class VoucherType(models.Model):
+    name = models.CharField(max_length=50, blank=False, unique=True)
+    description = models.TextField(blank=True, null=True)
 
     created_by = models.ForeignKey(
         Profile,
-        related_name='tc_creador',
+        related_name='tc_created_by',
         blank=True,
         null=True
     )
@@ -27,7 +28,7 @@ class TipoComprobante(models.Model):
     )
     updated_by = models.ForeignKey(
         Profile,
-        related_name='tc_actualizador',
+        related_name='tc_updated_by',
         blank=True,
         null=True
     )
@@ -40,28 +41,28 @@ class TipoComprobante(models.Model):
         verbose_name_plural = lazy('Tipos de Comprobante')
 
     def __unicode__(self):
-        return self.nombre
+        return self.name
 
 
-class SolicitudComprobante(models.Model):
-    empleado = models.ForeignKey(
+class VoucherRequisition(models.Model):
+    employee = models.ForeignKey(
         Profile,
         blank=False,
         on_delete=models.PROTECT
     )
-    tipo = models.ForeignKey(
-        TipoComprobante,
+    type = models.ForeignKey(
+        VoucherType,
         blank=False,
         on_delete=models.PROTECT
     )
-    fecha_inicial = models.DateField()
-    fecha_final = models.DateField()
-    motivo = models.TextField(max_length=144, blank=True)
-    respuesta = models.TextField(max_length=144, blank=True)
+    date_start = models.DateField()
+    date_end = models.DateField()
+    reason = models.TextField(max_length=144, blank=True)
+    response = models.TextField(max_length=144, blank=True)
     is_complete = models.BooleanField(default=False)
     created_by = models.ForeignKey(
         Profile,
-        related_name='sc_creador',
+        related_name='sc_created_by',
         blank=True,
         null=True
     )
@@ -71,7 +72,7 @@ class SolicitudComprobante(models.Model):
     )
     updated_by = models.ForeignKey(
         Profile,
-        related_name='sc_actualizador',
+        related_name='sc_updated_by',
         blank=True,
         null=True
     )
@@ -84,5 +85,5 @@ class SolicitudComprobante(models.Model):
         verbose_name_plural = lazy('Solicitudes de Comprobantes')
 
     def __unicode__(self):
-        desc = "%s : %s - %s" % (self.pk, self.empleado, self.tipo)
+        desc = "%s : %s - %s" % (self.pk, self.employee, self.type)
         return desc

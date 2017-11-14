@@ -7,15 +7,15 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 # Own's Libraries
-from .models import TipoComprobante
-from .models import SolicitudComprobante
+from .models import VoucherType
+from .models import VoucherRequisition
 
 
-@admin.register(TipoComprobante)
-class TipoComprobanteAdmin(admin.ModelAdmin):
+@admin.register(VoucherType)
+class VoucherTypeAdmin(admin.ModelAdmin):
     list_display = (
-        'nombre',
-        'descripcion',
+        'name',
+        'description',
         'created_by',
         'created_date',
         'updated_by',
@@ -23,15 +23,15 @@ class TipoComprobanteAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(SolicitudComprobante)
-class SolicitudComprobanteAdmin(admin.ModelAdmin):
+@admin.register(VoucherRequisition)
+class VoucherRequisitionAdmin(admin.ModelAdmin):
     list_display = (
-        'empleado',
-        'tipo',
-        'fecha_inicial',
-        'fecha_final',
-        'motivo',
-        'respuesta',
+        'employee',
+        'type',
+        'date_start',
+        'date_end',
+        'reason',
+        'response',
         'created_by',
         'created_date',
         'updated_by',

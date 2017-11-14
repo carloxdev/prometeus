@@ -1,9 +1,6 @@
 {% extends 'master.html' %}
-
 {% load static from staticfiles %}
-
 {% load custom_tags %}
-
 {% block title %} GCM - Nuevo Noticia {% endblock title %}
 
 {% block css %}
@@ -20,14 +17,16 @@
 
 {% block content %}
 
-    <div class="container ">
+    <div class="container">
         <div class="row">
 
             <div class="col-xs-12">
                 <header>
                     <h3>
                         <ol class="breadcrumb own-breadcrumb">
-                          <li class="own-breadcrumb-init"><a href="{% url 'editorial:post_list' %}">Noticias</a></li>
+                            <li class="own-breadcrumb-init">
+                                <a href="{% url 'editorial:post_list' %}">Noticias</a>
+                            </li>
                           <li>Crear Noticia</li>
                         </ol>
                     </h3>
@@ -36,12 +35,14 @@
             </div>
 
             <div class="col-xs-12">
-
                 <div class="own-form-title">
                     Proporciona los siguientes datos:
                 </div>
 
-                <form action="" method="post" class="well" enctype="multipart/form-data"> {% csrf_token %}
+                <form action=""
+                method="post" 
+                class="well"
+                enctype="multipart/form-data"> {% csrf_token %}
 
                     {% include 'messages.html' %}
 

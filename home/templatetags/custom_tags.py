@@ -19,11 +19,11 @@ def filter_has_group(user, group_name):
 def tag_message(_type, _text):
     """Show a message for the user.
 
-        The type of message could be:
-            - danger
-            - success
-            - primary
-            - warning
+    The type of message could be:
+        - danger
+        - success
+        - primary
+        - warning
     """
     context = {
         'type': _type,
@@ -37,6 +37,18 @@ def tag_field(_field):
 
     context = {
         'field': _field,
+    }
+    return context
+
+
+@register.inclusion_tag('tags/dates.html', takes_context=False)
+def tag_dates(_label_name, _is_optional, _field1, _field2):
+
+    context = {
+        'is_optional': _is_optional,
+        'label_name': _label_name,
+        'field1': _field1,
+        'field2': _field2,
     }
     return context
 

@@ -10,15 +10,21 @@
 \*-----------------------------------------------*/
 
 $(document).ready(function () {
-  
-	$empleados = $('#empleados')
-	$empleados.select2({
+
+	$employee = $('#id_employee')
+	$employee.select2({
 		theme: "bootstrap"
 	})
 
-	$fecha = $('#fecha')
-	$fecha.daterangepicker()
+	$date_start_id = $('#id_date_start')
+	$date_start_id.datepicker({
+        format: 'dd/mm/yyyy',
+    })
 
+    $date_end_id = $('#id_date_end')
+    $date_end_id.datepicker({
+        format: 'dd/mm/yyyy',
+    })
 })
 
 
@@ -27,7 +33,7 @@ $(document).ready(function () {
             OBJETO: PostThree
 \*-----------------------------------------------*/
 
-// function PostThree() { 
+// function PostThree() {
 
 //     this.id = $('#myTree')
 
@@ -40,5 +46,5 @@ $(document).ready(function () {
 //     // };
 
 //     this.id.tree()
-        
+
 // }

@@ -9,42 +9,42 @@ from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 
 # Own's Libraries
-from .models import SolicitudComprobante
+from .models import VoucherRequisition
 
 
-class SolicitudComprobanteBusiness(object):
+class VoucherRequisitionBusiness(object):
 
     @classmethod
     def get(self, _pk):
-        solicitud = get_object_or_404(SolicitudComprobante, pk=_pk)
-        return solicitud
+        requisition = get_object_or_404(VoucherRequisition, pk=_pk)
+        return requisition
 
     @classmethod
     def get_FilterBy(self, _value, _profile):
         if _value:
-            users = SolicitudComprobante.objects \
-                .filter(created_by=_profile) \
+            requisitions = VoucherRequisition.objects \
+                .filter(employee=_profile) \
                 .filter(
-                    Q(tipo__nombre__icontains=_value) |
-                    Q(motivo__icontains=_value)
+                    Q(type__nombre__icontains=_value) |
+                    Q(reason__icontains=_value)
                 ).order_by("-created_date")
         else:
-            users = SolicitudComprobante.objects \
-                .filter(created_by=_profile) \
+            requisitions = VoucherRequisition.objects \
+                .filter(employee=_profile) \
                 .order_by("-created_date")
 
-        return users
+        return requisitions
 
     @classmethod
-    def get_Paginated(self, _users, _current_page):
-        paginator = Paginator(_users, 20)
+    def get_Paginated(self, _requisitions, _current_page):
+        paginator = Paginator(_requisitions, 20)
         current_pagina = _current_page
 
         try:
-            _users = paginator.page(current_pagina)
+            _requisitions = paginator.page(current_pagina)
         except PageNotAnInteger:
-            _users = paginator.page(1)
+            _requisitions = paginator.page(1)
         except EmptyPage:
-            _users = paginator.page(paginator.num_page)
+            _requisitions = paginator.page(paginator.num_page)
 
-        return _users
+        return _requisitions

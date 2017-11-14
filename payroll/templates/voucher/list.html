@@ -48,7 +48,7 @@
         <br class="hidden-xs">
 
         <div class="container-fluid">
-            {% if vouchers %}
+            {% if requisitions %}
 
                 <div class="row own-record-titles">
 
@@ -63,20 +63,18 @@
                     <div class="col-sm-1 col-md-1"></div>
                 </div>
 
-                {% for voucher in vouchers %}
+                {% for requisition in requisitions %}
                     <div class="row own-record">
 
                         <!-- Tipo y Estado -->
-                        <div class="visible-xs col-sm-5 own-column-pk {% if voucher.is_complete %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
-                            {{voucher.tipo}}
+                        <div class="visible-xs col-sm-5 own-column-pk {% if requisition.is_complete %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
+                            {{requisition.type}}
                             <span class="own-column-conten pull-right">
-                                {% if voucher.is_complete %}
+                                {% if requisition.is_complete %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-activeicon" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-time own-data-disableicon" aria-hidden="true"></span>
                                 {% endif %}
-
-
                             </span>
                         </div>
 
@@ -85,11 +83,11 @@
 
                             <div class="row">
                                 <div class="hidden-xs col-sm-12 col-md-3">
-                                    {{voucher.tipo}}
+                                    {{requisition.type}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                    <a href=" {% url 'security:profile' voucher.created_by.pk %}">
-                                        {{ voucher.created_by }}
+                                    <a href=" {% url 'security:profile' requisition.employee.pk %}">
+                                        {{ requisition.employee }}
                                     </a>
 
                                 </div>
@@ -99,7 +97,7 @@
                         <!-- Estado -->
                         <div class="hidden-xs col-sm-1 own-column text-center own-column--border own-column-estado">
                             <span class="own-column-conten">
-                                {% if voucher.is_complete %}
+                                {% if requisition.is_complete %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-icon-active" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-minus-sign own-data-icon-disable" aria-hidden="true"></span>
@@ -114,7 +112,7 @@
                             </span>
                             <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue">
-                                {{voucher.fecha_inicial|date:"d M Y"}} - {{voucher.fecha_final|date:"d M Y"}}
+                                {{requisition.date_start|date:"d M Y"}} - {{requisition.date_end|date:"d M Y"}}
                             </span>
                         </div>
 
@@ -125,12 +123,12 @@
                             </span>
                             <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue">
-                                {{voucher.created_date|naturaltime|default:"" }}
+                                {{requisition.created_date|naturaltime|default:"" }}
                             </span>
                         </div>
 
                         <!-- Comand -->
-                        <a href="{% url 'payroll:voucher_edit' voucher.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+                        <a href="{% url 'payroll:voucher_edit' requisition.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
 
                             <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue own-data-comandvalue">
@@ -143,18 +141,18 @@
 
                 <div class="text-center">
                     <ul class="pagination pagination-sm no-margin">
-                        {% if vouchers.has_previous %}
-                            <li><a href="?{{ page_request_var }}={{ vouchers.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                        {% if requisitions.has_previous %}
+                            <li><a href="?{{ page_request_var }}={{ requisitions.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
                         {% endif %}
 
-                        {% for i in vouchers.paginator.page_range %}
-                            <li {% if vouchers.number == i %} class="active own-active" {% endif %}>
+                        {% for i in requisitions.paginator.page_range %}
+                            <li {% if requisitions.number == i %} class="active own-active" {% endif %}>
                                 <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
                             </li>
                         {% endfor %}
 
-                        {% if vouchers.has_next %}
-                            <li><a href="?page={{ vouchers.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                        {% if requisitions.has_next %}
+                            <li><a href="?page={{ requisitions.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
                         {% endif %}
                     </ul>
                 </div>
