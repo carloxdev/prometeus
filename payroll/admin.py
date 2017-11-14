@@ -26,12 +26,14 @@ class VoucherTypeAdmin(admin.ModelAdmin):
 @admin.register(VoucherRequisition)
 class VoucherRequisitionAdmin(admin.ModelAdmin):
     list_display = (
+        'id',
         'employee',
         'type',
         'date_start',
         'date_end',
         'reason',
         'response',
+        'status',
         'created_by',
         'created_date',
         'updated_by',

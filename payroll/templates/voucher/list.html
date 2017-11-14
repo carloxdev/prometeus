@@ -67,10 +67,11 @@
                     <div class="row own-record">
 
                         <!-- Tipo y Estado -->
-                        <div class="visible-xs col-sm-5 own-column-pk {% if requisition.is_complete %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
+                        <div class="visible-xs col-sm-5 own-column-pk {% if requisition.is_Complete %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
                             {{requisition.type}}
+
                             <span class="own-column-conten pull-right">
-                                {% if requisition.is_complete %}
+                                {% if requisition.is_Complete %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-activeicon" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-time own-data-disableicon" aria-hidden="true"></span>
@@ -82,13 +83,11 @@
                         <div class="col-sx-12 col-sm-4 col-md-6 own-column-main own-column--border">
 
                             <div class="row">
-                                <div class="hidden-xs col-sm-12 col-md-3">
+                                <div class="hidden-xs col-sm-12 col-md-5">
                                     {{requisition.type}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                    <a href=" {% url 'security:profile' requisition.employee.pk %}">
-                                        {{ requisition.employee }}
-                                    </a>
+                                    <strong>{{ requisition.reason|truncatechars:30 }}</strong>
 
                                 </div>
                             </div>
@@ -97,7 +96,7 @@
                         <!-- Estado -->
                         <div class="hidden-xs col-sm-1 own-column text-center own-column--border own-column-estado">
                             <span class="own-column-conten">
-                                {% if requisition.is_complete %}
+                                {% if requisition.is_Complete %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-icon-active" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-minus-sign own-data-icon-disable" aria-hidden="true"></span>

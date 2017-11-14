@@ -45,6 +45,13 @@ class VoucherType(models.Model):
 
 
 class VoucherRequisition(models.Model):
+
+    STATUS_OPTIONS = (
+        ('pen', 'PENDIENTE'),
+        ('can', 'CANCELADO'),
+        ('com', 'COMPLETADO'),
+    )
+
     employee = models.ForeignKey(
         Profile,
         blank=False,
@@ -57,9 +64,13 @@ class VoucherRequisition(models.Model):
     )
     date_start = models.DateField()
     date_end = models.DateField()
-    reason = models.TextField(max_length=144, blank=True)
-    response = models.TextField(max_length=144, blank=True)
-    is_complete = models.BooleanField(default=False)
+    reason = models.TextField(blank=True)
+    response = models.TextField(blank=True)
+    status = models.CharField(
+        max_length=3,
+        choices=STATUS_OPTIONS,
+        default="pen"
+    )
     created_by = models.ForeignKey(
         Profile,
         related_name='sc_created_by',
@@ -87,3 +98,11 @@ class VoucherRequisition(models.Model):
     def __unicode__(self):
         desc = "%s : %s - %s" % (self.pk, self.employee, self.type)
         return desc
+
+    def _is_Complete(self):
+        if self.status == "com":
+            return True
+        else:
+            return False
+
+    is_Complete = property(_is_Complete)
