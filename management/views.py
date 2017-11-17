@@ -22,13 +22,6 @@ class TaskList(View):
         return render(_request, self.template_name, {})
 
 
-class TaskVouchers(View):
-    template_name = "task_vouchers.html"
-
-    def get(self, _request):
-        return render(_request, self.template_name, {})
-
-
 class TaskBenefits(View):
     template_name = "task_benefits.html"
 

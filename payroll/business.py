@@ -20,7 +20,7 @@ class VoucherRequisitionBusiness(object):
         return requisition
 
     @classmethod
-    def get_FilterBy(self, _value, _profile):
+    def get_FilterByEmployee(self, _value, _profile):
         if _value:
             requisitions = VoucherRequisition.objects \
                 .filter(employee=_profile) \
@@ -31,6 +31,21 @@ class VoucherRequisitionBusiness(object):
         else:
             requisitions = VoucherRequisition.objects \
                 .filter(employee=_profile) \
+                .order_by("-created_date")
+
+        return requisitions
+
+    @classmethod
+    def get_FilterBy(self, _value):
+        if _value:
+            requisitions = VoucherRequisition.objects \
+                .filter(
+                    Q(type__nombre__icontains=_value) |
+                    Q(reason__icontains=_value) |
+                    Q(employee__user__name__icontains=_value)
+                ).order_by("-created_date")
+        else:
+            requisitions = VoucherRequisition.objects \
                 .order_by("-created_date")
 
         return requisitions

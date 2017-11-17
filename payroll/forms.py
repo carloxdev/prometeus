@@ -3,9 +3,11 @@
 # Django's Libraries
 from django.forms import ModelForm
 from django.forms import Select
-from django.forms import TextInput
+# from django.forms import TextInput
 from django.forms import DateInput
 from django.forms import Textarea
+from django.forms import ValidationError
+
 
 # Own's Libraries
 from .models import VoucherRequisition
@@ -50,3 +52,14 @@ class VoucherRequisitionAddForm(ModelForm):
             'type': 'Tipo de comprobante:',
             'reason': 'Motivo:'
         }
+
+    def clean_date_end(self):
+        date_start = self.cleaned_data['date_start']
+        date_end = self.cleaned_data['date_end']
+
+        if date_end < date_start:
+            raise ValidationError(
+                "La fecha final no puede ser menor a la inicial"
+            )
+
+        return date_end

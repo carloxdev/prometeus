@@ -1,7 +1,3 @@
-
-# Python's Libraries
-import os
-
 # Django's Libraries
 from django import template
 from django.contrib.auth.models import Group

@@ -6,7 +6,6 @@ from __future__ import unicode_literals
 # Django's Libraries
 from django.db import models
 from django.utils.translation import ugettext_lazy as lazy
-from django.conf import settings
 
 # Own's Libraries
 from security.models import Profile

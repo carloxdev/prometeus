@@ -7,6 +7,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views.generic import CreateView
 from django.views.generic.base import View
+# from django.views.generic import ListView
 from django.urls import reverse_lazy
 
 # Own's Libraries
@@ -23,10 +24,27 @@ class VoucherList(GroupLoginRequiredMixin, View):
 
     def get(self, _request):
         query = _request.GET.get('q')
-        requisitions = VoucherBusiness.get_FilterBy(
+        requisitions = VoucherBusiness.get_FilterByEmployee(
             query,
             _request.user.profile
         )
+        requisitions_paginated = VoucherBusiness.get_Paginated(
+            requisitions,
+            _request.GET.get('page')
+        )
+        context = {
+            'requisitions': requisitions_paginated
+        }
+        return render(_request, self.template_name, context)
+
+
+class VoucherListAdmin(GroupLoginRequiredMixin, View):
+    template_name = "voucher/list_admin.html"
+    group = ['COMPROBANTES_ADM', ]
+
+    def get(self, _request):
+        query = _request.GET.get('q')
+        requisitions = VoucherBusiness.get_FilterBy(query)
         requisitions_paginated = VoucherBusiness.get_Paginated(
             requisitions,
             _request.GET.get('page')
@@ -41,15 +59,16 @@ class VoucherAdd(GroupLoginRequiredMixin, CreateView):
     template_name = "voucher/add.html"
     model = VoucherRequisition
     form_class = VoucherRequisitionAddForm
-    success_url = reverse_lazy('payroll:voucher_list')
+    success_url = reverse_lazy('payroll:voucher_add_success')
 
-    # def form_valid(self, form):
-    #     form.instance.created_by = self.request.user.profile
-    #     return super(VoucherAdd, self).form_valid(form)
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user.profile
+        form.instance.updated_by = self.request.user.profile
+        return super(VoucherAdd, self).form_valid(form)
 
 
 class VoucherAddSuccess(View):
-    template_name = "voucher_add_success.html"
+    template_name = "voucher/add_success.html"
 
     def get(self, _request):
         return render(_request, self.template_name, {})

@@ -84,10 +84,13 @@
                                                 </a>
                                             </li>
                                             <!-- <li><a class="own-submenu-option" href="{% url 'management:email' %} ">Correo</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a class="own-submenu-option" href="{% url 'management:task_list' %}">Bandeja</a></li> -->
+                                            <li role="separator" class="divider"></li>-->
                                         {% else %}
                                             <li><a class="own-submenu-option" href="{% url 'security:profile' user.pk %}">Mi Perfil</a></li>
+                                        {% endif %}
+
+                                        {% if user.is_superuser or user|filter_has_group:"ADMINISTRACION" %}
+                                            <li><a class="own-submenu-option" href="{% url 'management:task_list' %}">Bandeja</a></li>
                                         {% endif %}
                                     </ul>
                                 </li>

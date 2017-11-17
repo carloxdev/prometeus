@@ -23,7 +23,10 @@ class Default(View):
             return redirect(reverse('security:index'))
         else:
             posts = PostBusiness.get_Published()
-            posts_paginated = PostBusiness.get_Paginated(posts, _request.GET.get('page'))
+            posts_paginated = PostBusiness.get_Paginated(
+                posts,
+                _request.GET.get('page')
+            )
 
         context = {
             'records': posts_paginated

@@ -4,7 +4,7 @@
 
 {% load humanize %}
 
-{% block title %} GCM - Comprobantes {% endblock title %}
+{% block title %} GCM - Comprobantes Administracion {% endblock title %}
 
 {% block css %}
 
@@ -54,7 +54,7 @@
 
                     <div class="col-sm-4 col-md-6">TIPO</div>
 
-                    <div class="col-sm-1 col-md-1">DESCRIPCION</div>
+                    <div class="col-sm-1 col-md-1">EMPLEADO</div>
 
                     <div class="col-sm-3 col-md-2">FECHA INFORMACION</div>
 
@@ -87,8 +87,7 @@
                                     {{requisition.type}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                    <strong>{{ requisition.reason|truncatechars:30 }}</strong>
-
+                                    <a href="{% url 'security:profile' requisition.employee.pk %}">{{ requisition.employee }}</a>
                                 </div>
                             </div>
                         </div>
@@ -127,11 +126,11 @@
                         </div>
 
                         <!-- Comand -->
-                        <a href="{% url 'payroll:voucher_view' requisition.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+                        <a href="{% url 'payroll:voucher_edit' requisition.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
 
                             <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue own-data-comandvalue">
-                                Revisar
+                                Editar
                             </span>
                         </a>
 

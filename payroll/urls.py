@@ -5,6 +5,7 @@ from django.conf.urls import url
 
 # Own's Libraries
 from .views import VoucherList
+from .views import VoucherListAdmin
 from .views import VoucherAdd
 from .views import VoucherAddSuccess
 from .views import VoucherView
@@ -19,8 +20,17 @@ from .views import BenefitEdit
 
 urlpatterns = [
     url(r'^vouchers/$', VoucherList.as_view(), name="voucher_list"),
+    url(
+        r'^vouchers_admin/$',
+        VoucherListAdmin.as_view(),
+        name="voucher_list_admin"
+    ),
     url(r'^vouchers/add/$', VoucherAdd.as_view(), name="voucher_add"),
-    url(r'^vouchers/add/success/$', VoucherAddSuccess.as_view(), name="voucher_add_success"),
+    url(
+        r'^vouchers/add/success/$',
+        VoucherAddSuccess.as_view(),
+        name="voucher_add_success"
+    ),
     url(r'^vouchers/(?P<_pk>\d+)/view/$', VoucherView.as_view(), name="voucher_view"),
     url(r'^vouchers/(?P<_pk>\d+)/edit/$', VoucherEdit.as_view(), name="voucher_edit"),
 
