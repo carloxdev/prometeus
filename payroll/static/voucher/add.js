@@ -19,11 +19,15 @@ $(document).ready(function () {
 	$date_start_id = $('#id_date_start')
 	$date_start_id.datepicker({
         format: 'dd/mm/yyyy',
+		autoclose: true,
+		clearBtn: true
     })
 
     $date_end_id = $('#id_date_end')
     $date_end_id.datepicker({
         format: 'dd/mm/yyyy',
+		autoclose: true,
+		clearBtn: true
     })
 })
 

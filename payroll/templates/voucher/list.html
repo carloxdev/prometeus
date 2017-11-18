@@ -54,7 +54,7 @@
 
                     <div class="col-sm-4 col-md-6">TIPO</div>
 
-                    <div class="col-sm-1 col-md-1">DESCRIPCION</div>
+                    <div class="col-sm-1 col-md-1">ESTADO</div>
 
                     <div class="col-sm-3 col-md-2">FECHA INFORMACION</div>
 
@@ -67,14 +67,23 @@
                     <div class="row own-record">
 
                         <!-- Tipo y Estado -->
-                        <div class="visible-xs col-sm-5 own-column-pk {% if requisition.is_Complete %} own-column-pk-active {% else %} own-column-pk-disable {% endif %}">
-                            {{requisition.type}}
+                        <div class="visible-xs col-sm-5 own-column-pk
+                            {% if requisition.is_Complete %}
+                                own-column-pk-success
+                            {% elif requisition.is_Cancel %}
+                                own-column-pk-cancel
+                            {% else %}
+                                own-column-pk-warning
+                            {% endif %}">
+                            {{requisition.type}} - {{requisition.pk}}
 
                             <span class="own-column-conten pull-right">
                                 {% if requisition.is_Complete %}
-                                    <span class="glyphicon glyphicon-ok-sign own-data-activeicon" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                                {% elif requisition.is_Cancel %}
+                                    <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
                                 {% else %}
-                                    <span class="glyphicon glyphicon-time own-data-disableicon" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                                 {% endif %}
                             </span>
                         </div>
@@ -88,7 +97,6 @@
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
                                     <strong>{{ requisition.reason|truncatechars:30 }}</strong>
-
                                 </div>
                             </div>
                         </div>
@@ -96,10 +104,13 @@
                         <!-- Estado -->
                         <div class="hidden-xs col-sm-1 own-column text-center own-column--border own-column-estado">
                             <span class="own-column-conten">
+
                                 {% if requisition.is_Complete %}
-                                    <span class="glyphicon glyphicon-ok-sign own-data-icon-active" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-ok-sign own-data-icon-success" aria-hidden="true"></span>
+                                {% elif requisition.is_Cancel %}
+                                    <span class="glyphicon glyphicon-minus-sign own-data-icon-cancel" aria-hidden="true"></span>
                                 {% else %}
-                                    <span class="glyphicon glyphicon-minus-sign own-data-icon-disable" aria-hidden="true"></span>
+                                    <span class="glyphicon glyphicon-time own-data-icon-warning" aria-hidden="true"></span>
                                 {% endif %}
                             </span>
                         </div>

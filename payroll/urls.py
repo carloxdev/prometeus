@@ -31,7 +31,11 @@ urlpatterns = [
         VoucherAddSuccess.as_view(),
         name="voucher_add_success"
     ),
-    url(r'^vouchers/(?P<_pk>\d+)/view/$', VoucherView.as_view(), name="voucher_view"),
+    url(
+        r'^vouchers/(?P<pk>\d+)/view/$',
+        VoucherView.as_view(),
+        name="voucher_view"
+    ),
     url(r'^vouchers/(?P<_pk>\d+)/edit/$', VoucherEdit.as_view(), name="voucher_edit"),
 
     url(r'^benefits/$', BenefitList.as_view(), name="benefit_list"),

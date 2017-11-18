@@ -103,5 +103,11 @@ class VoucherRequisition(models.Model):
             return True
         else:
             return False
-
     is_Complete = property(_is_Complete)
+
+    def _is_Cancel(self):
+        if self.status == "can":
+            return True
+        else:
+            return False
+    is_Cancel = property(_is_Cancel)

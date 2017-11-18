@@ -22,19 +22,19 @@ class VoucherRequisitionAddForm(ModelForm):
     class Meta:
         model = VoucherRequisition
         fields = (
-            'employee',
             'type',
             'date_start',
             'date_end',
             'reason',
         )
         exclude = [
+            'employee',
             'response',
             'is_complete',
         ]
 
         widgets = {
-            'employee': Select(attrs={'class': 'form-control'}),
+            # 'employee': Select(attrs={'class': 'form-control'}),
             'date_start': DateInput(
                 attrs={'class': 'form-control'},
                 format='%d/%m/%Y'
@@ -48,7 +48,7 @@ class VoucherRequisitionAddForm(ModelForm):
         }
 
         labels = {
-            'employee': 'Empleado:',
+            # 'employee': 'Empleado:',
             'type': 'Tipo de comprobante:',
             'reason': 'Motivo:'
         }

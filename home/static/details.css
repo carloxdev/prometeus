@@ -1,0 +1,20 @@
+.own-table {
+    font-size: .8em;
+}
+
+    .own-table-label {
+
+    }
+
+    .own-table-info {
+        font-weight: bold;
+    }
+
+.own-label {
+    font-size: 1em !important;
+}
+
+
+.own-data-icon {
+    color: #B2BAC0;
+}

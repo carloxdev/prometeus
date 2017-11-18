@@ -7,6 +7,8 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.views.generic import CreateView
 from django.views.generic.base import View
+from django.views.generic.base import TemplateView
+from django.views.generic.detail import DetailView
 # from django.views.generic import ListView
 from django.urls import reverse_lazy
 
@@ -62,23 +64,20 @@ class VoucherAdd(GroupLoginRequiredMixin, CreateView):
     success_url = reverse_lazy('payroll:voucher_add_success')
 
     def form_valid(self, form):
+        form.instance.employee = self.request.user.profile
         form.instance.created_by = self.request.user.profile
         form.instance.updated_by = self.request.user.profile
         return super(VoucherAdd, self).form_valid(form)
 
 
-class VoucherAddSuccess(View):
+class VoucherAddSuccess(TemplateView):
     template_name = "voucher/add_success.html"
 
-    def get(self, _request):
-        return render(_request, self.template_name, {})
 
-
-class VoucherView(View):
-    template_name = "voucher_view.html"
-
-    def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
+class VoucherView(DetailView):
+    model = VoucherRequisition
+    template_name = "voucher/view.html"
+    context_object_name = "rq"
 
 
 class VoucherEdit(View):

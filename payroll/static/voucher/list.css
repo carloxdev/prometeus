@@ -25,12 +25,16 @@
 		color: white;
 	}
 
-		.own-column-pk-active {
+		.own-column-pk-success {
 			background-color: #4A9048 !important;
 		}
 
-		.own-column-pk-disable {
-			background-color: #9CA1A9 !important;
+		.own-column-pk-cancel {
+			background-color: #CE3C3E !important;
+		}
+
+		.own-column-pk-warning {
+			background-color: #EC9D3D !important;
 		}
 
 	.own-column-main {
@@ -51,12 +55,16 @@
 			color: #B2BAC0;
 		}
 
-		.own-data-icon-active {
+		.own-data-icon-success {
 			color: #62BF5D;
 		}
 
-		.own-data-icon-disable {
-			color: #C0C5CD;
+		.own-data-icon-cancel {
+			color: #CE3C3E;
+		}
+
+		.own-data-icon-warning {
+			color: #EC9D3D;
 		}
 
 		.own-data-normalvalue {
