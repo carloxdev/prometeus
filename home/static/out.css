@@ -51,6 +51,15 @@ hr {
                 color: white !important;
             }
 
+            .own-btn-menu-s {
+                padding-top: .25em !important;
+                padding-bottom: .25em !important;
+                margin-left: 5em;
+                margin-right: 5em;
+                background-color: #ce3d3e;
+                color: white !important;
+            }
+
             .own-btn-menu-out:hover {
                 color: #ce3d3e !important;
             }
