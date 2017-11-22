@@ -108,13 +108,15 @@
     						</div>
     					</div>
     				</div>
+
+                    {% if user.profile == profile %}
                     <div class="panel-footer text-center">
                         <a href="{% url 'security:profile_password' profile.pk %}" class="btn btn-primary">
                             <i class="fa fa-key" aria-hidden="true"></i>
                             Cambiar Contraseña
                         </a>
                     </div>
-
+                    {% endif %}
     			</div>
     		</div>
     	</div>

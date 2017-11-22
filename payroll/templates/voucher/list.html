@@ -31,7 +31,7 @@
                     {% if request.path == '/vouchers_all/' %}
                         <a href="{% url 'payroll:voucher_list' %}" class="btn btn-info ">
                             <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                            Ver pendientes
+                            Ver solo pendientes
                         </a>
                     {% else %}
                         <a href="{% url 'payroll:voucher_list_all' %}" class="btn btn-info ">

@@ -18,7 +18,7 @@
             <header>
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
-					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list' %}">Solicitudes</a></li>
+					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_all' %}">Solicitudes</a></li>
 					  	<li>Revisar Solicitud de Comprobante</li>
 					</ol>
 				</h3>
@@ -63,7 +63,7 @@
 						<label for="empleados">Archivo:</label>
 						<a href="{{rq.file.url}}">{{rq.file.name}}</a>
 					</div>
-				{% else %}
+				{% elif rq.is_Cancel is False %}
 					<div>
 						<a href="{% url 'payroll:voucher_cancel' rq.pk %}" class="btn btn-danger">
 							Cancelar
