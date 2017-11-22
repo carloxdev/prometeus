@@ -80,11 +80,13 @@ class VoucherView(DetailView):
     context_object_name = "rq"
 
 
-class VoucherEdit(View):
-    template_name = "voucher_edit.html"
+class VoucherEdit(DetailView):
+    model = VoucherRequisition
+    template_name = "voucher/edit_admin.html"
+    context_object_name = "rq"
 
-    def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
+    # def get(self, _request, _pk):
+    #     return render(_request, self.template_name, {})
 
 
 class BenefitList(View):

@@ -22,7 +22,9 @@ class Helper(object):
             not _obj.name.endswith('.JPEG') and
                 not _obj.name.endswith('.JPG')):
 
-            raise ValidationError("Solo se permiten archivos con extensión: .jpg, .jpeg, .png")
+            raise ValidationError(
+                "Solo se permiten archivos con extensión: .jpg, .jpeg, .png"
+            )
 
     @classmethod
     def validate_Size(self, _obj):

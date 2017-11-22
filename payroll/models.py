@@ -2,13 +2,25 @@
 
 # Python's Libraries
 from __future__ import unicode_literals
+import os
 
 # Django's Libraries
 from django.db import models
 from django.utils.translation import ugettext_lazy as lazy
 
 # Own's Libraries
+from home.utilities import Helper
 from security.models import Profile
+
+
+def get_FilePath_Voucher(_instance, _filename):
+
+    if (_instance):
+        upload_dir = os.path.join(
+            'files',
+            'vouchers',
+        )
+    return os.path.join(upload_dir, _filename)
 
 
 class VoucherType(models.Model):
@@ -65,6 +77,14 @@ class VoucherRequisition(models.Model):
     date_end = models.DateField()
     reason = models.TextField(blank=True)
     response = models.TextField(blank=True)
+    file = models.FileField(
+        upload_to=get_FilePath_Voucher,
+        validators=[
+            Helper.validate_Size
+        ],
+        blank=True,
+        null=True,
+    )
     status = models.CharField(
         max_length=3,
         choices=STATUS_OPTIONS,
