@@ -20,12 +20,17 @@ class VoucherRequisitionBusiness(object):
         return requisition
 
     @classmethod
+    def get_No_Pendientes(self):
+        cantidades = VoucherRequisition.objects.filter(status="pen").count()
+        return cantidades
+
+    @classmethod
     def get_FilterByEmployee(self, _value, _profile):
         if _value:
             requisitions = VoucherRequisition.objects \
                 .filter(employee=_profile) \
                 .filter(
-                    Q(type__nombre__icontains=_value) |
+                    Q(type__name__icontains=_value) |
                     Q(reason__icontains=_value)
                 ).order_by("-created_date")
         else:
@@ -36,17 +41,48 @@ class VoucherRequisitionBusiness(object):
         return requisitions
 
     @classmethod
-    def get_FilterBy(self, _value):
+    def get_Pendientes(self, _value, _profile=None):
         if _value:
             requisitions = VoucherRequisition.objects \
                 .filter(
-                    Q(type__nombre__icontains=_value) |
+                    Q(type__name__icontains=_value) |
+                    Q(pk__icontains=_value) |
                     Q(reason__icontains=_value) |
-                    Q(employee__user__name__icontains=_value)
-                ).order_by("-created_date")
+                    Q(response__icontains=_value) |
+                    Q(employee__user__first_name__icontains=_value) |
+                    Q(employee__user__last_name__icontains=_value)
+                ) \
+                .filter(status="pen") \
+                .order_by("-created_date")
+        else:
+            requisitions = VoucherRequisition.objects \
+                .filter(status="pen") \
+                .order_by("-created_date")
+
+        if _profile:
+            requisitions = requisitions.filter(employee=_profile)
+
+        return requisitions
+
+    @classmethod
+    def get_All(self, _value, _profile=None):
+        if _value:
+            requisitions = VoucherRequisition.objects \
+                .filter(
+                    Q(type__name__icontains=_value) |
+                    Q(pk__icontains=_value) |
+                    Q(reason__icontains=_value) |
+                    Q(response__icontains=_value) |
+                    Q(employee__user__first_name__icontains=_value) |
+                    Q(employee__user__last_name__icontains=_value)
+                ) \
+                .order_by("-created_date")
         else:
             requisitions = VoucherRequisition.objects \
                 .order_by("-created_date")
+
+        if _profile:
+            requisitions = requisitions.filter(employee=_profile)
 
         return requisitions
 

@@ -23,10 +23,22 @@
         <nav>
             <div class="row">
                 <div class="col-xs-12 col-sm-6">
-                    <a href="{% url 'payroll:voucher_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                    <a href="{% url 'payroll:voucher_add' %}" class="btn btn-primary ">
                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                         Solicitar
                     </a>
+
+                    {% if request.path == '/vouchers_all/' %}
+                        <a href="{% url 'payroll:voucher_list' %}" class="btn btn-info ">
+                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                            Ver pendientes
+                        </a>
+                    {% else %}
+                        <a href="{% url 'payroll:voucher_list_all' %}" class="btn btn-info ">
+                            <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                            Ver todos
+                        </a>
+                    {% endif %}
                 </div>
                 <br class="visible-xs">
                 <br class="visible-xs">
@@ -93,7 +105,7 @@
 
                             <div class="row">
                                 <div class="hidden-xs col-sm-12 col-md-5 own-data-second">
-                                    {{requisition.type}}
+                                    {{requisition.pk}} - {{requisition.type}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
                                     <strong>{{ requisition.reason|truncatechars:30 }}</strong>

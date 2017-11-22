@@ -37,6 +37,23 @@ def tag_field(_field):
     return context
 
 
+@register.inclusion_tag('tags/file.html', takes_context=False)
+def tag_file(_file, _form):
+    name = ""
+    url = ""
+
+    if _form.instance.file:
+        name = _form.instance.file.name
+        url = _form.instance.file.url
+
+    context = {
+        'file': _file,
+        'name': name,
+        'url': url
+    }
+    return context
+
+
 @register.inclusion_tag('tags/dates.html', takes_context=False)
 def tag_dates(_label_name, _is_optional, _field1, _field2):
 

@@ -21,16 +21,25 @@
         </header>
         <hr>
         <nav>
-            <div class="row">
-                <div class="col-xs-12 col-sm-6">
-                    <a href="{% url 'payroll:voucher_add' %}" class="btn btn-primary visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
-                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                        Solicitar
-                    </a>
-                </div>
+            <form class="row" action="" method="GET">
+                {% if request.path == '/vouchers_admin_all/' %}
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="{% url 'payroll:voucher_list_admin' %}" class="btn btn-info visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                            <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                            Ver pendientes
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="col-xs-12 col-sm-6">
+                        <a href="{% url 'payroll:voucher_list_admin_all' %}" class="btn btn-info visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                            <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                            Ver todos
+                        </a>
+                    </div>
+                {% endif %}
                 <br class="visible-xs">
                 <br class="visible-xs">
-                <form class="col-xs-12 col-sm-6" action="" method="GET">
+                <div class="col-xs-12 col-sm-6" >
                     <div class="input-group">
                         <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
 
@@ -41,8 +50,10 @@
                           </button>
                         </span>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
+
+
         </nav>
         <br>
         <br class="hidden-xs">
@@ -92,8 +103,8 @@
                         <div class="col-sx-12 col-sm-4 col-md-6 own-column-main own-column--border">
 
                             <div class="row">
-                                <div class="hidden-xs col-sm-12 col-md-5">
-                                    {{requisition.type}}
+                                <div class="hidden-xs col-sm-12 col-md-5 own-data-second">
+                                    {{requisition.pk}} - {{requisition.type}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
                                     <a href="{% url 'security:profile' requisition.employee.pk %}">

@@ -4,6 +4,12 @@
 {% block title %} GCM - Editar Solicitud de Comprobante {% endblock title %}
 
 {% block css %}
+
+	<!-- Own's Styles -->
+	<link rel="stylesheet" type="text/css" href="{% static 'tags/forms.min.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'tags/components.min.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'details.min.css' %}"/>
+
 {% endblock css %}
 
 {% block content %}
@@ -22,8 +28,10 @@
                 </header>
                 <hr>
     		</div>
+		</div>
 
-			<div class="col-xs-12">
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-lg-9">
 				<div class="own-form-title">
                     Proporciona la siguiente información:
                 </div>
@@ -37,90 +45,118 @@
 
 					{% tag_form_errors form %}
 
-
-				</form>
-			</div>
-
-
-			<div class="col-xs-12">
-	            <header>
-	                <h3 class="own-titulo">Solicitud de Comprobante</h3>
-	            </header>
-
-	            <hr class="own-article-line">
-
-				<br>
-			</div>
-
-	        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-
-				<div class="well">
-
 					<div class="form-group">
 						<label for="empleados">Empleado:</label>
-						<select id="empleados" class="form-control" disabled>
-							<option>201334 - JORGE MARTINEZ HERNANDEZ</option>
-							<option>208323 - CARLOS ANDRES MARTINEZ JIMENEZ</option>
-							<option>234121 - CLAUDIA VILLEGAS LOPEZ</option>
-						</select>
+						<input type="text" class="form-control" value="{{ form.instance.employee }}" disabled>
 					</div>
 
 					<div class="form-group">
-						<label for="empleados">Fecha:</label>
-						<input type="text" class="form-control" id="fecha" value="01/01/2015 - 01/31/2015" disabled />
+						<label for="empleados">Fechas:</label>
+						<input type="text" class="form-control" value="{{ form.instance.date_start|date:"d M Y" }} al {{ form.instance.date_end|date:"d M Y" }}" disabled />
 					</div>
 
 					<div class="form-group">
 						<label for="empleados">Tipo de Comprobante:</label>
-						<select id="empleados" class="form-control" disabled>>
-							<option>Recibo de Nomina</option>
-							<option>Recibo de Vacaciones</option>
-							<option>Recibo de Prestamo</option>
-						</select>
+						<input type="text" class="form-control" value="{{ form.instance.type }}" disabled>
 					</div>
 
-	                <div class="form-group">
-	                    <label for="empleados">Estado:</label>
-	                    <select id="empleados" class="form-control" >
-	                        <option>Pendiente</option>
-	                        <option>PROCESADO</option>
-	                    </select>
+					<div class="form-group">
+	                    <label for="comment">Motivo de la solicitud:</label>
+	                    <textarea class="form-control" rows="5" disabled>{{ form.instance.reason }}</textarea>
 	                </div>
 
+					{% tag_file form.file form %}
 
-		            <div class="form-group">
-		            	<label for="empleados">Archivo:</label>
-		                <input type="file" class="filestyle" id="portada" data-iconName="glyphicon glyphicon-file" data-buttonText="Seleccionar Archivo">
-		            </div>
+                    {% tag_field form.status %}
 
-	                <div class="form-group">
-	                    <label for="comment">Comentarios de la Administracion:</label>
-	                    <textarea class="form-control" rows="5" id="comment"></textarea>
-	                </div>
+					{% tag_field form.response %}
 
 					<div class="text-center">
-	                    <button class="btn btn-danger pull-left">
-	                        Cancelar
-	                    </button>
+                        <a href="{% url 'payroll:voucher_list' %}" class="btn btn-default">Regresar a listado</a>
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Guardar
+                        </button>
+                    </div>
 
-	                    <button class="btn btn-primary">
-	                    	Guardar
-	                    </button>
-	                </div>
+				</form>
+			</div>
 
+			<div class="col-xs-12 col-md-4 col-lg-3">
+				<div class="panel panel-default affix-top">
+					<div class="panel-heading">
+						<h5 class="panel-title own-panel-title">Informacion:</h5>
+					</div>
+					<table class="table own-table">
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-asterisk own-data-icon" aria-hidden="true"></span>
+								 Estado:
+							</td>
+							<td class="own-table-info">
+								{% if form.instance.is_Complete %}
+									<span class="label label-success own-label">
+										<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+										{{ form.instance.get_status_display }}
+									</span>
+								{% elif form.instance.is_Cancel %}
+									<span class="label label-danger own-label">
+										<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+										{{ form.instance.get_status_display }}
+									</span>
+								{% else %}
+									<span class="label label-warning own-label">
+										<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+										{{ form.instance.get_status_display }}
+									</span>
+								{% endif %}
+							</td>
+						</tr>
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-user own-data-icon" aria-hidden="true"></span>
+								Creado por:
+							</td>
+							<td class="own-table-info">{{ form.instance.created_by|default:"" }}</td>
+						</tr>
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+								Creado el:
+							</td>
+							<td class="own-table-info">{{ form.instance.created_date|date:"d M Y" }}</td>
+						</tr>
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-user own-data-icon" aria-hidden="true"></span>
+								Actualizado por:
+							</td>
+							<td class="own-table-info">{{ form.instance.updated_by|default:"" }}</td>
+						</tr>
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+								Actualizado el:
+							</td>
+							<td class="own-table-info">{{ form.instance.updated_date|date:"d M Y" }}</td>
+						</tr>
+					</table>
 				</div>
 	        </div>
+		</div>
 
-	        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-	            <div class="form-group well">
-	                <label for="comment">Comentario:</label>
-	                <textarea class="form-control" rows="5" id="comment"></textarea>
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-lg-9">
+				<div class="form-group well">
+					<label for="comment">Comentario:</label>
+					<textarea class="form-control" rows="5" id="comment"></textarea>
 					<br>
-					<button class="btn btn-default">
-	                	Enviar
-	            	</button>
-	            </div>
-	        </div>
+					<button class="btn btn-success">
+						<span class="glyphicon glyphicon-send"></span>
+						Enviar
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -130,6 +166,5 @@
 
     <!-- Bootstrap Filestyle -->
     <script type="text/javascript" src="{% static 'libs/bootstrap-filestyle/1.2.1/src/bootstrap-filestyle.min.js' %}"></script>
-
 
 {% endblock scripts %}

@@ -54,30 +54,28 @@
                 </div>
 
 				{% if rq.is_Complete %}
-                <div class="form-group">
-                    <label for="comment">Respuesta de la Administracion:</label>
-                    <textarea class="form-control" rows="5" value="{{ rq.response }}" disabled></textarea>
-                </div>
+	                <div class="form-group">
+	                    <label for="comment">Respuesta de la Administracion:</label>
+	                    <textarea class="form-control" rows="5" value="{{ rq.response }}" disabled></textarea>
+	                </div>
 
-				<div class="form-group">
-					<label for="empleados">Archivo:</label>
-					<a href="#">comprobante.pdf</a>
-				</div>
+					<div class="form-group">
+						<label for="empleados">Archivo:</label>
+						<a href="{{rq.file.url}}">{{rq.file.name}}</a>
+					</div>
+				{% else %}
+					<div>
+						<a href="{% url 'payroll:voucher_cancel' rq.pk %}" class="btn btn-danger">
+							Cancelar
+						</a>
+	                    <!--
+						<button class="btn btn-primary">
+							<span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+	                    	Imprimir
+	                    </button>
+						-->
+	                </div>
 				{% endif %}
-
-				<div>
-                    <button class="btn btn-danger">
-                        Cancelar
-                    </button>
-
-                    <!--
-					<button class="btn btn-primary">
-						<span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                    	Imprimir
-                    </button>
-					-->
-                </div>
-
 			</div>
 		</div>
 

@@ -1,0 +1,46 @@
+{% if file.errors %}
+
+    <div class="form-group has-error has-feedback">
+        <label class="control-label" for="{{ file.id_for_label }}">
+            {{ file.label }}
+
+            {% if file.file.required is False %}
+                <span class="own-optional">(opcional)</span>
+            {% endif %}
+        </label>
+        {{ file }}
+        {% if url %}
+            <p>Archivo actual: <a href="{{ url }}">{{ name }}</a></p>
+        {% endif %}
+        <div class="help-block with-errors">
+            <ul class="list-unstyled">
+                {% for error in file.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% else %}
+
+    <div class="form-group">
+        <label class="control-label" for="{{ file.id_for_label }}">
+            {{ file.label }}
+
+            {% if file.field.required is False %}
+                <span class="own-optional">(opcional)</span>
+            {% endif %}
+        </label>
+        {{ file }}
+        {% if url %}
+            <p>Archivo actual: <a href="{{ url }}">{{ name }}</a></p>
+        {% endif %}
+
+        {% if file.help_text %}
+            <div class="help-block own-help-bock">
+                {{ file.help_text }}
+            </div>
+        {% endif %}
+    </div>
+
+{% endif %}

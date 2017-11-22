@@ -50,7 +50,7 @@
                                 {% if user.is_authenticated %}
 
                                 {% if user.is_superuser or user|filter_has_group:"COMPROBANTES_USR" %}
-                                    <li><a class="own-menu-option" href="{% url 'payroll:voucher_list' %}">Comprobantes</a></li>
+                                    <li><a class="own-menu-option" href="{% url 'payroll:voucher_list_all' %}">Comprobantes</a></li>
                                 {% endif %}
 
                                 <!--
