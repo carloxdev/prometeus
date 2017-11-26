@@ -18,8 +18,9 @@ from django.urls import reverse_lazy
 
 # Own's Libraries
 from security.mixins import GroupLoginRequiredMixin
-from .business import VoucherRequisitionBusiness as VoucherBusiness
+from social.business import CommentBusiness
 
+from .business import VoucherRequisitionBusiness as VoucherBusiness
 from .models import VoucherRequisition
 from .forms import VoucherRequisitionAddForm
 from .forms import VoucherRequisitionEditForm
@@ -141,6 +142,16 @@ class VoucherView(DetailView):
     template_name = "voucher/view.html"
     context_object_name = "rq"
 
+    def get_context_data(self, **kwargs):
+        context = {}
+        if self.object:
+            context['object'] = self.object
+            context_object_name = self.get_context_object_name(self.object)
+            if context_object_name:
+                context[context_object_name] = self.object
+        context.update(kwargs)
+        return super(VoucherView, self).get_context_data(**context)
+
 
 class VoucherEdit(UpdateView):
     model = VoucherRequisition
@@ -151,6 +162,18 @@ class VoucherEdit(UpdateView):
     def form_valid(self, form):
         form.instance.updated_by = self.request.user.profile
         return super(VoucherEdit, self).form_valid(form)
+
+    # def get_context_data(self, **kwargs):
+    #     context = {}
+    #     if self.object:
+    #         context['object'] = self.object
+    #         context_object_name = self.get_context_object_name(self.object)
+    #         if context_object_name:
+    #             context[context_object_name] = self.object
+    #
+    #
+    #     context.update(kwargs)
+    #     return super(VoucherEdit, self).get_context_data(**context)
 
 
 class BenefitList(View):

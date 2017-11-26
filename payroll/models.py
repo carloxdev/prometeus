@@ -6,11 +6,14 @@ import os
 
 # Django's Libraries
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as lazy
+from django.utils.translation import gettext_lazy as _
 
 # Own's Libraries
 from home.utilities import Helper
 from security.models import Profile
+from social.business import CommentBusiness
 
 
 def get_FilePath_Voucher(_instance, _filename):
@@ -111,6 +114,17 @@ class VoucherRequisition(models.Model):
         auto_now_add=False,
     )
 
+    def clean(self):
+        fecha_inicio = self.date_start
+        fecha_fin = self.date_end
+
+        if fecha_fin < fecha_inicio:
+            raise ValidationError({
+                'date_end': _(
+                    'Fecha final no puede ser menor que fecha inicial.'
+                )
+            })
+
     class Meta:
         verbose_name_plural = lazy('Solicitudes de Comprobantes')
 
@@ -118,16 +132,23 @@ class VoucherRequisition(models.Model):
         desc = "%s : %s - %s" % (self.pk, self.employee, self.type)
         return desc
 
-    def _is_Complete(self):
+    @property
+    def is_Complete(self):
         if self.status == "com":
             return True
         else:
             return False
-    is_Complete = property(_is_Complete)
+    # is_Complete = property(_is_Complete)
 
-    def _is_Cancel(self):
+    @property
+    def is_Cancel(self):
         if self.status == "can":
             return True
         else:
             return False
-    is_Cancel = property(_is_Cancel)
+    # is_Cancel = property(_is_Cancel)
+
+    @property
+    def comments(self):
+        records = CommentBusiness.get(self.__class__, self.id)
+        return records

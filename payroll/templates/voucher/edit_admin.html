@@ -1,5 +1,6 @@
 {% extends 'master.html' %}
 {% load static from staticfiles %}
+{% load humanize %}
 {% load custom_tags %}
 {% block title %} GCM - Editar Solicitud de Comprobante {% endblock title %}
 
@@ -22,7 +23,7 @@
                     <h3>
                         <ol class="breadcrumb own-breadcrumb">
                           <li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_admin' %}">Solicitudes</a></li>
-                          <li>Solicitud de Comprobante</li>
+                          <li> Solicitud No. {{ form.instance.id }}</li>
                         </ol>
                     </h3>
                 </header>
@@ -156,6 +157,17 @@
 						Enviar
 					</button>
 				</div>
+
+				{% for comentario in form.instance.comments %}
+				<div class="panel panel-default">
+				  	<div class="panel-heading">
+						{{comentario.created_by.user.first_name}} comento el {{comentario.created_date|naturaltime|default:""}}
+					</div>
+				  	<div class="panel-body">
+						{{comentario.content}}
+				 	</div>
+				</div>
+				{% endfor %}
 			</div>
 		</div>
 	</div>

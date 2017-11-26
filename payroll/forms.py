@@ -52,16 +52,16 @@ class VoucherRequisitionAddForm(ModelForm):
             'reason': 'Motivo:'
         }
 
-    def clean_date_end(self):
-        date_start = self.cleaned_data['date_start']
-        date_end = self.cleaned_data['date_end']
-
-        if date_end < date_start:
-            raise ValidationError(
-                "La fecha final no puede ser menor a la inicial"
-            )
-
-        return date_end
+    # def clean_date_end(self):
+    #     date_start = self.cleaned_data['date_start']
+    #     date_end = self.cleaned_data['date_end']
+    #
+    #     if date_end < date_start:
+    #         raise ValidationError(
+    #             "La fecha final no puede ser menor a la inicial"
+    #         )
+    #
+    #     return date_end
 
 # class VoucherRequisitionCancel(ModelForm):
 #     class Meta:
