@@ -2,6 +2,7 @@
 {% load static from staticfiles %}
 {% load humanize %}
 {% load custom_tags %}
+{% load social_tags %}
 {% block title %} GCM - Editar Solicitud de Comprobante {% endblock title %}
 
 {% block css %}
@@ -73,7 +74,10 @@
 					{% tag_field form.response %}
 
 					<div class="text-center">
-                        <a href="{% url 'payroll:voucher_list' %}" class="btn btn-default">Regresar a listado</a>
+                        <a href="{% url 'payroll:voucher_list_admin' %}" class="btn btn-default">
+							<span class="glyphicon glyphicon-arrow-left"></span>
+							Regresar a listado
+						</a>
                         <button type="submit" class="btn btn-success">
                             <span class="glyphicon glyphicon-ok"></span>
                             Guardar
@@ -146,30 +150,7 @@
 	        </div>
 		</div>
 
-		<div class="row">
-			<div class="col-xs-12 col-md-8 col-lg-9">
-				<div class="form-group well">
-					<label for="comment">Comentario:</label>
-					<textarea class="form-control" rows="5" id="comment"></textarea>
-					<br>
-					<button class="btn btn-success">
-						<span class="glyphicon glyphicon-send"></span>
-						Enviar
-					</button>
-				</div>
-
-				{% for comentario in form.instance.comments %}
-				<div class="panel panel-default">
-				  	<div class="panel-heading">
-						{{comentario.created_by.user.first_name}} comento el {{comentario.created_date|naturaltime|default:""}}
-					</div>
-				  	<div class="panel-body">
-						{{comentario.content}}
-				 	</div>
-				</div>
-				{% endfor %}
-			</div>
-		</div>
+		{% tag_comments form.instance %}
 	</div>
 
 {% endblock content %}

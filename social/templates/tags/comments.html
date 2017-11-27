@@ -1,0 +1,26 @@
+{% load humanize %}
+
+<div class="row">
+    <div class="col-xs-12 col-md-8 col-lg-9">
+        <div class="form-group well">
+            <label for="comment">Comentario:</label>
+            <textarea class="form-control" rows="5" id="comment_content"></textarea>
+            <br>
+            <button class="btn btn-success" id="btn_enviar">
+                <span class="glyphicon glyphicon-send"></span>
+                Enviar
+            </button>
+        </div>
+
+        {% for comentario in instance.comments %}
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{comentario.created_by.user.first_name}} comento el {{comentario.created_date|naturaltime|default:""}}
+            </div>
+            <div class="panel-body">
+                {{comentario.content}}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,6 +1,20 @@
 # -*- coding: utf-8 -*-
+
+# Python's Libraries
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+# Django's Libraries
+# from django.shortcuts import render
 
-# Create your views here.
+# Third-party Libraries
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+# Own's Libraries
+from .models import Comment
+
+
+class CommentAddAPI(APIView):
+
+    def post(self, request, format=None):
+        return Response("OK")

@@ -18,13 +18,11 @@ from django.urls import reverse_lazy
 
 # Own's Libraries
 from security.mixins import GroupLoginRequiredMixin
-from social.business import CommentBusiness
 
 from .business import VoucherRequisitionBusiness as VoucherBusiness
 from .models import VoucherRequisition
 from .forms import VoucherRequisitionAddForm
 from .forms import VoucherRequisitionEditForm
-# from .forms import VoucherRequisitionCancel
 
 
 class VoucherList(GroupLoginRequiredMixin, View):
