@@ -21,7 +21,7 @@
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
 					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_all' %}">Solicitudes</a></li>
-					  	<li>Revisar Solicitud de Comprobante</li>
+					  	<li><span id="object_id">{{rq.pk}}</span> Revisar Solicitud de Comprobante</li>
 					</ol>
 				</h3>
             </header>
@@ -59,10 +59,12 @@
 	                    <textarea class="form-control" rows="5" value="{{ rq.response }}" disabled></textarea>
 	                </div>
 
+					{% if rq.file %}
 					<div class="form-group">
 						<label for="empleados">Archivo:</label>
 						<a href="{{rq.file.url}}">{{rq.file.name}}</a>
 					</div>
+					{% endif %}
 				{% elif rq.is_Cancel is False %}
 					<div>
 						<a href="{% url 'payroll:voucher_cancel' rq.pk %}" class="btn btn-danger">
@@ -153,8 +155,12 @@
 
 	<!-- Alertify -->
 	<script src="{% static 'libs/alertifyjs/1.11.0/alertify.min.js' %}"></script>
+	<script src="{% static 'alerts.min.js' %}"></script>
+
+	<!-- Mommentjs -->
+	<script src="{% static 'libs/momentjs/2.19.3/moment-with-locales.min.js' %}"></script>
 
 	<!-- Own's Libraries -->
-	<script src="{% static 'comment.min.js' %}"></script>
+	<script src="{% static 'comment.js' %}"></script>
 
 {% endblock scripts %}

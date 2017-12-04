@@ -12,15 +12,17 @@
             </button>
         </div>
 
-        {% for comentario in instance.comments %}
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                {{comentario.created_by.user.first_name}} comento el {{comentario.created_date|naturaltime|default:""}}
+        <div id="list_comments">
+            {% for comentario in instance.comments %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="badge">{{comentario.created_by.user.first_name}}</span> comento {{comentario.created_date|naturaltime|default:""}}:
+                </div>
+                <div class="panel-body">
+                    {{comentario.content}}
+                </div>
             </div>
-            <div class="panel-body">
-                {{comentario.content}}
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
 </div>

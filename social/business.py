@@ -17,3 +17,14 @@ class CommentBusiness(object):
             object_id=_object_id
         ).order_by('-created_date')
         return records
+
+    @classmethod
+    def add(self, _content, _object_type, _object_id, _profile):
+        content_type = ContentType.objects.get(model=_object_type)
+        comment = Comment()
+        comment.content_type = content_type
+        comment.object_id = _object_id
+        comment.created_by = _profile
+        comment.content = _content
+        comment.save()
+        return comment

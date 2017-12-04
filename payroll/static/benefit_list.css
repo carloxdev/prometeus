@@ -16,12 +16,12 @@
 
 
 .app-record-titles {
-	display: none;	
+	display: none;
 }
 
 
 .app-record {
-	
+
 	/*border: 1px 1px 0 1px solid #E6EAEE !important;*/
 
 	border: 1px solid #E6EAEE;
@@ -32,7 +32,7 @@
 
 	-webkit-box-shadow: 0px 10px 18px -6px rgba(0,0,0,0.30);
 	-moz-box-shadow: 0px 10px 18px -6px rgba(0,0,0,0.30);
-	box-shadow: 0px 10px 18px -6px rgba(0,0,0,0.30);	
+	box-shadow: 0px 10px 18px -6px rgba(0,0,0,0.30);
 }
 
 
@@ -51,7 +51,7 @@
 
 		.app-column-pk-disable {
 			background-color: #EDA847 !important;
-		}		
+		}
 
 	.app-column-main {
 		margin-top: .8em;
@@ -59,7 +59,7 @@
 
 	.app-column {
 		margin-top: .8em;
-	}	
+	}
 
 		.app-data-label {
 			margin-right: .5em;
@@ -69,15 +69,15 @@
 
 		.app-data-icon {
 			color: #B2BAC0;
-		}		
+		}
 
 		.app-data-icon-active {
 			color: #62BF5D;
-		}		
+		}
 
 		.app-data-icon-disable {
 			color: #C0C5CD;
-		}			
+		}
 
 		.app-data-normalvalue {
 			color: #60656B;
@@ -87,7 +87,7 @@
 			font-size: .9em;
 			display: inline-block;
 			color: #60656B;
-		}		
+		}
 
 
 	.app-comando {
@@ -115,7 +115,7 @@
 
 		padding-top: .8em !important;
 		padding-bottom: .8em !important;
-		
+
 		border-radius: 0 0  4px 4px;
 
 		background-color: #F9FAFD;
@@ -138,8 +138,8 @@
 /* Small Devices, Tablets */
 @media only screen and (min-width : 768px) {
 
-.app-seccion-titulo { 
-	
+.app-seccion-titulo {
+
 	font-size: 14px !important;
 
 }
@@ -147,7 +147,7 @@
 	.app-record {
 		border: 1px solid #E5E5E5 !important;
 		margin-bottom: .9em;
-	}	
+	}
 
 	.app-paginacion {
 		margin: 1.3em 0;
@@ -159,7 +159,7 @@
 		font-size: .8em;
 		margin-bottom: .8em;
 
-		display: block;	
+		display: block;
 	}
 
 	.own-status-desc {
@@ -172,7 +172,7 @@
 		min-height: 4em;
 
 		padding-top: .5em !important;
-		padding-right: 0 !important;	
+		padding-right: 0 !important;
 	}
 
 	.app-column {
@@ -180,7 +180,7 @@
 		margin-top: 0 !important;
 		min-height: 4em;
 		padding-top: 1.2em !important;
-	}	
+	}
 
 	.app-column--border	{
 		border-right: 1px solid #D3D3D3;
@@ -217,18 +217,18 @@
 
 		.app-data-second {
 			color: #60656B;
-			font-size: .9em;			
+			font-size: .9em;
 		}
 
 		.app-data-normalvalue {
 			font-size: .9em;
-		}	
+		}
 
 		.app-data-command {
 			display: none;
 		}
 
-	
+
 		/* Ocultamos etiquetas de los campos */
 		.app-data-label {
 			display: none;
@@ -246,7 +246,7 @@
 		.app-data-command {
 			font-size: 1em;
 			display: inline-block;
-		}	 		
+		}
 
 }
 
