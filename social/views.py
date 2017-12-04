@@ -12,7 +12,6 @@ from rest_framework import status
 from rest_framework.response import Response
 
 # Own's Libraries
-from .models import Comment
 from .business import CommentBusiness
 
 
