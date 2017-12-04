@@ -10,6 +10,7 @@ from django.contrib import admin
 
 
 urlpatterns = [
+    url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
     url(r'^admin/', admin.site.urls),
     url(r'', include('editorial.urls', namespace="editorial")),
     url(r'', include('home.urls', namespace="home")),
