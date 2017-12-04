@@ -8,5 +8,5 @@ from .views import CommentAddAPI
 
 
 urlpatterns = [
-    url(r'^comments/add/$', CommentAddAPI.as_view(), name="comment_add"),
+    url(r'^api/comments/add/$', CommentAddAPI.as_view(), name="comment_add"),
 ]

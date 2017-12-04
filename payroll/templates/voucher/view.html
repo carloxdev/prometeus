@@ -9,6 +9,7 @@
 
 	<!-- Own's Styles -->
 	<link rel="stylesheet" type="text/css" href="{% static 'details.min.css' %}"/>
+
 {% endblock css %}
 
 {% block content %}
@@ -147,6 +148,8 @@
 {% endblock content %}
 
 {% block scripts %}
+
+	<script src="{% static 'libs/js-cookie/2.2.0/src/js.cookie.js' %}"></script>
 
 	<!-- Alertify -->
 	<script src="{% static 'libs/alertifyjs/1.11.0/alertify.min.js' %}"></script>

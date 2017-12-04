@@ -17,6 +17,7 @@ urlpatterns = [
     url(r'', include('management.urls', namespace="management")),
     url(r'', include('payroll.urls', namespace="payroll")),
     url(r'', include('security.urls', namespace="security")),
+    url(r'', include('social.urls', namespace="social")),
 ]
 
 
