@@ -2,7 +2,6 @@
 
 # Python's Libraries
 from __future__ import unicode_literals
-import os
 
 # Django's Libraries
 from django.db import models
@@ -14,15 +13,7 @@ from django_resized import ResizedImageField
 from home.utilities import Helper
 from security.models import Profile
 
-
-def get_ImagePath_Post(_instance, _filename):
-
-    if (_instance):
-        upload_dir = os.path.join(
-            'images',
-            'posts'
-        )
-    return os.path.join(upload_dir, _filename)
+from .utils import get_ImagePath_Post
 
 
 class Post(models.Model):
