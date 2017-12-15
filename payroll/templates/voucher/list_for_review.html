@@ -28,8 +28,8 @@
                         Solicitar
                     </a>
 
-                    {% if request.path == '/vouchers_all/' %}
-                        <a href="{% url 'payroll:voucher_list' %}" class="btn btn-info ">
+                    {% if request.path == '/vouchers/all/' %}
+                        <a href="{% url 'payroll:voucher_list_pending' %}" class="btn btn-info ">
                             <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                             Ver solo pendientes
                         </a>
