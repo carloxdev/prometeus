@@ -11,6 +11,11 @@ def filter_has_group(user, group_name):
     return group in user.groups.all()
 
 
+@register.filter(name='to_class_name')
+def to_class_name(model):
+    return model.__class__.__name__
+
+
 @register.inclusion_tag('tags/message.html', takes_context=False)
 def tag_message(_type, _text):
     """Show a message for the user.
@@ -30,7 +35,6 @@ def tag_message(_type, _text):
 
 @register.inclusion_tag('tags/field.html', takes_context=False)
 def tag_field(_field):
-
     context = {
         'field': _field,
     }
@@ -56,7 +60,6 @@ def tag_file(_file, _form):
 
 @register.inclusion_tag('tags/dates.html', takes_context=False)
 def tag_dates(_label_name, _is_optional, _field1, _field2):
-
     context = {
         'is_optional': _is_optional,
         'label_name': _label_name,
@@ -66,9 +69,18 @@ def tag_dates(_label_name, _is_optional, _field1, _field2):
     return context
 
 
+@register.inclusion_tag('tags/date.html', takes_context=False)
+def tag_date(_label_name, _is_optional, _field):
+    context = {
+        'is_optional': _is_optional,
+        'label_name': _label_name,
+        'field': _field
+    }
+    return context
+
+
 @register.inclusion_tag('tags/radio.html', takes_context=False)
 def tag_radio(_field):
-
     context = {
         'field': _field,
     }
@@ -77,7 +89,6 @@ def tag_radio(_field):
 
 @register.inclusion_tag('tags/image.html', takes_context=False)
 def tag_image(_field, _object):
-
     context = {
         'field': _field,
         'object': _object
@@ -87,7 +98,6 @@ def tag_image(_field, _object):
 
 @register.inclusion_tag('tags/image_nopreview.html', takes_context=False)
 def tag_image_nopreview(_field):
-
     context = {
         'field': _field
     }
@@ -96,7 +106,6 @@ def tag_image_nopreview(_field):
 
 @register.inclusion_tag('tags/form_errors.html', takes_context=False)
 def tag_form_errors(_form):
-
     context = {
         'form': _form,
     }

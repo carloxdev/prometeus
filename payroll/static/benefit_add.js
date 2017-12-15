@@ -16,9 +16,13 @@ $(document).ready(function () {
 		theme: "bootstrap"
 	})
 
-	$fecha = $('#fecha')
-	
-    $fecha.datepicker()
+	$fecha = $('#id_date')
+	$fecha.datepicker({
+        format: 'dd/mm/yyyy',
+		autoclose: true,
+		clearBtn: true
+    })
+
 })
 
 

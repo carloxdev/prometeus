@@ -50,7 +50,6 @@ class VoucherType(models.Model):
 
 
 class VoucherRequisition(models.Model):
-
     STATUS_OPTIONS = (
         ('pen', 'PENDIENTE'),
         ('can', 'CANCELADO'),
@@ -136,6 +135,104 @@ class VoucherRequisition(models.Model):
             return True
         else:
             return False
+
+    @property
+    def comments(self):
+        records = CommentBusiness.get(self.__class__, self.id)
+        return records
+
+
+class BenefitType(models.Model):
+    name = models.CharField(max_length=50, blank=False)
+    description = models.TextField(blank=True, null=True)
+
+    created_by = models.ForeignKey(
+        Profile,
+        related_name='tp_created_by',
+        blank=True,
+        null=True
+    )
+    created_date = models.DateTimeField(
+        auto_now=False,
+        auto_now_add=True,
+    )
+    updated_by = models.ForeignKey(
+        Profile,
+        related_name='tp_updated_by',
+        blank=True,
+        null=True
+    )
+    updated_date = models.DateTimeField(
+        auto_now=True,
+        auto_now_add=False,
+    )
+
+    class Meta:
+        verbose_name_plural = lazy('Tipos de Prestaciones')
+
+    def __unicode__(self):
+        return self.name
+
+
+class BenefitRequisition(models.Model):
+    PAYMENT_STATUS = (
+        ('pen', 'Pago Pendiente'),
+        ('can', 'Pago Cancelado'),
+        ('rec', 'Pago Recibido'),
+    )
+
+    STATUS = (
+        ('pen', 'Pendiente'),
+        ('can', 'Cancelado'),
+        ('com', 'Completado'),
+    )
+
+    employee = models.ForeignKey(
+        Profile,
+        blank=False,
+        on_delete=models.PROTECT
+    )
+    type = models.ForeignKey(
+        BenefitType,
+        blank=False,
+        on_delete=models.PROTECT
+    )
+    date = models.DateField()
+    reason = models.TextField(blank=True)
+    additional_comments = models.TextField(blank=True)
+    payment_status = models.CharField(
+        max_length=3,
+        choices=PAYMENT_STATUS,
+        default="pen"
+    )
+    status = models.CharField(max_length=3, choices=STATUS, default="pen")
+    created_by = models.ForeignKey(
+        Profile,
+        related_name='sp_created_by',
+        blank=True,
+        null=True
+    )
+    created_date = models.DateTimeField(
+        auto_now=False,
+        auto_now_add=True,
+    )
+    updated_by = models.ForeignKey(
+        Profile,
+        related_name='sp_updated_by',
+        blank=True,
+        null=True
+    )
+    updated_date = models.DateTimeField(
+        auto_now=True,
+        auto_now_add=False,
+    )
+
+    class Meta:
+        verbose_name_plural = lazy('Solicitudes de Prestaciones')
+
+    def __unicode__(self):
+        desc = "%s : %s - %s" % (self.pk, self.employee, self.type)
+        return desc
 
     @property
     def comments(self):

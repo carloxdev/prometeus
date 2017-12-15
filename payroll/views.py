@@ -20,8 +20,9 @@ from django.urls import reverse_lazy
 from security.mixins import GroupLoginRequiredMixin
 
 from .business import VoucherRequisitionBusiness as VoucherBusiness
-from .models import VoucherRequisition
-from .forms import VoucherRequisitionAddForm
+from .business import BenefitRequisitionBusiness as BenefitBusiness
+from .models import VoucherRequisition, BenefitRequisition
+from .forms import VoucherRequisitionAddForm, BenefitRequisitionAddForm
 from .forms import VoucherRequisitionEditForm
 
 
@@ -176,16 +177,35 @@ class VoucherEdit(UpdateView):
 
 class BenefitList(View):
     template_name = "benefit_list.html"
+    group = ['PRESTACIONES_ADM', 'PRESTACIONES_USR', ]
 
     def get(self, _request):
-        return render(_request, self.template_name, {})
+        query = _request.GET.get('q')
+        requisitions = BenefitBusiness.get_Pendientes(
+            query,
+            _request.user.profile
+        )
+        requisitions_paginated = BenefitBusiness.get_Paginated(
+            requisitions,
+            _request.GET.get('page')
+        )
+        context = {
+            'requisitions': requisitions_paginated
+        }
+        return render(_request, self.template_name, context)
 
 
-class BenefitAdd(View):
+class BenefitAdd(CreateView):
     template_name = "benefit_add.html"
+    model = BenefitRequisition
+    form_class = BenefitRequisitionAddForm
+    success_url = reverse_lazy('payroll:benefit_add_success')
 
-    def get(self, _request):
-        return render(_request, self.template_name, {})
+    def form_valid(self, form):
+        form.instance.employee = self.request.user.profile
+        form.instance.created_by = self.request.user.profile
+        form.instance.updated_by = self.request.user.profile
+        return super(BenefitAdd, self).form_valid(form)
 
 
 class BenefitAddSuccess(View):
@@ -195,11 +215,20 @@ class BenefitAddSuccess(View):
         return render(_request, self.template_name, {})
 
 
-class BenefitView(View):
+class BenefitView(DetailView):
+    model = BenefitRequisition
     template_name = "benefit_view.html"
+    context_object_name = "rq"
 
-    def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
+    def get_context_data(self, **kwargs):
+        context = {}
+        if self.object:
+            context['object'] = self.object
+            context_object_name = self.get_context_object_name(self.object)
+            if context_object_name:
+                context[context_object_name] = self.object
+        context.update(kwargs)
+        return super(BenefitView, self).get_context_data(**context)
 
 
 class BenefitEdit(View):

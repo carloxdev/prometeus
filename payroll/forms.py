@@ -11,7 +11,7 @@ from django.forms import ValidationError
 
 
 # Own's Libraries
-from .models import VoucherRequisition
+from .models import VoucherRequisition, BenefitRequisition
 
 
 class VoucherRequisitionAddForm(ModelForm):
@@ -121,3 +121,30 @@ class VoucherRequisitionEditForm(ModelForm):
             raise ValidationError(
                 "Favor de dar explicar porque estas cancelando la solicitud"
             )
+
+
+class BenefitRequisitionAddForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(BenefitRequisitionAddForm, self).__init__(*args, **kwargs)
+        self.fields['reason'].required = True
+
+    class Meta:
+        model = BenefitRequisition
+        fields = (
+            'type',
+            'date',
+            'reason',
+        )
+        widgets = {
+            'date': DateInput(
+                attrs={'class': 'form-control'},
+                format='%d/%m/%Y'
+            ),
+            'type': Select(attrs={'class': 'form-control'}),
+            'reason': Textarea(attrs={'class': 'form-control', 'rows': '8'}),
+        }
+
+        labels = {
+            'type': 'Tipo de Prestacion:',
+            'reason': 'Motivo:'
+        }
