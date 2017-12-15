@@ -4,9 +4,9 @@
 from django.conf.urls import url
 
 # Own's Libraries
-from .views import VoucherList
+from .views import VoucherListPending
 from .views import VoucherListAll
-from .views import VoucherListAdmin
+from .views import VoucherListAdminPending
 from .views import VoucherListAdminAll
 from .views import VoucherAdd
 from .views import VoucherAddSuccess
@@ -22,19 +22,31 @@ from .views import BenefitEdit
 
 
 urlpatterns = [
-    url(r'^vouchers/$', VoucherList.as_view(), name="voucher_list"),
-    url(r'^vouchers_all/$', VoucherListAll.as_view(), name="voucher_list_all"),
     url(
-        r'^vouchers_admin/$',
-        VoucherListAdmin.as_view(),
-        name="voucher_list_admin"
+        r'^vouchers/pending/$',
+        VoucherListPending.as_view(),
+        name="voucher_list_pending"
     ),
     url(
-        r'^vouchers_admin_all/$',
+        r'^vouchers/all/$',
+        VoucherListAll.as_view(),
+        name="voucher_list_all"
+    ),
+    url(
+        r'^vouchers/admin/pending/$',
+        VoucherListAdminPending.as_view(),
+        name="voucher_list_admin_pending"
+    ),
+    url(
+        r'^vouchers/admin/all/$',
         VoucherListAdminAll.as_view(),
         name="voucher_list_admin_all"
     ),
-    url(r'^vouchers/add/$', VoucherAdd.as_view(), name="voucher_add"),
+    url(
+        r'^vouchers/add/$',
+        VoucherAdd.as_view(),
+        name="voucher_add"
+    ),
     url(
         r'^vouchers/add/success/$',
         VoucherAddSuccess.as_view(),

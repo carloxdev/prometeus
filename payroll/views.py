@@ -25,13 +25,13 @@ from .forms import VoucherRequisitionAddForm
 from .forms import VoucherRequisitionEditForm
 
 
-class VoucherList(GroupLoginRequiredMixin, View):
-    template_name = "voucher/list.html"
+class VoucherListPending(GroupLoginRequiredMixin, View):
+    template_name = "voucher/list_for_review.html"
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
     def get(self, _request):
         query = _request.GET.get('q')
-        requisitions = VoucherBusiness.get_Pendientes(
+        requisitions = VoucherBusiness.get_Pending(
             query,
             _request.user.profile
         )
@@ -46,7 +46,7 @@ class VoucherList(GroupLoginRequiredMixin, View):
 
 
 class VoucherListAll(GroupLoginRequiredMixin, View):
-    template_name = "voucher/list.html"
+    template_name = "voucher/list_for_review.html"
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
     def get(self, _request):
@@ -65,13 +65,13 @@ class VoucherListAll(GroupLoginRequiredMixin, View):
         return render(_request, self.template_name, context)
 
 
-class VoucherListAdmin(GroupLoginRequiredMixin, View):
-    template_name = "voucher/list_admin.html"
+class VoucherListAdminPending(GroupLoginRequiredMixin, View):
+    template_name = "voucher/list_for_edit.html"
     group = ['COMPROBANTES_ADM', ]
 
     def get(self, _request):
         query = _request.GET.get('q')
-        requisitions = VoucherBusiness.get_Pendientes(query)
+        requisitions = VoucherBusiness.get_Pending(query)
         requisitions_paginated = VoucherBusiness.get_Paginated(
             requisitions,
             _request.GET.get('page')
@@ -83,7 +83,7 @@ class VoucherListAdmin(GroupLoginRequiredMixin, View):
 
 
 class VoucherListAdminAll(GroupLoginRequiredMixin, View):
-    template_name = "voucher/list_admin.html"
+    template_name = "voucher/list_for_edit.html"
     group = ['COMPROBANTES_ADM', ]
 
     def get(self, _request):
@@ -153,7 +153,7 @@ class VoucherView(DetailView):
 
 class VoucherEdit(UpdateView):
     model = VoucherRequisition
-    template_name = "voucher/edit_admin.html"
+    template_name = "voucher/edit.html"
     form_class = VoucherRequisitionEditForm
     success_url = reverse_lazy('payroll:voucher_list_admin')
 

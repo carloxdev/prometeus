@@ -23,7 +23,7 @@
                 <header>
                     <h3>
                         <ol class="breadcrumb own-breadcrumb">
-                          <li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_admin' %}">Solicitudes</a></li>
+                          <li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_admin_pending' %}">Solicitudes</a></li>
                           <li> Solicitud No. {{ form.instance.id }}</li>
                         </ol>
                     </h3>
@@ -74,7 +74,7 @@
 					{% tag_field form.response %}
 
 					<div class="text-center">
-                        <a href="{% url 'payroll:voucher_list_admin' %}" class="btn btn-default">
+                        <a href="{% url 'payroll:voucher_list_admin_pending' %}" class="btn btn-default">
 							<span class="glyphicon glyphicon-arrow-left"></span>
 							Regresar a listado
 						</a>

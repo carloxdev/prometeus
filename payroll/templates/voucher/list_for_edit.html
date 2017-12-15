@@ -22,9 +22,9 @@
         <hr>
         <nav>
             <form class="row" action="" method="GET">
-                {% if request.path == '/vouchers_admin_all/' %}
+                {% if request.path == '/vouchers/admin/all/' %}
                     <div class="col-xs-12 col-sm-6">
-                        <a href="{% url 'payroll:voucher_list_admin' %}" class="btn btn-info visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                        <a href="{% url 'payroll:voucher_list_admin_pending' %}" class="btn btn-info visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
                             <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                             Ver pendientes
                         </a>

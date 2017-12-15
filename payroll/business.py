@@ -20,7 +20,7 @@ class VoucherRequisitionBusiness(object):
         return requisition
 
     @classmethod
-    def get_No_Pendientes(self):
+    def get_No_Pending(self):
         cantidades = VoucherRequisition.objects.filter(status="pen").count()
         return cantidades
 
@@ -41,7 +41,7 @@ class VoucherRequisitionBusiness(object):
         return requisitions
 
     @classmethod
-    def get_Pendientes(self, _value, _profile=None):
+    def get_Pending(self, _value, _profile=None):
         if _value:
             requisitions = VoucherRequisition.objects \
                 .filter(
