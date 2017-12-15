@@ -2,7 +2,6 @@
 
 # Python's Libraries
 from __future__ import unicode_literals
-import os
 
 # Django's Libraries
 from django.db import models
@@ -15,14 +14,7 @@ from home.utilities import Helper
 from security.models import Profile
 from social.business import CommentBusiness
 
-
-def get_FilePath_Voucher(_instance, _filename):
-    if (_instance):
-        upload_dir = os.path.join(
-            'files',
-            'vouchers',
-        )
-    return os.path.join(upload_dir, _filename)
+from .utils import get_FilePath_Voucher
 
 
 class VoucherType(models.Model):
@@ -137,16 +129,12 @@ class VoucherRequisition(models.Model):
         else:
             return False
 
-    # is_Complete = property(_is_Complete)
-
     @property
     def is_Cancel(self):
         if self.status == "can":
             return True
         else:
             return False
-
-    # is_Cancel = property(_is_Cancel)
 
     @property
     def comments(self):
