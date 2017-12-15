@@ -11,6 +11,11 @@ def filter_has_group(user, group_name):
     return group in user.groups.all()
 
 
+@register.filter(name='to_class_name')
+def to_class_name(model):
+    return model.__class__.__name__
+
+
 @register.inclusion_tag('tags/message.html', takes_context=False)
 def tag_message(_type, _text):
     """Show a message for the user.

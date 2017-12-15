@@ -1,6 +1,7 @@
 {% extends 'master.html' %}
 {% load static from staticfiles %}
 {% load social_tags %}
+{% load to_class_name from custom_tags %}
 {% block css %}
 
 	<!-- Alertify -->
@@ -21,7 +22,7 @@
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
 					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_all' %}">Solicitudes</a></li>
-					  	<li><span id="object_id">{{rq.pk}}</span> Revisar Solicitud de Comprobante</li>
+					  	<li><span id="object_id" data-tag-model="{{ rq | to_class_name }}">{{rq.pk}}</span> Revisar Solicitud de Comprobante</li>
 					</ol>
 				</h3>
             </header>

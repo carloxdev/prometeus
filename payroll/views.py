@@ -215,11 +215,20 @@ class BenefitAddSuccess(View):
         return render(_request, self.template_name, {})
 
 
-class BenefitView(View):
+class BenefitView(DetailView):
+    model = BenefitRequisition
     template_name = "benefit_view.html"
+    context_object_name = "rq"
 
-    def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
+    def get_context_data(self, **kwargs):
+        context = {}
+        if self.object:
+            context['object'] = self.object
+            context_object_name = self.get_context_object_name(self.object)
+            if context_object_name:
+                context[context_object_name] = self.object
+        context.update(kwargs)
+        return super(BenefitView, self).get_context_data(**context)
 
 
 class BenefitEdit(View):

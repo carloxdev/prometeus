@@ -14,6 +14,7 @@ $(document).ready(function () {
 function CommentsInput() {
     this.$content = $('#comment_content')
     this.$object_id = $('#object_id')
+    this.$tag_model = this.$object_id.data('tag-model')
     this.$button = $('#btn_enviar')
     this.$user = $('#user')
     this.$list_comments = $('#list_comments')
@@ -34,7 +35,7 @@ CommentsInput.prototype.click_Enviar = function (e) {
         $.ajax({
             url: url_add_comment,
             data: {
-                "object_type" : 'VoucherRequisition',
+                "object_type" : obj.$tag_model,
                 "object_id" : obj.$object_id.text(),
                 "comment" :  obj.$content.val()
             },

@@ -187,10 +187,16 @@ class BenefitType(models.Model):
 
 
 class BenefitRequisition(models.Model):
-    STATUS_OPTIONS = (
+    PAYMENT_STATUS = (
         ('pen', 'Pago Pendiente'),
         ('can', 'Pago Cancelado'),
         ('rec', 'Pago Recibido'),
+    )
+
+    STATUS = (
+        ('pen', 'Pendiente'),
+        ('can', 'Cancelado'),
+        ('com', 'Completado'),
     )
 
     employee = models.ForeignKey(
@@ -206,11 +212,12 @@ class BenefitRequisition(models.Model):
     date = models.DateField()
     reason = models.TextField(blank=True)
     additional_comments = models.TextField(blank=True)
-    status = models.CharField(
+    payment_status = models.CharField(
         max_length=3,
-        choices=STATUS_OPTIONS,
+        choices=PAYMENT_STATUS,
         default="pen"
     )
+    status = models.CharField(max_length=3, choices=STATUS, default="pen")
     created_by = models.ForeignKey(
         Profile,
         related_name='sp_created_by',
