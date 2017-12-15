@@ -25,3 +25,5 @@ management/migrations/*
 payroll/migrations/*
 security/migrations/*
 social/migrations/*
+
+.idea/
