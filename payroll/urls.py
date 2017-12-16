@@ -4,7 +4,7 @@
 from django.conf.urls import url
 
 # Own's Libraries
-from .views import VoucherListPending
+from .views import VoucherListPending, BenefitListAdmin
 from .views import VoucherListAll
 from .views import VoucherListAdminPending
 from .views import VoucherListAdminAll
@@ -68,10 +68,10 @@ urlpatterns = [
         name="voucher_cancel"
     ),
 
-    url(r'^benefits/pending/$', BenefitList.as_view(), name="benefit_list_pending"),
-    url(r'^benefits/all/$', BenefitList.as_view(), name="benefit_list_all"),
-    url(r'^benefits/admin/pending/$', BenefitList.as_view(), name="benefit_list_admin_pending"),
-    url(r'^benefits/admin/all/$', BenefitList.as_view(), name="benefit_list_list_admin_all"),
+    url(r'^benefits/pending/$', BenefitList.as_view(), {'status': 'pending'}, name="benefit_list_pending"),
+    url(r'^benefits/all/$', BenefitList.as_view(), {'status': 'all'}, name="benefit_list_all"),
+    url(r'^benefits/admin/pending/$', BenefitListAdmin.as_view(), {'status': 'pending'}, name="benefit_list_admin_pending"),
+    url(r'^benefits/admin/all/$', BenefitListAdmin.as_view(), {'status': 'all'}, name="benefit_list_admin_all"),
     url(r'^benefits/add/$', BenefitAdd.as_view(), name="benefit_add"),
     url(r'^benefits/add/success/$', BenefitAddSuccess.as_view(), name="benefit_add_success"),
     url(r'^benefits/(?P<pk>\d+)/edit/$', BenefitEdit.as_view(), name="benefit_edit"),

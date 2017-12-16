@@ -21,10 +21,10 @@
                 <h3 class="own-titulo">Prestaciones</h3>
             </header>
 
-            <hr class="own-article-line">            
+            <hr class="own-article-line">
 
             <nav class="own-article-toolbar">
-                
+
                 <div class="row">
 
                     <div class="col-xs-12 col-sm-6">
@@ -33,18 +33,18 @@
                             Solicitar
                         </a>
                         {% if status == 'all' %}
-                            <a href="{% url 'payroll:benefit_list_pending' %}" class="btn btn-info ">
+                            <a href="{% url 'payroll:benefit_list_admin_pending' %}" class="btn btn-info ">
                                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
                                 Ver solo pendientes
                             </a>
                         {% else %}
-                            <a href="{% url 'payroll:benefit_list_all' %}" class="btn btn-info ">
+                            <a href="{% url 'payroll:benefit_list_admin_all' %}" class="btn btn-info ">
                                 <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
                                 Ver todos
                             </a>
                         {% endif %}
                     </div>
-                    
+
                     <br class="visible-xs">
                     <br class="visible-xs">
 
@@ -52,20 +52,20 @@
 
                         <div class="input-group">
                             <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
-                            
+
                             <span class="input-group-btn">
                               <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                 <span class="hidden-xs">Buscar</span>
                               </button>
                             </span>
-                        </div>   
+                        </div>
 
                     </form>
                 </div>
-            </nav>  
+            </nav>
 
-            <br>            
+            <br>
 
             <div class="container-fluid">
             {% if requisitions %}
@@ -116,7 +116,9 @@
                                     {{requisition.pk}} - {{requisition.type}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                    <strong>{{ requisition.reason|truncatechars:30 }}</strong>
+                                    <a href="{% url 'security:profile' requisition.employee.pk %}">
+                                        {{ requisition.employee }}
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -162,7 +164,7 @@
 
                             <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue own-data-comandvalue">
-                                Revisar
+                                Editar
                             </span>
                         </a>
 
