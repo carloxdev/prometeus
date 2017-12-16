@@ -30,9 +30,9 @@ class VoucherRequisitionBusiness(object):
             requisitions = VoucherRequisition.objects \
                 .filter(employee=_profile) \
                 .filter(
-                Q(type__name__icontains=_value) |
-                Q(reason__icontains=_value)
-            ).order_by("-created_date")
+                    Q(type__name__icontains=_value) |
+                    Q(reason__icontains=_value)
+                ).order_by("-created_date")
         else:
             requisitions = VoucherRequisition.objects \
                 .filter(employee=_profile) \
@@ -45,13 +45,13 @@ class VoucherRequisitionBusiness(object):
         if _value:
             requisitions = VoucherRequisition.objects \
                 .filter(
-                Q(type__name__icontains=_value) |
-                Q(pk__icontains=_value) |
-                Q(reason__icontains=_value) |
-                Q(response__icontains=_value) |
-                Q(employee__user__first_name__icontains=_value) |
-                Q(employee__user__last_name__icontains=_value)
-            ) \
+                    Q(type__name__icontains=_value) |
+                    Q(pk__icontains=_value) |
+                    Q(reason__icontains=_value) |
+                    Q(response__icontains=_value) |
+                    Q(employee__user__first_name__icontains=_value) |
+                    Q(employee__user__last_name__icontains=_value)
+                ) \
                 .filter(status="pen") \
                 .order_by("-created_date")
         else:
@@ -69,13 +69,13 @@ class VoucherRequisitionBusiness(object):
         if _value:
             requisitions = VoucherRequisition.objects \
                 .filter(
-                Q(type__name__icontains=_value) |
-                Q(pk__icontains=_value) |
-                Q(reason__icontains=_value) |
-                Q(response__icontains=_value) |
-                Q(employee__user__first_name__icontains=_value) |
-                Q(employee__user__last_name__icontains=_value)
-            ) \
+                    Q(type__name__icontains=_value) |
+                    Q(pk__icontains=_value) |
+                    Q(reason__icontains=_value) |
+                    Q(response__icontains=_value) |
+                    Q(employee__user__first_name__icontains=_value) |
+                    Q(employee__user__last_name__icontains=_value)
+                ) \
                 .order_by("-created_date")
         else:
             requisitions = VoucherRequisition.objects \
@@ -118,9 +118,9 @@ class BenefitRequisitionBusiness(object):
             requisitions = BenefitRequisition.objects \
                 .filter(employee=_profile) \
                 .filter(
-                Q(type__name__icontains=_value) |
-                Q(reason__icontains=_value)
-            ).order_by("-created_date")
+                    Q(type__name__icontains=_value) |
+                    Q(reason__icontains=_value)
+                ).order_by("-created_date")
         else:
             requisitions = BenefitRequisition.objects \
                 .filter(employee=_profile) \
@@ -133,13 +133,13 @@ class BenefitRequisitionBusiness(object):
         if _value:
             requisitions = BenefitRequisition.objects \
                 .filter(
-                Q(type__name__icontains=_value) |
-                Q(pk__icontains=_value) |
-                Q(reason__icontains=_value) |
-                Q(payment_info__icontains=_value) |
-                Q(employee__user__first_name__icontains=_value) |
-                Q(employee__user__last_name__icontains=_value)
-            ) \
+                    Q(type__name__icontains=_value) |
+                    Q(pk__icontains=_value) |
+                    Q(reason__icontains=_value) |
+                    Q(payment_info__icontains=_value) |
+                    Q(employee__user__first_name__icontains=_value) |
+                    Q(employee__user__last_name__icontains=_value)
+                ) \
                 .filter(status="pen") \
                 .order_by("-created_date")
         else:
@@ -157,13 +157,13 @@ class BenefitRequisitionBusiness(object):
         if _value:
             requisitions = BenefitRequisition.objects \
                 .filter(
-                Q(type__name__icontains=_value) |
-                Q(pk__icontains=_value) |
-                Q(reason__icontains=_value) |
-                Q(payment_info__icontains=_value) |
-                Q(employee__user__first_name__icontains=_value) |
-                Q(employee__user__last_name__icontains=_value)
-            ) \
+                    Q(type__name__icontains=_value) |
+                    Q(pk__icontains=_value) |
+                    Q(reason__icontains=_value) |
+                    Q(payment_info__icontains=_value) |
+                    Q(employee__user__first_name__icontains=_value) |
+                    Q(employee__user__last_name__icontains=_value)
+                ) \
                 .order_by("-created_date")
         else:
             requisitions = BenefitRequisition.objects \

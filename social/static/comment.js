@@ -29,7 +29,7 @@ CommentsInput.prototype.click_Enviar = function (e) {
     obj = e.data
 
     if (obj.$content.val() == "") {
-        alertify.alert('Favor de especificar un comentario');
+        alertify.alert('¡Aviso!','Favor de especificar un comentario');
     }
     else {
         $.ajax({

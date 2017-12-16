@@ -22,7 +22,7 @@ class TaskList(View):
     template_name = "task_list.html"
 
     def get(self, _request):
-        new_vouchers = VoucherRequisitionBusiness.get_No_Pendientes()
+        new_vouchers = VoucherRequisitionBusiness.get_No_Pending()
 
         context = {
             'new_vouchers': new_vouchers
