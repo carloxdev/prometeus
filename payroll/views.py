@@ -22,7 +22,7 @@ from security.mixins import GroupLoginRequiredMixin
 from .business import VoucherRequisitionBusiness as VoucherBusiness
 from .business import BenefitRequisitionBusiness as BenefitBusiness
 from .models import VoucherRequisition, BenefitRequisition
-from .forms import VoucherRequisitionAddForm, BenefitRequisitionAddForm
+from .forms import VoucherRequisitionAddForm, BenefitRequisitionAddForm, BenefitRequisitionEditForm
 from .forms import VoucherRequisitionEditForm
 
 
@@ -215,24 +215,29 @@ class BenefitAddSuccess(View):
         return render(_request, self.template_name, {})
 
 
-class BenefitView(DetailView):
-    model = BenefitRequisition
-    template_name = "benefit_view.html"
-    context_object_name = "rq"
-
-    def get_context_data(self, **kwargs):
-        context = {}
-        if self.object:
-            context['object'] = self.object
-            context_object_name = self.get_context_object_name(self.object)
-            if context_object_name:
-                context[context_object_name] = self.object
-        context.update(kwargs)
-        return super(BenefitView, self).get_context_data(**context)
-
-
 class BenefitEdit(View):
     template_name = "benefit_edit.html"
+    group = ['PRESTACIONES_ADM', 'PRESTACIONES_USR', ]
 
-    def get(self, _request, _pk):
-        return render(_request, self.template_name, {})
+    def get(self, request, pk):
+        benefit = get_object_or_404(BenefitRequisition, pk=pk)
+        is_admin_form = (request.user.groups.filter(
+            name='PRESTACIONES_ADM').exists() or request.user.is_superuser) and benefit.created_by.user != request.user
+
+        form = BenefitRequisitionEditForm(instance=benefit, is_admin_form=is_admin_form)
+        context = {
+            'rq': benefit,
+            'form': form
+        }
+        return render(request, self.template_name, context)
+
+    def post(self, request, pk):
+        benefit = get_object_or_404(BenefitRequisition, pk=pk)
+        form = BenefitRequisitionEditForm(data=request.POST, instance=benefit)
+
+        if form.is_valid():
+            form.save()
+            return redirect('payroll:benefit_add_success')
+        else:
+            return redirect(reverse('payroll:benefit_edit'), pk=pk)
+

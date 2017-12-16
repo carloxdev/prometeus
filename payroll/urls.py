@@ -17,8 +17,8 @@ from .views import VoucherCancel
 from .views import BenefitList
 from .views import BenefitAdd
 from .views import BenefitAddSuccess
-from .views import BenefitView
 from .views import BenefitEdit
+
 
 
 urlpatterns = [
@@ -71,6 +71,5 @@ urlpatterns = [
     url(r'^benefits/$', BenefitList.as_view(), name="benefit_list"),
     url(r'^benefits/add/$', BenefitAdd.as_view(), name="benefit_add"),
     url(r'^benefits/add/success/$', BenefitAddSuccess.as_view(), name="benefit_add_success"),
-    url(r'^benefits/(?P<pk>\d+)/view/$', BenefitView.as_view(), name="benefit_view"),
-    url(r'^benefits/(?P<_pk>\d+)/edit/$', BenefitEdit.as_view(), name="benefit_edit"),
+    url(r'^benefits/(?P<pk>\d+)/edit/$', BenefitEdit.as_view(), name="benefit_edit"),
 ]

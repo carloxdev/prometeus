@@ -61,7 +61,7 @@ class BenefitRequisitionAdmin(admin.ModelAdmin):
         'type',
         'date',
         'reason',
-        'additional_comments',
+        'payment_info',
         'status',
         'created_by',
         'created_date',
