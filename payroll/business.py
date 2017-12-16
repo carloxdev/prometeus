@@ -136,7 +136,7 @@ class BenefitRequisitionBusiness(object):
                     Q(type__name__icontains=_value) |
                     Q(pk__icontains=_value) |
                     Q(reason__icontains=_value) |
-                    Q(additional_comments__icontains=_value) |
+                    Q(payment_info__icontains=_value) |
                     Q(employee__user__first_name__icontains=_value) |
                     Q(employee__user__last_name__icontains=_value)
                 ) \
@@ -160,7 +160,7 @@ class BenefitRequisitionBusiness(object):
                     Q(type__name__icontains=_value) |
                     Q(pk__icontains=_value) |
                     Q(reason__icontains=_value) |
-                    Q(additional_comments__icontains=_value) |
+                    Q(payment_info__icontains=_value) |
                     Q(employee__user__first_name__icontains=_value) |
                     Q(employee__user__last_name__icontains=_value)
                 ) \
