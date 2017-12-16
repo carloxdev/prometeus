@@ -23,7 +23,7 @@
             <header>
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
-					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:benefit_list' %}">Solicitudes</a></li>
+					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:benefit_list_all' %}">Solicitudes</a></li>
 					  	<li>Solicitud de prestación no. <span id="object_id" data-tag-model="{{ rq | to_class_name }}">{{rq.pk}}</span></li>
 					</ol>
 				</h3>

@@ -188,9 +188,9 @@ class BenefitList(View):
 
         if filter_checkbox and (
                 _request.user.groups.filter(name='PRESTACIONES_ADM').exists() or _request.user.is_superuser):
-            requisitions = BenefitBusiness.get_Pendientes(query)
+            requisitions = BenefitBusiness.get_Pendings(query)
         else:
-            requisitions = BenefitBusiness.get_Pendientes(query, _request.user.profile)
+            requisitions = BenefitBusiness.get_Pendings(query, _request.user.profile)
         requisitions_paginated = BenefitBusiness.get_Paginated(requisitions,_request.GET.get('page'))
 
         context = {

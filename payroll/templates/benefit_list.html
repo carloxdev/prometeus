@@ -84,9 +84,9 @@
 
                         <!-- Tipo y Estado -->
                         <div class="visible-xs col-sm-5 own-column-pk
-                            {% if requisition.is_Complete %}
+                            {% if requisition.status == 'com' %}
                                 own-column-pk-success
-                            {% elif requisition.is_Cancel %}
+                            {% elif requisition.status == 'can' %}
                                 own-column-pk-cancel
                             {% else %}
                                 own-column-pk-warning
@@ -123,7 +123,7 @@
 
                                 {% if requisition.status == 'com' %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-icon-success" aria-hidden="true"></span>
-                                {% elif requisition.status == 'pen' %}
+                                {% elif requisition.status == 'can' %}
                                     <span class="glyphicon glyphicon-minus-sign own-data-icon-cancel" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-time own-data-icon-warning" aria-hidden="true"></span>

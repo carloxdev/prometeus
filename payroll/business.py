@@ -108,7 +108,7 @@ class BenefitRequisitionBusiness(object):
         return requisition
 
     @classmethod
-    def get_No_Pendientes(self):
+    def get_No_Pendings(self):
         cantidades = BenefitRequisition.objects.filter(status="pen").count()
         return cantidades
 
@@ -129,7 +129,7 @@ class BenefitRequisitionBusiness(object):
         return requisitions
 
     @classmethod
-    def get_Pendientes(self, _value, _profile=None):
+    def get_Pendings(self, _value, _profile=None):
         if _value:
             requisitions = BenefitRequisition.objects \
                 .filter(
