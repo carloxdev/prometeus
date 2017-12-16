@@ -8,7 +8,28 @@ from django.shortcuts import render
 from django.views.generic.base import View
 
 
-class IncidentList(View):
+class IncidentListPending(View):
+    template_name = "incident_list.html"
+
+    def get(self, _request):
+        return render(_request, self.template_name, {})
+
+
+class IncidentListAll(View):
+    template_name = "incident_list.html"
+
+    def get(self, _request):
+        return render(_request, self.template_name, {})
+
+
+class IncidentListAdminPending(View):
+    template_name = "incident_list.html"
+
+    def get(self, _request):
+        return render(_request, self.template_name, {})
+
+
+class IncidentListAdminAll(View):
     template_name = "incident_list.html"
 
     def get(self, _request):
@@ -29,6 +50,13 @@ class IncidentAddSuccess(View):
         return render(_request, self.template_name, {})
 
 
+class IncidentView(View):
+    template_name = "incident_view.html"
+
+    def get(self, _request, _pk):
+        return render(_request, self.template_name, {})
+
+
 class IncidentEdit(View):
     template_name = "incident_edit.html"
 
@@ -36,8 +64,8 @@ class IncidentEdit(View):
         return render(_request, self.template_name, {})
 
 
-class IncidentView(View):
-    template_name = "incident_view.html"
+class IncidentCancel(View):
+    template_name = "incident_edit.html"
 
     def get(self, _request, _pk):
         return render(_request, self.template_name, {})
