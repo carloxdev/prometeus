@@ -9,7 +9,6 @@ from django.forms import DateInput
 from django.forms import Textarea
 from django.forms import ValidationError
 
-
 # Own's Libraries
 from .models import VoucherRequisition, BenefitRequisition
 
@@ -63,6 +62,7 @@ class VoucherRequisitionAddForm(ModelForm):
     #
     #     return date_end
 
+
 # class VoucherRequisitionCancel(ModelForm):
 #     class Meta:
 #         model = VoucherRequisition
@@ -73,7 +73,6 @@ class VoucherRequisitionAddForm(ModelForm):
 
 
 class VoucherRequisitionEditForm(ModelForm):
-
     class Meta:
         model = VoucherRequisition
         fields = (
@@ -147,4 +146,38 @@ class BenefitRequisitionAddForm(ModelForm):
         labels = {
             'type': 'Tipo de Prestacion:',
             'reason': 'Motivo:'
+        }
+
+
+class BenefitRequisitionEditForm(ModelForm):
+    user_fields = ['payment_evidence', ]  # Fill with user fillable fields.
+
+    def __init__(self, is_admin_form=False, *args, **kwargs):
+        super(BenefitRequisitionEditForm, self).__init__(*args, **kwargs)
+        if is_admin_form:
+            for field in [x for x in self.fields if x in self.user_fields]:
+                self.fields[field].widget.attrs['readonly'] = True
+        else:
+            for field in [x for x in self.fields if not x in self.user_fields]:
+                self.fields[field].widget.attrs['readonly'] = True
+
+    class Meta:
+        model = BenefitRequisition
+        fields = [
+            "payment_info",
+            'status',
+            'payment_evidence',
+            'admin_response',
+        ]
+        widgets = {
+            "payment_info": Textarea(attrs={'class': 'form-control', 'rows': '8'}),
+            "admin_response": Textarea(attrs={'class': 'form-control', 'rows': '8'}),
+            "payment_evidence": Textarea(attrs={'class': 'form-control', 'rows': '8'}),
+            'status': Select(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            "payment_info": 'Información del pago',
+            "payment_evidence": 'Evidencia del pago',
+            "admin_response": 'Respuesta del administrador',
+            'status': 'Estado de la operación',
         }

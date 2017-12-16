@@ -3,6 +3,7 @@
 {% load static from staticfiles %}
 
 {% load humanize %}
+{% load filter_has_group from custom_tags %}
 {% block title %} GCM - Prestaciones{% endblock %}
 {% block css %}
 
@@ -30,6 +31,13 @@
                             <i class="fa fa-plus-circle" aria-hidden="true"></i>
                             Solicitar
                         </a>
+                        {% if user.is_superuser or user|filter_has_group:"PRESTACIONES_ADM" %}
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" id="filter_checkbox"> Ver todas las solicitudes
+                                </label>
+                            </div>
+                        {% endif %}
                     </div>
                     
                     <br class="visible-xs">
@@ -145,7 +153,7 @@
                         </div>
 
                         <!-- Comand -->
-                        <a href="{% url 'payroll:benefit_view' requisition.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+                        <a href="{% url 'payroll:benefit_edit' requisition.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
 
                             <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue own-data-comandvalue">
@@ -184,5 +192,6 @@
 {% endblock content %}
 
 {% block scripts %}
-
+    <script src="{% static 'libs/js-cookie/2.2.0/src/js.cookie.js' %}"></script>
+    <script src="{% static 'benefit_list.js' %}"></script>
 {% endblock scripts %}
