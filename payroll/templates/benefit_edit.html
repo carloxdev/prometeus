@@ -11,6 +11,7 @@
 
 	<!-- Own's Styles -->
 	<link rel="stylesheet" type="text/css" href="{% static 'details.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'custom.css' %}">
 
 {% endblock css %}
 
@@ -23,7 +24,7 @@
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
 					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:benefit_list' %}">Solicitudes</a></li>
-					  	<li><span id="object_id" data-tag-model="{{ rq | to_class_name }}">{{rq.pk}}</span> Revisar Solicitud de Comprobante</li>
+					  	<li>Solicitud de prestación no. <span id="object_id" data-tag-model="{{ rq | to_class_name }}">{{rq.pk}}</span></li>
 					</ol>
 				</h3>
             </header>
@@ -92,12 +93,12 @@
 							 Estado:
 						</td>
 						<td class="own-table-info">
-							{% if rq.is_Complete %}
+							{% if rq.status == 'com' %}
 								<span class="label label-success own-label">
 									<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
 									{{ rq.get_status_display }}
 								</span>
-							{% elif rq.is_Cancel %}
+							{% elif rq.status == 'can' %}
 								<span class="label label-danger own-label">
 									<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
 									{{ rq.get_status_display }}

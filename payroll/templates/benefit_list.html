@@ -9,6 +9,7 @@
 
     <!-- Own's Styles -->
     <link rel="stylesheet" href="{% static 'voucher/list.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'custom.css' %}">
 
 {% endblock css %}
 
@@ -93,9 +94,9 @@
                             {{requisition.type}} - {{requisition.pk}}
 
                             <span class="own-column-conten pull-right">
-                                {% if requisition.is_Complete %}
+                                {% if requisition.status == 'com' %}
                                     <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                                {% elif requisition.is_Cancel %}
+                                {% elif requisition.status == 'can' %}
                                     <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
@@ -120,9 +121,9 @@
                         <div class="hidden-xs col-sm-1 own-column text-center own-column--border own-column-estado">
                             <span class="own-column-conten">
 
-                                {% if requisition.is_Complete %}
+                                {% if requisition.status == 'com' %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-icon-success" aria-hidden="true"></span>
-                                {% elif requisition.is_Cancel %}
+                                {% elif requisition.status == 'pen' %}
                                     <span class="glyphicon glyphicon-minus-sign own-data-icon-cancel" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-time own-data-icon-warning" aria-hidden="true"></span>
