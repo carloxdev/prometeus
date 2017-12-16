@@ -181,17 +181,22 @@ class BenefitList(View):
 
     def get(self, _request):
         query = _request.GET.get('q')
-        requisitions = BenefitBusiness.get_Pendientes(
-            query,
-            _request.user.profile
-        )
-        requisitions_paginated = BenefitBusiness.get_Paginated(
-            requisitions,
-            _request.GET.get('page')
-        )
+        try:
+            filter_checkbox = _request.COOKIES['filter_checkbox']
+        except:
+            filter_checkbox = None
+
+        if filter_checkbox and (
+                _request.user.groups.filter(name='PRESTACIONES_ADM').exists() or _request.user.is_superuser):
+            requisitions = BenefitBusiness.get_Pendientes(query)
+        else:
+            requisitions = BenefitBusiness.get_Pendientes(query, _request.user.profile)
+        requisitions_paginated = BenefitBusiness.get_Paginated(requisitions,_request.GET.get('page'))
+
         context = {
             'requisitions': requisitions_paginated
         }
+
         return render(_request, self.template_name, context)
 
 
