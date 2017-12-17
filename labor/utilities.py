@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # Python's Libraries
+import os
 import urllib
 
 # Django's Libraries
@@ -34,3 +35,13 @@ class Helper(object):
         if filesize > bits_limit:
             raise ValidationError("Tamaño máximo permitido %sMB" %
                                   str(megabyte_limit))
+
+    @classmethod
+    def get_FilePath_Incidence(self, _instance, _filename):
+
+        if (_instance):
+            upload_dir = os.path.join(
+                'files',
+                'incidences',
+            )
+        return os.path.join(upload_dir, _filename)

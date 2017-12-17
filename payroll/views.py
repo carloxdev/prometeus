@@ -21,9 +21,12 @@ from security.mixins import GroupLoginRequiredMixin
 
 from .business import VoucherRequisitionBusiness as VoucherBusiness
 from .business import BenefitRequisitionBusiness as BenefitBusiness
-from .models import VoucherRequisition, BenefitRequisition
-from .forms import VoucherRequisitionAddForm, BenefitRequisitionAddForm, BenefitRequisitionEditForm
+from .models import VoucherRequisition
+from .models import BenefitRequisition
+from .forms import VoucherRequisitionAddForm
 from .forms import VoucherRequisitionEditForm
+from .forms import BenefitRequisitionAddForm
+from .forms import BenefitRequisitionEditForm
 
 
 class VoucherListPending(GroupLoginRequiredMixin, View):
@@ -260,4 +263,3 @@ class BenefitEdit(View):
             return redirect('payroll:benefit_add_success')
         else:
             return redirect(reverse('payroll:benefit_edit'), pk=pk)
-

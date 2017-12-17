@@ -6,3 +6,4 @@ from django.apps import AppConfig
 
 class EditorialConfig(AppConfig):
     name = 'editorial'
+    verbose_name = 'Comunicación'

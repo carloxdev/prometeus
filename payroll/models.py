@@ -6,36 +6,26 @@ from __future__ import unicode_literals
 # Django's Libraries
 from django.db import models
 from django.core.exceptions import ValidationError
-from django.utils.translation import ugettext_lazy as lazy
 from django.utils.translation import gettext_lazy as _
 
 # Own's Libraries
-from home.utilities import Helper
+from .utilities import Helper
 from security.models import Profile
 from social.business import CommentBusiness
 
-from .utils import get_FilePath_Voucher
-
 
 class VoucherType(models.Model):
-    name = models.CharField(max_length=50, blank=False, unique=True)
-    description = models.TextField(blank=True, null=True)
-
-    created_by = models.ForeignKey(
-        Profile,
-        related_name='tc_created_by',
-        blank=True,
-        null=True
+    name = models.CharField(
+        "Nombre",
+        max_length=50,
+        blank=False,
+        unique=True
     )
+    description = models.TextField("Descripción", blank=True, null=True)
+
     created_date = models.DateTimeField(
         auto_now=False,
         auto_now_add=True,
-    )
-    updated_by = models.ForeignKey(
-        Profile,
-        related_name='tc_updated_by',
-        blank=True,
-        null=True
     )
     updated_date = models.DateTimeField(
         auto_now=True,
@@ -43,7 +33,8 @@ class VoucherType(models.Model):
     )
 
     class Meta:
-        verbose_name_plural = lazy('Tipos de Comprobante')
+        verbose_name = 'Tipo de Comprobante'
+        verbose_name_plural = 'Tipos de Comprobantes'
 
     def __unicode__(self):
         return self.name
@@ -58,20 +49,23 @@ class VoucherRequisition(models.Model):
 
     employee = models.ForeignKey(
         Profile,
+        verbose_name="Empleado",
         blank=False,
         on_delete=models.PROTECT
     )
     type = models.ForeignKey(
         VoucherType,
+        verbose_name="Tipo",
         blank=False,
         on_delete=models.PROTECT
     )
-    date_start = models.DateField()
-    date_end = models.DateField()
-    reason = models.TextField(blank=True)
-    response = models.TextField(blank=True)
+    date_start = models.DateField("Fecha Inicio")
+    date_end = models.DateField("Fecha Fin")
+    reason = models.TextField("Motivo de la Solicitud", blank=True)
+    response = models.TextField("Respuesta de Administracion", blank=True)
     file = models.FileField(
-        upload_to=get_FilePath_Voucher,
+        "Archivo",
+        upload_to=Helper.get_FilePath_Voucher,
         validators=[
             Helper.validate_Size
         ],
@@ -79,12 +73,14 @@ class VoucherRequisition(models.Model):
         null=True,
     )
     status = models.CharField(
+        "Estado",
         max_length=3,
         choices=STATUS_OPTIONS,
         default="pen"
     )
     created_by = models.ForeignKey(
         Profile,
+        verbose_name="Creado por",
         related_name='sc_created_by',
         blank=True,
         null=True
@@ -95,6 +91,7 @@ class VoucherRequisition(models.Model):
     )
     updated_by = models.ForeignKey(
         Profile,
+        verbose_name="Actualizado por",
         related_name='sc_updated_by',
         blank=True,
         null=True
@@ -116,7 +113,8 @@ class VoucherRequisition(models.Model):
             })
 
     class Meta:
-        verbose_name_plural = lazy('Solicitudes de Comprobantes')
+        verbose_name = 'Solicitud de Comprobante'
+        verbose_name_plural = 'Solicitudes de Comprobantes'
 
     def __unicode__(self):
         desc = "%s : %s - %s" % (self.pk, self.employee, self.type)
@@ -143,24 +141,16 @@ class VoucherRequisition(models.Model):
 
 
 class BenefitType(models.Model):
-    name = models.CharField(max_length=50, blank=False)
-    description = models.TextField(blank=True, null=True)
-
-    created_by = models.ForeignKey(
-        Profile,
-        related_name='tp_created_by',
-        blank=True,
-        null=True
+    name = models.CharField(
+        max_length=50,
+        blank=False,
+        unique=True
     )
+    description = models.TextField("Descripción", blank=True, null=True)
+
     created_date = models.DateTimeField(
         auto_now=False,
         auto_now_add=True,
-    )
-    updated_by = models.ForeignKey(
-        Profile,
-        related_name='tp_updated_by',
-        blank=True,
-        null=True
     )
     updated_date = models.DateTimeField(
         auto_now=True,
@@ -168,7 +158,8 @@ class BenefitType(models.Model):
     )
 
     class Meta:
-        verbose_name_plural = lazy('Tipos de Prestaciones')
+        verbose_name = 'Tipo de Prestacion'
+        verbose_name_plural = 'Tipos de Prestaciones'
 
     def __unicode__(self):
         return self.name
@@ -184,22 +175,29 @@ class BenefitRequisition(models.Model):
 
     employee = models.ForeignKey(
         Profile,
+        verbose_name="Empleado",
         blank=False,
         on_delete=models.PROTECT
     )
     type = models.ForeignKey(
         BenefitType,
+        verbose_name="Tipo",
         blank=False,
         on_delete=models.PROTECT
     )
-    date = models.DateField()
-    reason = models.TextField(blank=True)
-    payment_evidence = models.TextField(blank=True)
-    admin_response = models.TextField(blank=True)
-    payment_info = models.TextField(blank=True)
-    status = models.CharField(max_length=3, choices=STATUS, default="pen")
+    date = models.DateField("Fecha")
+    reason = models.TextField("Motivo de la Solicitud", blank=True)
+    payment_evidence = models.TextField("Evidencia del Pago", blank=True)
+    admin_response = models.TextField(
+        "Respuesta de Administración",
+        blank=True
+    )
+    payment_info = models.TextField("Informacion del Pago", blank=True)
+    status = models.CharField(
+        "Estado", max_length=3, choices=STATUS, default="pen")
     created_by = models.ForeignKey(
         Profile,
+        verbose_name="Creado por",
         related_name='sp_created_by',
         blank=True,
         null=True
@@ -210,6 +208,7 @@ class BenefitRequisition(models.Model):
     )
     updated_by = models.ForeignKey(
         Profile,
+        verbose_name="Actualizado por",
         related_name='sp_updated_by',
         blank=True,
         null=True
@@ -220,7 +219,8 @@ class BenefitRequisition(models.Model):
     )
 
     class Meta:
-        verbose_name_plural = lazy('Solicitudes de Prestaciones')
+        verbose_name = 'Solicitud de Prestacion'
+        verbose_name_plural = 'Solicitudes de Prestaciones'
 
     def __unicode__(self):
         desc = "%s : %s - %s" % (self.pk, self.employee, self.type)
