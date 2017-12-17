@@ -175,30 +175,45 @@ class VoucherEdit(UpdateView):
     #     return super(VoucherEdit, self).get_context_data(**context)
 
 
-class BenefitList(View):
+class BenefitList(GroupLoginRequiredMixin, View):
     template_name = "benefit_list.html"
     group = ['PRESTACIONES_ADM', 'PRESTACIONES_USR', ]
 
-    def get(self, _request):
+    def get(self, _request, status):
         query = _request.GET.get('q')
-        try:
-            filter_checkbox = _request.COOKIES['filter_checkbox']
-        except:
-            filter_checkbox = None
-
-        if filter_checkbox and (
-                _request.user.groups.filter(name='PRESTACIONES_ADM').exists() or _request.user.is_superuser):
-            requisitions = BenefitBusiness.get_Pendientes(query)
+        if status=='pending':
+            requisitions = BenefitBusiness.get_Pendings(query, _request.user.profile)
         else:
-            requisitions = BenefitBusiness.get_Pendientes(query, _request.user.profile)
+            requisitions = BenefitBusiness.get_All(query, _request.user.profile)
+
         requisitions_paginated = BenefitBusiness.get_Paginated(requisitions,_request.GET.get('page'))
 
         context = {
+            'status' : status,
             'requisitions': requisitions_paginated
         }
 
         return render(_request, self.template_name, context)
 
+class BenefitListAdmin(GroupLoginRequiredMixin, View):
+    template_name = "benefit_list_admin.html"
+    group = ['PRESTACIONES_ADM', ]
+
+    def get(self, _request, status):
+        query = _request.GET.get('q')
+        if status=='pending':
+            requisitions = BenefitBusiness.get_Pendings(query)
+        else:
+            requisitions = BenefitBusiness.get_All(query)
+
+        requisitions_paginated = BenefitBusiness.get_Paginated(requisitions,_request.GET.get('page'))
+
+        context = {
+            'status' : status,
+            'requisitions': requisitions_paginated
+        }
+
+        return render(_request, self.template_name, context)
 
 class BenefitAdd(CreateView):
     template_name = "benefit_add.html"

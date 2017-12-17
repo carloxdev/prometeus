@@ -46,14 +46,14 @@
 				  				<i class="fa fa-usd fa-5x" aria-hidden="true"></i>
 				  			</div>
 				  			<div class="col-xs-9 text-right">
-								<div class="own-huge">0</div>
+								<div class="own-huge">{{ new_benefits }}</div>
 								<div>Nuevas Solicitudes</div>
 				  			</div>
 				  		</div>
 				    	Prestaciones
 				  	</div>
 
-                    <a href="#">
+                    <a href="{% url 'payroll:benefit_list_admin_pending' %}">
 				  		<div class="panel-footer">
 							<span class="pull-left">Ver Solicitudes</span>
 							<span class="pull-right">

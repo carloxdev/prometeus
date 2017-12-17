@@ -2,6 +2,7 @@
 {% load static from staticfiles %}
 {% load social_tags %}
 {% load to_class_name from custom_tags %}
+{% load filter_has_group from custom_tags %}
 {% block title %} GCM - Ver solicitud de prestacion{% endblock %}
 {% block css %}
 
@@ -11,6 +12,7 @@
 
 	<!-- Own's Styles -->
 	<link rel="stylesheet" type="text/css" href="{% static 'details.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'custom.css' %}">
 
 {% endblock css %}
 
@@ -22,8 +24,8 @@
             <header>
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
-					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:benefit_list' %}">Solicitudes</a></li>
-					  	<li><span id="object_id" data-tag-model="{{ rq | to_class_name }}">{{rq.pk}}</span> Revisar Solicitud de Comprobante</li>
+					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:benefit_list_all' %}">Solicitudes</a></li>
+					  	<li>Solicitud de prestación no. <span id="object_id" data-tag-model="{{ rq | to_class_name }}">{{rq.pk}}</span></li>
 					</ol>
 				</h3>
             </header>
@@ -54,12 +56,14 @@
                     <label for="comment">Motivo de la solicitud:</label>
                     <textarea class="form-control" rows="5" disabled>{{ rq.reason }}</textarea>
                 </div>
-                <form method="POST">
+                <form id="form_benefit_edit" method="POST">
                     {% csrf_token %}
-                    <div class="form-group">
-                        {{ form.status.label_tag }}
-                        {{ form.status }}
-                    </div>
+                    {% if user.is_superuser or user|filter_has_group:"PRESTACIONES_ADM" %}
+                        <div class="form-group">
+                            {{ form.status.label_tag }}
+                            {{ form.status }}
+                        </div>
+                    {% endif %}
                     <div class="form-group">
                         {{ form.payment_info.label_tag }}
                         {{ form.payment_info }}
@@ -72,6 +76,10 @@
                         {{ form.admin_response.label_tag }}
                         {{ form.admin_response }}
                     </div>
+                    <a class="btn btn-danger" href="#" type="button">
+                        <i class="glyphicon glyphicon-cancel"></i>
+                        Cancelar
+                    </a>
                     <button class="btn btn-info" type="submit">
                         <i class="glyphicon glyphicon-edit"></i>
                          Guardar Cambios
@@ -92,12 +100,12 @@
 							 Estado:
 						</td>
 						<td class="own-table-info">
-							{% if rq.is_Complete %}
+							{% if rq.status == 'com' %}
 								<span class="label label-success own-label">
 									<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
 									{{ rq.get_status_display }}
 								</span>
-							{% elif rq.is_Cancel %}
+							{% elif rq.status == 'can' %}
 								<span class="label label-danger own-label">
 									<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
 									{{ rq.get_status_display }}
@@ -161,5 +169,6 @@
 
 	<!-- Own's Libraries -->
 	<script src="{% static 'comment.js' %}"></script>
+	<script src="{% static 'benefit_edit.js' %}"></script>
 
 {% endblock scripts %}

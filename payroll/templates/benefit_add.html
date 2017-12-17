@@ -27,7 +27,7 @@
                 <header>
                     <h3>
                         <ol class="breadcrumb own-breadcrumb">
-                          <li class="own-breadcrumb-init"><a href="{% url 'payroll:benefit_list' %}">Solicitudes</a></li>
+                          <li class="own-breadcrumb-init"><a href="{% url 'payroll:benefit_list_all' %}">Solicitudes</a></li>
                           <li>Solicitud de Prestacion</li>
                         </ol>
                     </h3>
@@ -56,7 +56,7 @@
                     {% tag_field form.reason %}
 
                     <div class="text-center">
-                        <a href="{% url 'payroll:benefit_list' %}" class="btn btn-default">Cancelar</a>
+                        <a href="{% url 'payroll:benefit_list_all' %}" class="btn btn-default">Cancelar</a>
                         <button type="submit" class="btn btn-success">
                             <span class="glyphicon glyphicon-ok"></span>
                             Solicitar

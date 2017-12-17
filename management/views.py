@@ -8,7 +8,7 @@ from django.shortcuts import render
 from django.views.generic.base import View
 
 # Own's Libraries
-from payroll.business import VoucherRequisitionBusiness
+from payroll.business import VoucherRequisitionBusiness, BenefitRequisitionBusiness
 
 
 class EmailConfig(View):
@@ -23,9 +23,11 @@ class TaskList(View):
 
     def get(self, _request):
         new_vouchers = VoucherRequisitionBusiness.get_No_Pending()
+        new_benefits = BenefitRequisitionBusiness.get_No_Pendings()
 
         context = {
-            'new_vouchers': new_vouchers
+            'new_vouchers': new_vouchers,
+            'new_benefits': new_benefits
         }
         return render(_request, self.template_name, context)
 
