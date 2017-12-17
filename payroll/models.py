@@ -142,6 +142,7 @@ class VoucherRequisition(models.Model):
 
 class BenefitType(models.Model):
     name = models.CharField(
+        "Nombre",
         max_length=50,
         blank=False,
         unique=True

@@ -159,7 +159,7 @@ class VoucherEdit(UpdateView):
     model = VoucherRequisition
     template_name = "voucher/edit.html"
     form_class = VoucherRequisitionEditForm
-    success_url = reverse_lazy('payroll:voucher_list_admin')
+    success_url = reverse_lazy('payroll:voucher_list_admin_pending')
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user.profile
