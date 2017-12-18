@@ -143,19 +143,19 @@ class ProfileResource(resources.ModelResource):
         )
 
 
-@admin.register(Profile)
-class AdminProfile(ImportExportModelAdmin):
-    resource_class = ProfileResource
-    list_display = (
-        'user',
-        'recruited_date',
-        'birth_date',
-        'gender',
-        'job_title',
-        'department',
-        'phone',
-        'address',
-    )
+# @admin.register(Profile)
+# class AdminProfile(ImportExportModelAdmin):
+#     resource_class = ProfileResource
+#     list_display = (
+#         'user',
+#         'recruited_date',
+#         'birth_date',
+#         'gender',
+#         'job_title',
+#         'department',
+#         'phone',
+#         'address',
+#     )
 
 
 admin.site.unregister(User)

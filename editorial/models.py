@@ -10,10 +10,8 @@ from django.db import models
 from django_resized import ResizedImageField
 
 # Own's Libraries
-from home.utilities import Helper
+from .utilities import Helper
 from security.models import Profile
-
-from .utils import get_ImagePath_Post
 
 
 class Post(models.Model):
@@ -23,9 +21,10 @@ class Post(models.Model):
         ('EDT', 'Editando'),
     )
 
-    title = models.CharField(max_length=120)
+    title = models.CharField("Titulo", max_length=120)
     image = ResizedImageField(
-        upload_to=get_ImagePath_Post,
+        "Imagen",
+        upload_to=Helper.get_ImagePath_Post,
         quality=75,
         blank=True,
         validators=[
@@ -33,17 +32,24 @@ class Post(models.Model):
             Helper.validate_Size
         ]
     )
-    content = models.TextField(blank=True)
+    content = models.TextField("Contenido", blank=True)
 
-    status = models.CharField(max_length=3, choices=STATUS, default="EDT")
+    status = models.CharField(
+        "Estado",
+        max_length=3,
+        choices=STATUS,
+        default="EDT"
+    )
     created_by = models.ForeignKey(
         Profile,
+        verbose_name="Creado por",
         related_name='post_created_by',
         null=True
     )
     created_date = models.DateTimeField(auto_now=False, auto_now_add=True)
     updated_by = models.ForeignKey(
         Profile,
+        verbose_name="Actualizado por",
         related_name='post_updated_by',
         null=True
     )
@@ -54,3 +60,7 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = 'Pubicación'
+        verbose_name_plural = 'Publicaciones'

@@ -7,8 +7,10 @@ from __future__ import unicode_literals
 from django.contrib import admin
 
 # Own's Libraries
-from .models import VoucherType, BenefitRequisition, BenefitType
+from .models import VoucherType
 from .models import VoucherRequisition
+from .models import BenefitType
+from .models import BenefitRequisition
 
 
 @admin.register(VoucherType)
@@ -16,9 +18,7 @@ class VoucherTypeAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'description',
-        'created_by',
         'created_date',
-        'updated_by',
         'updated_date',
     )
 
@@ -46,9 +46,7 @@ class BenefitTypeAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'description',
-        'created_by',
         'created_date',
-        'updated_by',
         'updated_date',
     )
 

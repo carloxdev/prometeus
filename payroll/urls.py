@@ -20,7 +20,6 @@ from .views import BenefitAddSuccess
 from .views import BenefitEdit
 
 
-
 urlpatterns = [
     url(
         r'^vouchers/pending/$',

@@ -21,9 +21,12 @@ from security.mixins import GroupLoginRequiredMixin
 
 from .business import VoucherRequisitionBusiness as VoucherBusiness
 from .business import BenefitRequisitionBusiness as BenefitBusiness
-from .models import VoucherRequisition, BenefitRequisition
-from .forms import VoucherRequisitionAddForm, BenefitRequisitionAddForm, BenefitRequisitionEditForm
+from .models import VoucherRequisition
+from .models import BenefitRequisition
+from .forms import VoucherRequisitionAddForm
 from .forms import VoucherRequisitionEditForm
+from .forms import BenefitRequisitionAddForm
+from .forms import BenefitRequisitionEditForm
 
 
 class VoucherListPending(GroupLoginRequiredMixin, View):
@@ -104,20 +107,30 @@ class VoucherAdd(GroupLoginRequiredMixin, CreateView):
     template_name = "voucher/add.html"
     model = VoucherRequisition
     form_class = VoucherRequisitionAddForm
+    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
     success_url = reverse_lazy('payroll:voucher_add_success')
 
     def form_valid(self, form):
         form.instance.employee = self.request.user.profile
         form.instance.created_by = self.request.user.profile
         form.instance.updated_by = self.request.user.profile
-        return super(VoucherAdd, self).form_valid(form)
+        response = super(VoucherAdd, self).form_valid(form)
+
+        if response.status_code == 302:
+            self.request.user.email_user(
+                "Esta chido",
+                "Ejemplo de mensaje"
+            )
+
+        return response
 
 
-class VoucherAddSuccess(TemplateView):
+class VoucherAddSuccess(GroupLoginRequiredMixin, TemplateView):
     template_name = "voucher/add_success.html"
+    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
 
-class VoucherCancel(View):
+class VoucherCancel(GroupLoginRequiredMixin, View):
     template_name = "voucher/cancel.html"
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
@@ -136,9 +149,10 @@ class VoucherCancel(View):
         return redirect(reverse('payroll:voucher_list_all'))
 
 
-class VoucherView(DetailView):
+class VoucherView(GroupLoginRequiredMixin, DetailView):
     model = VoucherRequisition
     template_name = "voucher/view.html"
+    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
     context_object_name = "rq"
 
     def get_context_data(self, **kwargs):
@@ -152,11 +166,12 @@ class VoucherView(DetailView):
         return super(VoucherView, self).get_context_data(**context)
 
 
-class VoucherEdit(UpdateView):
+class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
     model = VoucherRequisition
     template_name = "voucher/edit.html"
+    group = ['COMPROBANTES_ADM', ]
     form_class = VoucherRequisitionEditForm
-    success_url = reverse_lazy('payroll:voucher_list_admin')
+    success_url = reverse_lazy('payroll:voucher_list_admin_pending')
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user.profile
@@ -260,4 +275,3 @@ class BenefitEdit(View):
             return redirect('payroll:benefit_add_success')
         else:
             return redirect(reverse('payroll:benefit_edit'), pk=pk)
-
