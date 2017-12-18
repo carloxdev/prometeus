@@ -258,8 +258,8 @@ class BenefitEdit(View):
         benefit = get_object_or_404(BenefitRequisition, pk=pk)
         is_admin_form = (request.user.groups.filter(
             name='PRESTACIONES_ADM').exists() or request.user.is_superuser) and benefit.created_by.user != request.user
-
-        form = BenefitRequisitionEditForm(instance=benefit, is_admin_form=is_admin_form)
+        is_cancelled = benefit.status == 'can'
+        form = BenefitRequisitionEditForm(instance=benefit, is_admin_form=is_admin_form, is_cancelled=is_cancelled)
         context = {
             'rq': benefit,
             'form': form
@@ -275,3 +275,22 @@ class BenefitEdit(View):
             return redirect('payroll:benefit_list_all')
         else:
             return redirect(reverse('payroll:benefit_edit'), pk=pk)
+
+
+class BenefitCancel(GroupLoginRequiredMixin, View):
+    template_name = "benefit_cancel.html"
+    group = ['PRESTACIONES_ADM', 'PRESTACIONES_USR', ]
+
+    def get(self, _request, pk):
+        req = get_object_or_404(BenefitRequisition, pk=pk)
+        context = {
+            'req': req
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, pk):
+        req = get_object_or_404(BenefitRequisition, pk=pk)
+        req.updated_by = _request.user.profile
+        req.status = "can"
+        req.save()
+        return redirect(reverse('payroll:benefit_list_all'))

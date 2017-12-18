@@ -76,16 +76,18 @@
                         {{ form.admin_response.label_tag }}
                         {{ form.admin_response }}
                     </div>
-                    {% if user.is_superuser or user|filter_has_group:"PRESTACIONES_ADM" or form.status == 'pen' %}
-                        <a class="btn btn-danger" href="#" type="button">
-                            <i class="glyphicon glyphicon-cancel"></i>
-                            Cancelar
-                        </a>
+                    {% if  form.status.value != 'can' %}
+                        {% if user.is_superuser or user|filter_has_group:"PRESTACIONES_ADM" or form.status.value == 'pen' %}
+                            <a class="btn btn-danger" href="{% url 'payroll:benefit_cancel' rq.pk %}" type="button">
+                                <i class="glyphicon glyphicon-cancel"></i>
+                                Cancelar
+                            </a>
+                        {% endif %}
+                        <button class="btn btn-info" id="btn_submit_edit" type="submit">
+                            <i class="glyphicon glyphicon-edit"></i>
+                            Guardar Cambios
+                        </button>
                     {% endif %}
-                    <button class="btn btn-info" id="btn_submit_edit" type="submit">
-                        <i class="glyphicon glyphicon-edit"></i>
-                         Guardar Cambios
-                    </button>
                 </form>
 			</div>
 		</div>

@@ -172,6 +172,7 @@ class BenefitRequisition(models.Model):
         ('ppe', 'Pago Pendiente'),
         ('ppc', 'Pago Por Comprobar'),
         ('com', 'Completado'),
+        ('can', 'Cancelado')
     )
 
     employee = models.ForeignKey(
