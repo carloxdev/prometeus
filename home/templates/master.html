@@ -57,10 +57,9 @@
                                     <li><a class="own-menu-option" href="{% url 'payroll:voucher_list_all' %}">Comprobantes</a></li>
                                 {% endif %}
 
-                                <!--
-                                <li><a class="own-menu-option" href="{% url 'payroll:benefit_list_all' %}">Prestaciones</a></li>
-                                <li><a class="own-menu-option" href="{% url 'labor:incident_list_all' %}">Incidencias</a></li> -->
-
+                                {% if user.is_superuser or user|filter_has_group:"INCIDENCIAS_USR" %}
+                                    <li><a class="own-menu-option" href="{% url 'labor:incident_list_all' %}">Incidencias</a></li>
+                                {% endif %}
 
                                 {% if user.is_superuser or user|filter_has_group:"NOTICIAS_ADM" %}
                                     <li><a class="own-menu-option" href="{% url 'editorial:post_list' %}">Noticias</a></li>
