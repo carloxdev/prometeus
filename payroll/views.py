@@ -240,7 +240,14 @@ class BenefitAdd(CreateView):
         form.instance.employee = self.request.user.profile
         form.instance.created_by = self.request.user.profile
         form.instance.updated_by = self.request.user.profile
-        return super(BenefitAdd, self).form_valid(form)
+        response = super(BenefitAdd, self).form_valid(form)
+
+        if response.status_code == 302:
+            self.request.user.email_user(
+                "Esta chido",
+                "Ejemplo de mensaje"
+            ) #TODO: INTEGRAR EMAIL DE NUEVA SOLICITUD
+        return response
 
 
 class BenefitAddSuccess(View):
@@ -272,6 +279,10 @@ class BenefitEdit(View):
 
         if form.is_valid():
             form.save()
+            request.user.email_user(
+                "Esta chido",
+                "Ejemplo de mensaje"
+            )  # TODO: INTEGRAR MENSAJE DE EMAIL DE ACTUALIZACION
             return redirect('payroll:benefit_list_all')
         else:
             return redirect(reverse('payroll:benefit_edit'), pk=pk)
@@ -293,4 +304,8 @@ class BenefitCancel(GroupLoginRequiredMixin, View):
         req.updated_by = _request.user.profile
         req.status = "can"
         req.save()
+        _request.user.email_user(
+            "Esta chido",
+            "Ejemplo de mensaje"
+        ) # TODO: INTEGRAR MENSAJE DE EMAIL DE CANCELACION
         return redirect(reverse('payroll:benefit_list_all'))
