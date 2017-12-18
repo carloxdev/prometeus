@@ -6,16 +6,14 @@ from __future__ import unicode_literals
 
 # Django's Libraries
 from django.db import models
-from django.core.exceptions import ValidationError
-from django.utils.translation import gettext_lazy as _
 
 # Own's Libraries
-from .utilities import Helper
 from security.models import Profile
 from social.business import CommentBusiness
+from .utilities import Helper
 
 
-class IncidenceType(models.Model):
+class IncidentType(models.Model):
     name = models.CharField(
         "Nombre",
         max_length=50,
@@ -41,7 +39,7 @@ class IncidenceType(models.Model):
         return self.name
 
 
-class IncidenceDocument(models.Model):
+class IncidentReport(models.Model):
     STATUS_OPTIONS = (
         ('pen', 'PENDIENTE'),
         ('can', 'CANCELADO'),
@@ -55,18 +53,17 @@ class IncidenceDocument(models.Model):
         on_delete=models.PROTECT
     )
     type = models.ForeignKey(
-        IncidenceType,
+        IncidentType,
         verbose_name="Tipo",
         blank=False,
         on_delete=models.PROTECT
     )
-    date_start = models.DateField("Fecha Inicio")
-    date_end = models.DateField("Fecha Fin")
+    date = models.DateField("Fecha", blank=True, null=True)
     reason = models.TextField("Motivo de la Solicitud", blank=True)
     response = models.TextField("Respuesta de Administracion", blank=True)
     file = models.FileField(
         "Archivo",
-        upload_to=Helper.get_FilePath_Incidence,
+        upload_to=Helper.get_FilePath_incident,
         validators=[
             Helper.validate_Size
         ],
@@ -102,20 +99,9 @@ class IncidenceDocument(models.Model):
         auto_now_add=False,
     )
 
-    def clean(self):
-        fecha_inicio = self.date_start
-        fecha_fin = self.date_end
-
-        if fecha_fin < fecha_inicio:
-            raise ValidationError({
-                'date_end': _(
-                    'Fecha final no puede ser menor que fecha inicial.'
-                )
-            })
-
     class Meta:
-        verbose_name = 'Documento de Incidencia'
-        verbose_name_plural = 'Documentos de Incidencias'
+        verbose_name = 'Reporte de Incidencia'
+        verbose_name_plural = 'Reportes de Incidencias'
 
     def __unicode__(self):
         desc = "%s : %s - %s" % (self.pk, self.employee, self.type)

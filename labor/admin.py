@@ -4,12 +4,12 @@
 from django.contrib import admin
 
 # Own's Libraries
-from .models import IncidenceType
-from .models import IncidenceDocument
+from .models import IncidentType
+from .models import IncidentReport
 
 
-@admin.register(IncidenceType)
-class IncidenceTypeAdmin(admin.ModelAdmin):
+@admin.register(IncidentType)
+class IncidentTypeAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'description',
@@ -18,14 +18,13 @@ class IncidenceTypeAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(IncidenceDocument)
-class IncidenceDocumentAdmin(admin.ModelAdmin):
+@admin.register(IncidentReport)
+class IncidentReport(admin.ModelAdmin):
     list_display = (
         'id',
         'employee',
         'type',
-        'date_start',
-        'date_end',
+        'date',
         'reason',
         'response',
         'status',

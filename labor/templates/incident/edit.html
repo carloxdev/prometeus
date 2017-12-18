@@ -1,0 +1,181 @@
+{% extends 'master.html' %}
+{% load static from staticfiles %}
+{% load humanize %}
+{% load custom_tags %}
+{% load social_tags %}
+{% block title %} GCM - Editar Reporte de Incidencia {% endblock title %}
+
+{% block css %}
+
+    <!-- Alertify -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/alertify.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/themes/bootstrap.min.css' %}"/>
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'tags/forms.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'tags/components.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'details.min.css' %}"/>
+
+{% endblock css %}
+
+{% block content %}
+
+	<div class="container own-components-area">
+		<div class="row">
+
+			<div class="col-xs-12">
+                <header>
+                    <h3>
+                        <ol class="breadcrumb own-breadcrumb">
+                          <li class="own-breadcrumb-init"><a href="{% url 'labor:incident_list_admin_pending' %}">Solicitudes</a></li>
+						  <li>Editar Reporte de Incidente: <span class="badge own-badge" id="object_id" data-tag-model="{{ form.instance | to_class_name }}">{{form.instance.id}}</span></li>
+                        </ol>
+                    </h3>
+                </header>
+                <hr>
+    		</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-8 col-lg-9">
+				<div class="own-form-title">
+                    Proporciona la siguiente información:
+                </div>
+
+				<form action=""
+                method="post"
+                class="well"
+                enctype="multipart/form-data"> {% csrf_token %}
+
+					{% include 'messages.html' %}
+
+					{% tag_form_errors form %}
+
+					<div class="form-group">
+						<label for="empleados">Empleado:</label>
+						<input type="text" class="form-control" value="{{ form.instance.employee }}" disabled>
+					</div>
+
+					<div class="form-group">
+						<label for="empleados">Fechas:</label>
+						<input type="text" class="form-control" value="{{ form.instance.date_start|date:"d M Y" }} al {{ form.instance.date_end|date:"d M Y" }}" disabled />
+					</div>
+
+					<div class="form-group">
+						<label for="empleados">Tipo de Comprobante:</label>
+						<input type="text" class="form-control" value="{{ form.instance.type }}" disabled>
+					</div>
+
+					<div class="form-group">
+	                    <label for="comment">Motivo de la solicitud:</label>
+	                    <textarea class="form-control" rows="5" disabled>{{ form.instance.reason }}</textarea>
+	                </div>
+
+					{% tag_file form.file form %}
+
+                    {% tag_field form.status %}
+
+					{% tag_field form.response %}
+
+					<div class="text-center">
+                        <a href="{% url 'labor:incident_list_admin_pending' %}" class="btn btn-default">
+							<span class="glyphicon glyphicon-arrow-left"></span>
+							Regresar a listado
+						</a>
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Guardar
+                        </button>
+                    </div>
+
+				</form>
+			</div>
+
+			<div class="col-xs-12 col-md-4 col-lg-3">
+				<div class="panel panel-default affix-top">
+					<div class="panel-heading">
+						<h5 class="panel-title own-panel-title">Informacion:</h5>
+					</div>
+					<table class="table own-table">
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-asterisk own-data-icon" aria-hidden="true"></span>
+								 Estado:
+							</td>
+							<td class="own-table-info">
+								{% if form.instance.is_Complete %}
+									<span class="label label-success own-label">
+										<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+										{{ form.instance.get_status_display }}
+									</span>
+								{% elif form.instance.is_Cancel %}
+									<span class="label label-danger own-label">
+										<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+										{{ form.instance.get_status_display }}
+									</span>
+								{% else %}
+									<span class="label label-warning own-label">
+										<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+										{{ form.instance.get_status_display }}
+									</span>
+								{% endif %}
+							</td>
+						</tr>
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-user own-data-icon" aria-hidden="true"></span>
+								Creado por:
+							</td>
+							<td class="own-table-info">{{ form.instance.created_by|default:"" }}</td>
+						</tr>
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+								Creado el:
+							</td>
+							<td class="own-table-info">{{ form.instance.created_date|date:"d M Y" }}</td>
+						</tr>
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-user own-data-icon" aria-hidden="true"></span>
+								Actualizado por:
+							</td>
+							<td class="own-table-info">{{ form.instance.updated_by|default:"" }}</td>
+						</tr>
+						<tr>
+							<td class="own-table-label">
+								<span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+								Actualizado el:
+							</td>
+							<td class="own-table-info">{{ form.instance.updated_date|date:"d M Y" }}</td>
+						</tr>
+					</table>
+				</div>
+	        </div>
+		</div>
+
+		{% tag_comments form.instance %}
+	</div>
+
+{% endblock content %}
+
+
+{% block scripts %}
+
+    <!-- JS Cookie -->
+    <script src="{% static 'libs/js-cookie/2.2.0/src/js.cookie.js' %}"></script>
+
+    <!-- Alertify -->
+    <script src="{% static 'libs/alertifyjs/1.11.0/alertify.min.js' %}"></script>
+    <script src="{% static 'alerts.min.js' %}"></script>
+
+    <!-- Bootstrap Filestyle -->
+    <script type="text/javascript" src="{% static 'libs/bootstrap-filestyle/1.2.1/src/bootstrap-filestyle.min.js' %}"></script>
+
+    <!-- Mommentjs -->
+    <script src="{% static 'libs/momentjs/2.19.3/moment-with-locales.min.js' %}"></script>
+
+    <!-- Own's Libraries -->
+    <script src="{% static 'comment.js' %}"></script>
+
+{% endblock scripts %}

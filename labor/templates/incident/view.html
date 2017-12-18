@@ -1,106 +1,168 @@
 {% extends 'master.html' %}
-
 {% load static from staticfiles %}
-
+{% load social_tags %}
+{% load to_class_name from custom_tags %}
 {% block css %}
 
-    <!-- Bootstrap Select -->
-    <link rel="stylesheet" type="text/css" href="{% static 'libs/select2/4.0.3/dist/css/select2.min.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'libs/select2-bootstrap-theme-master/0.1.0-beta.10/dist/select2-bootstrap.min.css' %}"/>
+    <!-- Alertify -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/alertify.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/themes/bootstrap.min.css' %}"/>
 
-    <!-- Bootrstrap DatePicker -->
-    <link rel="stylesheet" type="text/css" href="{% static 'libs/bootstrap-datepicker/1.6.4/css/bootstrap-datepicker3.min.css' %}"/>
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'details.min.css' %}"/>
 
 {% endblock css %}
 
 {% block content %}
 
-    <div class="row">
-
-        <div class="col-xs-12">
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
             <header>
-                <h3 class="own-titulo">Revision Reporte de Incidencia</h3>
+                <h3 class="own-titulo">
+					<ol class="breadcrumb own-breadcrumb">
+					  	<li class="own-breadcrumb-init"><a href="{% url 'labor:incident_list_all' %}">Solicitudes</a></li>
+						<li>Solicitud de Comprobante: <span class="badge own-badge" id="object_id" data-tag-model="{{ rq | to_class_name }}">{{record.pk}}</span></li>
+					</ol>
+				</h3>
             </header>
+            <hr>
+		</div>
+	</div>
 
-            <hr class="own-article-line">
+	<div class="row">
+		<div class="col-xs-12 col-md-8 col-lg-9">
+			<div class="well">
 
-            <br>            
+				<div class="form-group">
+					<label for="empleados">Empleado:</label>
+					<input type="text" class="form-control" value="{{ record.employee }}" disabled>
+				</div>
+
+				<div class="form-group">
+					<label for="empleados">Fechas:</label>
+					<input type="text" class="form-control" value="{{ record.date_start|date:"d M Y" }} al {{ record.date_end|date:"d M Y" }}" disabled />
+				</div>
+
+				<div class="form-group">
+					<label for="empleados">Tipo de Comprobante:</label>
+					<input type="text" class="form-control" value="{{ record.type }}" disabled>
+				</div>
+
+				<div class="form-group">
+                    <label for="comment">Motivo de la solicitud:</label>
+                    <textarea class="form-control" rows="5" disabled>{{ record.reason }}</textarea>
+                </div>
+
+				{% if record.is_Complete %}
+	                <div class="form-group">
+	                    <label for="comment">Respuesta de la Administracion:</label>
+	                    <textarea class="form-control" rows="5" value="{{ record.response }}" disabled></textarea>
+	                </div>
+
+					{% if record.file %}
+					<div class="form-group">
+						<label for="empleados">Archivo:</label>
+						<a href="{{record.file.url}}">{{record.file.name}}</a>
+					</div>
+					{% endif %}
+				{% elif record.is_Cancel is False %}
+					<div>
+						<a href="{% url 'labor:incident_cancel' record.pk %}" class="btn btn-danger">
+							Cancelar
+						</a>
+	                    <!--
+						<button class="btn btn-primary">
+							<span class="glyphicon glyphicon-print" aria-hidden="true"></span>
+	                    	Imprimir
+	                    </button>
+						-->
+	                </div>
+				{% endif %}
+			</div>
+		</div>
+
+        <div class="col-xs-12 col-md-4 col-lg-3">
+			<div class="panel panel-default affix-top">
+				<div class="panel-heading">
+					<h5 class="panel-title own-panel-title">Informacion:</h5>
+				</div>
+				<table class="table own-table">
+					<tr>
+						<td class="own-table-label">
+							<span class="glyphicon glyphicon-asterisk own-data-icon" aria-hidden="true"></span>
+							 Estado:
+						</td>
+						<td class="own-table-info">
+							{% if record.is_Complete %}
+								<span class="label label-success own-label">
+									<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+									{{ record.get_status_display }}
+								</span>
+							{% elif record.is_Cancel %}
+								<span class="label label-danger own-label">
+									<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+									{{ record.get_status_display }}
+								</span>
+							{% else %}
+								<span class="label label-warning own-label">
+									<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+									{{ record.get_status_display }}
+								</span>
+							{% endif %}
+						</td>
+					</tr>
+					<tr>
+						<td class="own-table-label">
+							<span class="glyphicon glyphicon-user own-data-icon" aria-hidden="true"></span>
+							Creado por:
+						</td>
+						<td class="own-table-info">{{ record.created_by|default:"" }}</td>
+					</tr>
+					<tr>
+						<td class="own-table-label">
+							<span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+							Creado el:
+						</td>
+						<td class="own-table-info">{{ record.created_date|date:"d M Y" }}</td>
+					</tr>
+					<tr>
+						<td class="own-table-label">
+							<span class="glyphicon glyphicon-user own-data-icon" aria-hidden="true"></span>
+							Actualizado por:
+						</td>
+						<td class="own-table-info">{{ record.updated_by|default:"" }}</td>
+					</tr>
+					<tr>
+						<td class="own-table-label">
+							<span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+							Actualizado el:
+						</td>
+						<td class="own-table-info">{{ record.updated_date|date:"d M Y" }}</td>
+					</tr>
+				</table>
+			</div>
         </div>
+	</div>
 
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-
-            <div class="well">
-
-                <div class="form-group">
-                    <label for="empleados">Empleado:</label>
-                    <select id="empleados" class="form-control" disabled>
-                        <option>201334 - JORGE MARTINEZ HERNANDEZ</option>
-                        <option>208323 - CARLOS ANDRES MARTINEZ JIMENEZ</option>
-                        <option>234121 - CLAUDIA VILLEGAS LOPEZ</option>
-                    </select>                   
-                </div>
-                
-                <div class="form-group">
-                    <label for="empleados">Fecha:</label>
-                    <input type="text" id="fecha" class="form-control" value="12/04/2017" disabled>
-                </div>
-
-                <div class="form-group">
-                    <label for="empleados">Tipo de Incidencia:</label>
-                    <select id="empleados" class="form-control" disabled>
-                        <option>ACTO INSEGURO</option>
-                        <option>INCUMPLIMIENTO A NORMA</option>
-                        <option>ACCIDENTE</option>
-                    </select>                   
-                </div>              
-
-                <div class="form-group">
-                    <label for="comment">Descripcion de la Incidencia:</label>
-                    <textarea class="form-control" rows="5" id="comment" disabled>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et sint tenetur tempora eaque adipisci obcaecati sequi cupiditate, quod dolores maiores sed ut accusamus nesciunt eius. Repellendus quaerat vel sed expedita!</textarea>
-                </div>                
-
-                <div class="form-group">
-                    <label for="comment">Recomendaciones de Calidad/Seguridad:</label>
-                    <textarea class="form-control" rows="5" id="comment" disabled>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio qui quaerat sint consectetur quas, eaque, nemo odio nostrum sit perspiciatis commodi hic totam dolores eum neque repellendus, iure ad. Sapiente.</textarea>
-                </div>
-
-                <div class="text-center">
-                    <button class="btn btn-danger pull-left">
-                        Cancelar
-                    </button>
-
-                    <button class="btn btn-primary">
-                        <span class="glyphicon glyphicon-print" aria-hidden="true"></span>
-                        Imprimir
-                    </button>
-                </div> 
-            </div>
-
-        </div>
-
-        <div class="col-xs-12 col-sm-10 col-sm-offset-1">
-            <div class="form-group well">
-                <label for="comment">Comentario:</label>
-                <textarea class="form-control" rows="5" id="comment"></textarea>
-                <br>
-                <button class="btn btn-default">
-                    Enviar
-                </button>                            
-            </div>
-        </div>  
-    </div>
+	{% tag_comments rq %}
+</div>
 
 {% endblock content %}
 
 {% block scripts %}
 
-    <!-- Bootstrap Select -->
-    <script type="text/javascript" src="{% static 'libs/select2/4.0.3/dist/js/select2.min.js' %}"></script>
+    <!-- JS Cookie -->
+    <script src="{% static 'libs/js-cookie/2.2.0/src/js.cookie.js' %}"></script>
 
-    <!-- Bootrstrap DatePicker -->
-    <script type="text/javascript" src="{% static 'libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js' %}"></script>
+    <!-- Alertify -->
+    <script src="{% static 'libs/alertifyjs/1.11.0/alertify.min.js' %}"></script>
+    <script src="{% static 'alerts.min.js' %}"></script>
 
-    <!-- Own's Scripts -->
-    <script type="text/javascript" src="{% static 'benefit_add.js' %}"></script>    
+    <!-- Mommentjs -->
+    <script src="{% static 'libs/momentjs/2.19.3/moment-with-locales.min.js' %}"></script>
+
+    <!-- Own's Libraries -->
+    <script src="{% static 'comment.js' %}"></script>
 
 {% endblock scripts %}

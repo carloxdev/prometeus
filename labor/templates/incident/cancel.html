@@ -11,13 +11,13 @@
             enctype="multipart/form-data"> {% csrf_token %}
                 <div class="col-xs-12">
                     <div class="jumbotron text-center">
-                        <h1>¿Esta seguro de cancelar esta Solicitud?</h1>
+                        <h1>¿Esta seguro de cancelar este Reporte?</h1>
 
                         <p>
-                            Si cancela esta solicitud, se enviara correo a personal de nomina para detener el proceso de la solicitud
+                        	Si cancela esta documento, se enviara correo a personal de Calidad para detener el proceso de seguimiento
                         </p>
 
-                        <a href="{% url 'payroll:voucher_list_all' %}" class="btn btn-default">
+                        <a href="{% url 'labor:incident_list_all' %}" class="btn btn-default">
                             No, Regresar a listado
                         </a>
 

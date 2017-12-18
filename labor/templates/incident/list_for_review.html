@@ -4,12 +4,12 @@
 
 {% load humanize %}
 
-{% block title %} GCM - Comprobantes Administracion {% endblock title %}
+{% block title %} GCM - Incidencia {% endblock title %}
 
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" href="{% static 'voucher/list.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'incident/list.min.css' %}" />
 
 {% endblock css %}
 
@@ -17,29 +17,32 @@
 
     <div class="container-fluid">
         <header>
-            <h3 class="own-titulo">Administracion de Comprobantes</h3>
+            <h3 class="own-titulo">Incidencias</h3>
         </header>
         <hr>
         <nav>
-            <form class="row" action="" method="GET">
-                {% if request.path == '/vouchers/admin/all/' %}
-                    <div class="col-xs-12 col-sm-6">
-                        <a href="{% url 'payroll:voucher_list_admin_pending' %}" class="btn btn-info visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <a href="{% url 'labor:incident_add' %}" class="btn btn-primary ">
+                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        Solicitar
+                    </a>
+
+                    {% if request.path == '/incidents/all/' %}
+                        <a href="{% url 'labor:incident_list_pending' %}" class="btn btn-info ">
                             <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-                            Ver pendientes
+                            Ver solo pendientes
                         </a>
-                    </div>
-                {% else %}
-                    <div class="col-xs-12 col-sm-6">
-                        <a href="{% url 'payroll:voucher_list_admin_all' %}" class="btn btn-info visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                    {% else %}
+                        <a href="{% url 'labor:incident_list_all' %}" class="btn btn-info ">
                             <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
                             Ver todos
                         </a>
-                    </div>
-                {% endif %}
+                    {% endif %}
+                </div>
                 <br class="visible-xs">
                 <br class="visible-xs">
-                <div class="col-xs-12 col-sm-6" >
+                <form class="col-xs-12 col-sm-6" action="" method="GET">
                     <div class="input-group">
                         <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
 
@@ -50,10 +53,8 @@
                           </button>
                         </span>
                     </div>
-                </div>
-            </form>
-
-
+                </form>
+            </div>
         </nav>
         <br>
         <br class="hidden-xs">
@@ -107,9 +108,7 @@
                                     {{record.pk}} - {{record.type}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                    <a href="{% url 'security:profile' record.employee.pk %}">
-                                        {{ record.employee }}
-                                    </a>
+                                    <strong>{{ record.reason|truncatechars:30 }}</strong>
                                 </div>
                             </div>
                         </div>
@@ -151,11 +150,11 @@
                         </div>
 
                         <!-- Comand -->
-                        <a href="{% url 'payroll:voucher_edit' record.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+                        <a href="{% url 'labor:incident_view' record.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
 
                             <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue own-data-comandvalue">
-                                Editar
+                                Revisar
                             </span>
                         </a>
 

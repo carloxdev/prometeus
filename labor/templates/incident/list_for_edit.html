@@ -1,0 +1,194 @@
+{% extends 'master.html' %}
+
+{% load static from staticfiles %}
+
+{% load humanize %}
+
+{% block title %} GCM - Incidencias Administracion {% endblock title %}
+
+{% block css %}
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" href="{% static 'incident/list.css' %}" />
+
+{% endblock css %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <header>
+        <h3 class="own-titulo">Administracion de Incidencias</h3>
+    </header>
+    <hr>
+    <nav>
+        <form class="row" action="" method="GET">
+            {% if request.path == '/incidents/admin/all/' %}
+                <div class="col-xs-12 col-sm-6">
+                    <a href="{% url 'labor:incident_list_admin_pending' %}" class="btn btn-info visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                        Ver pendientes
+                    </a>
+                </div>
+            {% else %}
+                <div class="col-xs-12 col-sm-6">
+                    <a href="{% url 'labor:incident_list_admin_all' %}" class="btn btn-info visible-xs visible-sm-inline visible-md-inline visible-lg-inline">
+                        <span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+                        Ver todos
+                    </a>
+                </div>
+            {% endif %}
+            <br class="visible-xs">
+            <br class="visible-xs">
+            <div class="col-xs-12 col-sm-6" >
+                <div class="input-group">
+                    <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
+
+                    <span class="input-group-btn">
+                      <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        <span class="hidden-xs">Buscar</span>
+                      </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+
+
+    </nav>
+    <br>
+    <br class="hidden-xs">
+
+    <div class="container-fluid">
+        {% if records %}
+
+            <div class="row own-record-titles">
+
+                <div class="col-sm-4 col-md-6">TIPO</div>
+
+                <div class="col-sm-1 col-md-1">ESTADO</div>
+
+                <div class="col-sm-3 col-md-2">FECHA INFORMACION</div>
+
+                <div class="col-sm-3 col-md-2">FECHA SOLICITUD</div>
+
+                <div class="col-sm-1 col-md-1"></div>
+            </div>
+
+            {% for record in records %}
+                <div class="row own-record">
+
+                    <!-- Tipo y Estado -->
+                    <div class="visible-xs col-sm-5 own-column-pk
+                        {% if record.is_Complete %}
+                            own-column-pk-success
+                        {% elif record.is_Cancel %}
+                            own-column-pk-cancel
+                        {% else %}
+                            own-column-pk-warning
+                        {% endif %}">
+                        {{record.type}} - {{record.pk}}
+
+                        <span class="own-column-conten pull-right">
+                            {% if record.is_Complete %}
+                                <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+                            {% elif record.is_Cancel %}
+                                <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <!-- Tipo y Nombre -->
+                    <div class="col-sx-12 col-sm-4 col-md-6 own-column-main own-column--border">
+
+                        <div class="row">
+                            <div class="hidden-xs col-sm-12 col-md-5 own-data-second">
+                                {{record.pk}} - {{record.type}}
+                            </div>
+                            <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
+                                <a href="{% url 'security:profile' record.employee.pk %}">
+                                    {{ record.employee }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="hidden-xs col-sm-1 own-column text-center own-column--border own-column-estado">
+                        <span class="own-column-conten">
+
+                            {% if record.is_Complete %}
+                                <span class="glyphicon glyphicon-ok-sign own-data-icon-success" aria-hidden="true"></span>
+                            {% elif record.is_Cancel %}
+                                <span class="glyphicon glyphicon-minus-sign own-data-icon-cancel" aria-hidden="true"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-time own-data-icon-warning" aria-hidden="true"></span>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <!-- Fecha Informacion -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column-range own-column--border">
+                        <span class="own-data-label" >
+                            Fecha Información:
+                        </span>
+                        <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+                        <span class="own-data-normalvalue">
+                            {{record.date_start|date:"d M Y"}} - {{record.date_end|date:"d M Y"}}
+                        </span>
+                    </div>
+
+                    <!-- Fecha Solicitud -->
+                    <div class="col-sx-12 col-sm-3 col-md-2 own-column own-column--border">
+                        <span class="own-data-label" >
+                            Fecha Solicitud:
+                        </span>
+                        <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
+                        <span class="own-data-normalvalue">
+                            {{record.created_date|naturaltime|default:"" }}
+                        </span>
+                    </div>
+
+                    <!-- Comand -->
+                    <a href="{% url 'labor:incident_edit' record.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+
+                        <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
+                        <span class="own-data-normalvalue own-data-comandvalue">
+                            Editar
+                        </span>
+                    </a>
+
+                </div>
+            {% endfor %}
+
+            <div class="text-center">
+                <ul class="pagination pagination-sm no-margin">
+                    {% if records.has_previous %}
+                        <li><a href="?{{ page_request_var }}={{ records.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                    {% endif %}
+
+                    {% for i in records.paginator.page_range %}
+                        <li {% if records.number == i %} class="active own-active" {% endif %}>
+                            <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
+                        </li>
+                    {% endfor %}
+
+                    {% if records.has_next %}
+                        <li><a href="?page={{ records.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+
+        {% else %}
+            <h1 class="text-center">Sin solicitudes</h1>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+{% endblock scripts %}

@@ -1,7 +1,7 @@
 {% extends 'master.html' %}
 {% load static from staticfiles %}
 {% load custom_tags %}
-{% block title %} GCM - Nueva Solicitud de Comprobante {% endblock title %}
+{% block title %} GCM - Nuevo Reporte de Incidencia {% endblock title %}
 
 {% block css %}
 
@@ -27,8 +27,8 @@
                 <header>
                     <h3>
                         <ol class="breadcrumb own-breadcrumb">
-                          <li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_all' %}">Solicitudes</a></li>
-                          <li>Solicitud de Comprobante</li>
+                          <li class="own-breadcrumb-init"><a href="{% url 'labor:incident_list_all' %}">Solicitudes</a></li>
+                          <li>Reporte de Incidencia</li>
                         </ol>
                     </h3>
                 </header>
@@ -56,7 +56,7 @@
                     {% tag_field form.reason %}
 
                     <div class="text-center">
-                        <a href="{% url 'payroll:voucher_list_all' %}" class="btn btn-default">Cancelar</a>
+                        <a href="{% url 'labor:incident_list_all' %}" class="btn btn-default">Cancelar</a>
                         <button type="submit" class="btn btn-success">
                             <span class="glyphicon glyphicon-ok"></span>
                             Solicitar
@@ -70,15 +70,16 @@
 
 {% endblock content %}
 
+
 {% block scripts %}
 
-	<!-- Bootstrap Select -->
-	<script type="text/javascript" src="{% static 'libs/select2/4.0.3/dist/js/select2.min.js' %}"></script>
+    <!-- Bootstrap Select -->
+    <script type="text/javascript" src="{% static 'libs/select2/4.0.3/dist/js/select2.min.js' %}"></script>
 
-	<!-- Bootrstrap DatePicker -->
-	<script type="text/javascript" src="{% static 'libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js' %}"></script>
+    <!-- Bootrstrap DatePicker -->
+    <script type="text/javascript" src="{% static 'libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js' %}"></script>
 
-	<!-- Own's Scripts -->
-	<script type="text/javascript" src="{% static 'voucher/add.js' %}"></script>
+    <!-- Own's Scripts -->
+    <script type="text/javascript" src="{% static 'incident/add.js' %}"></script>
 
 {% endblock scripts %}

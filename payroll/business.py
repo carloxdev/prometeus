@@ -21,8 +21,8 @@ class VoucherRequisitionBusiness(object):
 
     @classmethod
     def get_No_Pending(self):
-        cantidades = VoucherRequisition.objects.filter(status="pen").count()
-        return cantidades
+        quantity = VoucherRequisition.objects.filter(status="pen").count()
+        return quantity
 
     @classmethod
     def get_FilterByEmployee(self, _value, _profile):
@@ -109,8 +109,8 @@ class BenefitRequisitionBusiness(object):
 
     @classmethod
     def get_No_Pendings(self):
-        cantidades = BenefitRequisition.objects.filter(status="pen").count()
-        return cantidades
+        quantity = BenefitRequisition.objects.filter(status="pen").count()
+        return quantity
 
     @classmethod
     def get_FilterByEmployee(self, _value, _profile):

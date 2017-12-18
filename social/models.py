@@ -14,7 +14,7 @@ from security.models import Profile
 
 class Comment(models.Model):
 
-    limit = models.Q(app_label='labor', model='IncidenceDocument') | \
+    limit = models.Q(app_label='labor', model='IncidentDocument') | \
             models.Q(app_label='payroll', model='VoucherRequisition') | \
             models.Q(app_label='payroll', model='BenefitRequisition')
 

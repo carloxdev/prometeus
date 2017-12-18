@@ -39,8 +39,8 @@ class TaskBenefits(View):
         return render(_request, self.template_name, {})
 
 
-class TaskIncidences(View):
-    template_name = "task_incidences.html"
+class TaskIncidents(View):
+    template_name = "task_incidents.html"
 
     def get(self, _request):
         return render(_request, self.template_name, {})

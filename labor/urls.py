@@ -17,47 +17,47 @@ from .views import IncidentCancel
 
 urlpatterns = [
     url(
-        r'^incidences/pending/$',
+        r'^incidents/pending/$',
         IncidentListPending.as_view(),
         name="incident_list_pending"
     ),
     url(
-        r'^incidences/all/$',
+        r'^incidents/all/$',
         IncidentListAll.as_view(),
         name="incident_list_all"
     ),
     url(
-        r'^incidences/admin/pending/$',
+        r'^incidents/admin/pending/$',
         IncidentListAdminPending.as_view(),
-        name="incident_list_pending"
+        name="incident_list_admin_pending"
     ),
     url(
-        r'^incidences/admin/all/$',
+        r'^incidents/admin/all/$',
         IncidentListAdminAll.as_view(),
-        name="incident_list_all"
+        name="incident_list_admin_all"
     ),
     url(
-        r'^incidences/add/$',
+        r'^incidents/add/$',
         IncidentAdd.as_view(),
         name="incident_add"
     ),
     url(
-        r'^incidences/add/success/$',
+        r'^incidents/add/success/$',
         IncidentAddSuccess.as_view(),
         name="incident_add_success"
     ),
     url(
-        r'^incidences/(?P<_pk>\d+)/view/$',
+        r'^incidents/(?P<pk>\d+)/view/$',
         IncidentView.as_view(),
         name="incident_view"
     ),
     url(
-        r'^incidences/(?P<_pk>\d+)/edit/$',
+        r'^incidents/(?P<pk>\d+)/edit/$',
         IncidentEdit.as_view(),
         name="incident_edit"
     ),
     url(
-        r'^incidences/(?P<_pk>\d+)/cancel/$',
+        r'^incidents/(?P<pk>\d+)/cancel/$',
         IncidentCancel.as_view(),
         name="incident_cancel"
     ),

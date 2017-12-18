@@ -13,7 +13,6 @@ from django.views.generic import UpdateView
 from django.views.generic.base import View
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
-# from django.views.generic import ListView
 from django.urls import reverse_lazy
 
 # Own's Libraries
