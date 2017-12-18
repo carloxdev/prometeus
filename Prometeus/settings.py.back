@@ -159,12 +159,12 @@ REST_FRAMEWORK = {
 }
 
 # Email Configuration
-EMAIL_HOST = 'smtpout.secureserver.net'
-EMAIL_HOST_USER = 'staff@******.com'
-EMAIL_HOST_PASSWORD = '********'
-DEFAULT_FROM_EMAIL = 'staff@*****.com'
-SERVER_EMAIL = 'staff@*****.com'
-EMAIL_PORT = 80
-EMAIL_USE_TLS = False
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'mail.granjascarroll.mx'
+EMAIL_PORT = 26
+EMAIL_HOST_USER = 'kioskogcm@granjascarroll.mx'
+DEFAULT_FROM_EMAIL = 'kioskogcm@granjascarroll.mx'
+EMAIL_HOST_PASSWORD = '!.p99VMUQ~ax'
+EMAIL_USE_TLS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
