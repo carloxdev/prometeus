@@ -272,6 +272,6 @@ class BenefitEdit(View):
 
         if form.is_valid():
             form.save()
-            return redirect('payroll:benefit_add_success')
+            return redirect('payroll:benefit_list_all')
         else:
             return redirect(reverse('payroll:benefit_edit'), pk=pk)
