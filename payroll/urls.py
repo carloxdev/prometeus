@@ -4,7 +4,7 @@
 from django.conf.urls import url
 
 # Own's Libraries
-from .views import VoucherListPending, BenefitListAdmin
+from .views import VoucherListPending, BenefitListAdmin, BenefitCancel
 from .views import VoucherListAll
 from .views import VoucherListAdminPending
 from .views import VoucherListAdminAll
@@ -74,4 +74,5 @@ urlpatterns = [
     url(r'^benefits/add/$', BenefitAdd.as_view(), name="benefit_add"),
     url(r'^benefits/add/success/$', BenefitAddSuccess.as_view(), name="benefit_add_success"),
     url(r'^benefits/(?P<pk>\d+)/edit/$', BenefitEdit.as_view(), name="benefit_edit"),
+    url(r'^benefits/(?P<pk>\d+)/cancel/$', BenefitCancel.as_view(), name="benefit_cancel"),
 ]

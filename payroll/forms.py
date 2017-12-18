@@ -152,13 +152,17 @@ class BenefitRequisitionAddForm(ModelForm):
 class BenefitRequisitionEditForm(ModelForm):
     user_fields = ['payment_evidence', ]  # Fill with user fillable fields.
 
-    def __init__(self, is_admin_form=False, *args, **kwargs):
+    def __init__(self, is_admin_form=False, is_cancelled=False, *args, **kwargs):
         super(BenefitRequisitionEditForm, self).__init__(*args, **kwargs)
-        if is_admin_form:
-            for field in [x for x in self.fields if x in self.user_fields]:
-                self.fields[field].widget.attrs['readonly'] = True
+        if not is_cancelled:
+            if is_admin_form:
+                for field in [x for x in self.fields if x in self.user_fields]:
+                    self.fields[field].widget.attrs['readonly'] = True
+            else:
+                for field in [x for x in self.fields if not x in self.user_fields]:
+                    self.fields[field].widget.attrs['readonly'] = True
         else:
-            for field in [x for x in self.fields if not x in self.user_fields]:
+            for field in self.fields:
                 self.fields[field].widget.attrs['readonly'] = True
 
     class Meta:
