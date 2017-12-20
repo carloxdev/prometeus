@@ -40,8 +40,8 @@
                         </a>
                     {% endif %}
                 </div>
-                <br class="visible-xs">
-                <br class="visible-xs">
+                <br class="hidden-sm hidden-md hidden-lg">
+                <br class="hidden-sm hidden-md hidden-lg">
                 <form class="col-xs-12 col-sm-6" action="" method="GET">
                     <div class="input-group">
                         <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
@@ -134,7 +134,7 @@
                             </span>
                             <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue">
-                                {{record.date_start|date:"d M Y"}} - {{record.date_end|date:"d M Y"}}
+                                {{record.date|date:"d M Y"}}
                             </span>
                         </div>
 

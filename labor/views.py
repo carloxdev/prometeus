@@ -26,7 +26,7 @@ from .forms import IncidentReportEditForm
 
 class IncidentListPending(GroupLoginRequiredMixin, View):
     template_name = "incident/list_for_review.html"
-    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
+    group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
 
     def get(self, _request):
         query = _request.GET.get('q')
@@ -46,7 +46,7 @@ class IncidentListPending(GroupLoginRequiredMixin, View):
 
 class IncidentListAll(GroupLoginRequiredMixin, View):
     template_name = "incident/list_for_review.html"
-    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
+    group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
 
     def get(self, _request):
         query = _request.GET.get('q')
@@ -66,7 +66,7 @@ class IncidentListAll(GroupLoginRequiredMixin, View):
 
 class IncidentListAdminPending(GroupLoginRequiredMixin, View):
     template_name = "incident/list_for_edit.html"
-    group = ['COMPROBANTES_ADM', ]
+    group = ['INCIDENCIAS_ADM', ]
 
     def get(self, _request):
         query = _request.GET.get('q')
@@ -83,7 +83,7 @@ class IncidentListAdminPending(GroupLoginRequiredMixin, View):
 
 class IncidentListAdminAll(GroupLoginRequiredMixin, View):
     template_name = "incident/list_for_edit.html"
-    group = ['COMPROBANTES_ADM', ]
+    group = ['INCIDENCIAS_ADM', ]
 
     def get(self, _request):
         query = _request.GET.get('q')
@@ -102,7 +102,7 @@ class IncidentAdd(GroupLoginRequiredMixin, CreateView):
     template_name = "incident/add.html"
     model = IncidentReport
     form_class = IncidentReportAddForm
-    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
+    group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
     success_url = reverse_lazy('labor:incident_add_success')
 
     def form_valid(self, form):
@@ -121,22 +121,22 @@ class IncidentAdd(GroupLoginRequiredMixin, CreateView):
 
 class IncidentAddSuccess(GroupLoginRequiredMixin, TemplateView):
     template_name = "incident/add_success.html"
-    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
+    group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
 
 
 class IncidentCancel(GroupLoginRequiredMixin, View):
     template_name = "incident/cancel.html"
-    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
+    group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
 
-    def get(self, _request, _pk):
-        req = get_object_or_404(IncidentReport, pk=_pk)
+    def get(self, _request, pk):
+        req = get_object_or_404(IncidentReport, pk=pk)
         context = {
             'req': req
         }
         return render(_request, self.template_name, context)
 
-    def post(self, _request, _pk):
-        req = get_object_or_404(IncidentReport, pk=_pk)
+    def post(self, _request, pk):
+        req = get_object_or_404(IncidentReport, pk=pk)
         req.updated_by = _request.user.profile
         req.status = "can"
         req.save()
@@ -146,8 +146,8 @@ class IncidentCancel(GroupLoginRequiredMixin, View):
 class IncidentView(GroupLoginRequiredMixin, DetailView):
     model = IncidentReport
     template_name = "incident/view.html"
-    group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
-    context_object_name = "rq"
+    group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
+    context_object_name = "record"
 
     def get_context_data(self, **kwargs):
         context = {}
@@ -163,7 +163,7 @@ class IncidentView(GroupLoginRequiredMixin, DetailView):
 class IncidentEdit(GroupLoginRequiredMixin, UpdateView):
     model = IncidentReport
     template_name = "incident/edit.html"
-    group = ['COMPROBANTES_ADM', ]
+    group = ['INCIDENCIAS_ADM', ]
     form_class = IncidentReportEditForm
     success_url = reverse_lazy('labor:incident_list_admin_pending')
 

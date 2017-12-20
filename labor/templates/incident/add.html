@@ -51,7 +51,7 @@
 
                     {% tag_field form.type %}
 
-                    {% tag_dates 'Fecha' False form.date_start form.date_end %}
+                    {% tag_date 'Fecha' False form.date %}
 
                     {% tag_field form.reason %}
 
@@ -80,6 +80,6 @@
     <script type="text/javascript" src="{% static 'libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.min.js' %}"></script>
 
     <!-- Own's Scripts -->
-    <script type="text/javascript" src="{% static 'incident/add.js' %}"></script>
+    <script type="text/javascript" src="{% static 'incident/add.min.js' %}"></script>
 
 {% endblock scripts %}

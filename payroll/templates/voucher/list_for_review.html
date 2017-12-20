@@ -40,8 +40,8 @@
                         </a>
                     {% endif %}
                 </div>
-                <br class="visible-xs">
-                <br class="visible-xs">
+                <br class="hidden-sm hidden-md hidden-lg">
+                <br class="hidden-sm hidden-md hidden-lg">
                 <form class="col-xs-12 col-sm-6" action="" method="GET">
                     <div class="input-group">
                         <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
@@ -60,7 +60,7 @@
         <br class="hidden-xs">
 
         <div class="container-fluid">
-            {% if requisitions %}
+            {% if records %}
 
                 <div class="row own-record-titles">
 
@@ -75,24 +75,24 @@
                     <div class="col-sm-1 col-md-1"></div>
                 </div>
 
-                {% for requisition in requisitions %}
+                {% for record in records %}
                     <div class="row own-record">
 
                         <!-- Tipo y Estado -->
                         <div class="visible-xs col-sm-5 own-column-pk
-                            {% if requisition.is_Complete %}
+                            {% if record.is_Complete %}
                                 own-column-pk-success
-                            {% elif requisition.is_Cancel %}
+                            {% elif record.is_Cancel %}
                                 own-column-pk-cancel
                             {% else %}
                                 own-column-pk-warning
                             {% endif %}">
-                            {{requisition.type}} - {{requisition.pk}}
+                            {{record.type}} - {{record.pk}}
 
                             <span class="own-column-conten pull-right">
-                                {% if requisition.is_Complete %}
+                                {% if record.is_Complete %}
                                     <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-                                {% elif requisition.is_Cancel %}
+                                {% elif record.is_Cancel %}
                                     <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
@@ -105,10 +105,10 @@
 
                             <div class="row">
                                 <div class="hidden-xs col-sm-12 col-md-5 own-data-second">
-                                    {{requisition.pk}} - {{requisition.type}}
+                                    {{record.pk}} - {{record.type}}
                                 </div>
                                 <div class="col-sx-12 col-sm-12 col-md-7 own-data-second">
-                                    <strong>{{ requisition.reason|truncatechars:30 }}</strong>
+                                    <strong>{{ record.reason|truncatechars:30 }}</strong>
                                 </div>
                             </div>
                         </div>
@@ -117,9 +117,9 @@
                         <div class="hidden-xs col-sm-1 own-column text-center own-column--border own-column-estado">
                             <span class="own-column-conten">
 
-                                {% if requisition.is_Complete %}
+                                {% if record.is_Complete %}
                                     <span class="glyphicon glyphicon-ok-sign own-data-icon-success" aria-hidden="true"></span>
-                                {% elif requisition.is_Cancel %}
+                                {% elif record.is_Cancel %}
                                     <span class="glyphicon glyphicon-minus-sign own-data-icon-cancel" aria-hidden="true"></span>
                                 {% else %}
                                     <span class="glyphicon glyphicon-time own-data-icon-warning" aria-hidden="true"></span>
@@ -134,7 +134,7 @@
                             </span>
                             <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue">
-                                {{requisition.date_start|date:"d M Y"}} - {{requisition.date_end|date:"d M Y"}}
+                                {{record.date_start|date:"d M Y"}} - {{record.date_end|date:"d M Y"}}
                             </span>
                         </div>
 
@@ -145,12 +145,12 @@
                             </span>
                             <span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue">
-                                {{requisition.created_date|naturaltime|default:"" }}
+                                {{record.created_date|naturaltime|default:"" }}
                             </span>
                         </div>
 
                         <!-- Comand -->
-                        <a href="{% url 'payroll:voucher_view' requisition.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
+                        <a href="{% url 'payroll:voucher_view' record.pk %}" class="col-sx-12 col-sm-1 col-md-1 own-column own-comando">
 
                             <span class="glyphicon glyphicon-edit own-link-icon" aria-hidden="true"></span>
                             <span class="own-data-normalvalue own-data-comandvalue">
@@ -163,18 +163,18 @@
 
                 <div class="text-center">
                     <ul class="pagination pagination-sm no-margin">
-                        {% if requisitions.has_previous %}
-                            <li><a href="?{{ page_request_var }}={{ requisitions.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
+                        {% if records.has_previous %}
+                            <li><a href="?{{ page_request_var }}={{ records.previous_page_number }}&q={{ request.GET.q }}">&laquo;</a></li>
                         {% endif %}
 
-                        {% for i in requisitions.paginator.page_range %}
-                            <li {% if requisitions.number == i %} class="active own-active" {% endif %}>
+                        {% for i in records.paginator.page_range %}
+                            <li {% if records.number == i %} class="active own-active" {% endif %}>
                                 <a href="?page={{i}}&q={{ request.GET.q }}">{{ i }}</a>
                             </li>
                         {% endfor %}
 
-                        {% if requisitions.has_next %}
-                            <li><a href="?page={{ requisitions.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
+                        {% if records.has_next %}
+                            <li><a href="?page={{ records.next_page_number }}&q={{ request.GET.q }}">&raquo;</a></li>
                         {% endif %}
                     </ul>
                 </div>

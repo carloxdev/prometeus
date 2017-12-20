@@ -22,6 +22,10 @@ class VoucherType(models.Model):
         unique=True
     )
     description = models.TextField("Descripción", blank=True, null=True)
+    valid_range = models.BooleanField(
+        "Validar rangos de fechas",
+        default=True
+    )
 
     created_date = models.DateTimeField(
         auto_now=False,
@@ -59,10 +63,11 @@ class VoucherRequisition(models.Model):
         blank=False,
         on_delete=models.PROTECT
     )
-    date_start = models.DateField("Fecha Inicio")
-    date_end = models.DateField("Fecha Fin")
-    reason = models.TextField("Motivo de la Solicitud", blank=True)
-    response = models.TextField("Respuesta de Administracion", blank=True)
+    date_start = models.DateField("Fecha Inicio", blank=True, null=True)
+    date_end = models.DateField("Fecha Fin", blank=True, null=True)
+    reason = models.TextField("Motivo de la Solicitud", blank=True, null=True)
+    response = models.TextField(
+        "Respuesta de Administracion", blank=True, null=True)
     file = models.FileField(
         "Archivo",
         upload_to=Helper.get_FilePath_Voucher,
@@ -104,13 +109,29 @@ class VoucherRequisition(models.Model):
     def clean(self):
         fecha_inicio = self.date_start
         fecha_fin = self.date_end
+        tipo = self.type
 
-        if fecha_fin < fecha_inicio:
-            raise ValidationError({
-                'date_end': _(
-                    'Fecha final no puede ser menor que fecha inicial.'
-                )
-            })
+        if tipo.valid_range:
+            if fecha_inicio is None:
+                raise ValidationError({
+                    'date_start': _(
+                        'Fecha Inicial no proporcionada.'
+                    )
+                })
+
+            if fecha_fin is None:
+                raise ValidationError({
+                    'date_start': _(
+                        'Fecha Fin no proporcionada.'
+                    )
+                })
+
+            if fecha_fin < fecha_inicio:
+                raise ValidationError({
+                    'date_end': _(
+                        'Fecha final no puede ser menor que fecha inicial.'
+                    )
+                })
 
     class Meta:
         verbose_name = 'Solicitud de Comprobante'

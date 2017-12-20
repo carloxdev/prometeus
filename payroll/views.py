@@ -8,15 +8,20 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.core.mail import send_mail
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.views.generic.base import View
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
+from django.conf import settings
+
 
 # Own's Libraries
 from security.mixins import GroupLoginRequiredMixin
+from management.models import VoucherConfig
+from management.models import BenefitConfig
 
 from .business import VoucherRequisitionBusiness as VoucherBusiness
 from .business import BenefitRequisitionBusiness as BenefitBusiness
@@ -43,7 +48,7 @@ class VoucherListPending(GroupLoginRequiredMixin, View):
             _request.GET.get('page')
         )
         context = {
-            'requisitions': requisitions_paginated
+            'records': requisitions_paginated
         }
         return render(_request, self.template_name, context)
 
@@ -63,7 +68,7 @@ class VoucherListAll(GroupLoginRequiredMixin, View):
             _request.GET.get('page')
         )
         context = {
-            'requisitions': requisitions_paginated
+            'records': requisitions_paginated
         }
         return render(_request, self.template_name, context)
 
@@ -80,7 +85,7 @@ class VoucherListAdminPending(GroupLoginRequiredMixin, View):
             _request.GET.get('page')
         )
         context = {
-            'requisitions': requisitions_paginated
+            'records': requisitions_paginated
         }
         return render(_request, self.template_name, context)
 
@@ -97,7 +102,7 @@ class VoucherListAdminAll(GroupLoginRequiredMixin, View):
             _request.GET.get('page')
         )
         context = {
-            'requisitions': requisitions_paginated
+            'records': requisitions_paginated
         }
         return render(_request, self.template_name, context)
 
@@ -117,9 +122,29 @@ class VoucherAdd(GroupLoginRequiredMixin, CreateView):
 
         if response.status_code == 302:
             self.request.user.email_user(
-                "Esta chido",
-                "Ejemplo de mensaje"
+                "Tu Solicitud con el no. %s fue generada correctamente" %
+                (form.instance.pk),
+                "La administracion revisara tu solicitud"
+                "y te avisara cuando esta sea procesada"
             )
+
+            try:
+                vconfig = VoucherConfig.objects.get(
+                    type=form.instance.type
+                )
+                send_mail(
+                    "%s genero una nueva solicitud con el no. %s" % (
+                        form.instance.employee.user.get_full_name(),
+                        form.instance.pk
+                    ),
+                    "Estimado administrador se registro la solicitud #%s"
+                    "Favor de entrar a plataforma para revisar y procesar" %
+                    (form.instance.pk),
+                    settings.DEFAULT_FROM_EMAIL,
+                    [vconfig.email]
+                )
+            except Exception:
+                pass
 
         return response
 
@@ -145,6 +170,32 @@ class VoucherCancel(GroupLoginRequiredMixin, View):
         req.updated_by = _request.user.profile
         req.status = "can"
         req.save()
+
+        # self.request.user.email_user(
+        #     "Tu Solicitud con el no. %s fue CANCELADA correctamente" %
+        #     (form.instance.pk),
+        #     "Se avisara La administracion no seguira dando seguimiento a tu solicitud"
+        #     "y te avisara cuando esta sea procesada"
+        # )
+        #
+        # try:
+        #     vconfig = VoucherConfig.objects.get(
+        #         type=form.instance.type
+        #     )
+        #     send_mail(
+        #         "%s genero una nueva solicitud con el no. %s" % (
+        #             form.instance.employee.user.get_full_name(),
+        #             form.instance.pk
+        #         ),
+        #         "Estimado administrador se registro la solicitud #%s"
+        #         "Favor de entrar a plataforma para revisar y procesar" %
+        #         (form.instance.pk),
+        #         settings.DEFAULT_FROM_EMAIL,
+        #         [vconfig.email]
+        #     )
+        # except Exception:
+        #     pass
+
         return redirect(reverse('payroll:voucher_list_all'))
 
 
@@ -152,7 +203,7 @@ class VoucherView(GroupLoginRequiredMixin, DetailView):
     model = VoucherRequisition
     template_name = "voucher/view.html"
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
-    context_object_name = "rq"
+    context_object_name = "record"
 
     def get_context_data(self, **kwargs):
         context = {}

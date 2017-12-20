@@ -18,6 +18,7 @@ class IncidentReportAddForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(IncidentReportAddForm, self).__init__(*args, **kwargs)
         self.fields['reason'].required = True
+        self.fields['date'].required = True
 
     class Meta:
         model = IncidentReport
@@ -43,7 +44,7 @@ class IncidentReportAddForm(ModelForm):
 
         labels = {
             'type': 'Tipo de comprobante:',
-            'reason': 'Motivo:'
+            'reason': 'Descripción:'
         }
 
 

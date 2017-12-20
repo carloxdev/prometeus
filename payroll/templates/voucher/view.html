@@ -22,7 +22,7 @@
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
 					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_all' %}">Solicitudes</a></li>
-						<li>Solicitud de Comprobante: <span class="badge own-badge" id="object_id" data-tag-model="{{ rq | to_class_name }}">{{rq.pk}}</span></li>
+						<li>Solicitud de Comprobante: <span class="badge own-badge" id="object_id" data-tag-model="{{ record | to_class_name }}">{{record.pk}}</span></li>
 					</ol>
 				</h3>
             </header>
@@ -36,39 +36,41 @@
 
 				<div class="form-group">
 					<label for="empleados">Empleado:</label>
-					<input type="text" class="form-control" value="{{ rq.employee }}" disabled>
+					<input type="text" class="form-control" value="{{ record.employee }}" disabled>
 				</div>
 
+				{% if record.type.valid_range %}
 				<div class="form-group">
 					<label for="empleados">Fechas:</label>
-					<input type="text" class="form-control" value="{{ rq.date_start|date:"d M Y" }} al {{ rq.date_end|date:"d M Y" }}" disabled />
+					<input type="text" class="form-control" value="{{ record.date_start|date:"d M Y" }} al {{ record.date_end|date:"d M Y" }}" disabled />
 				</div>
+				{% endif %}
 
 				<div class="form-group">
 					<label for="empleados">Tipo de Comprobante:</label>
-					<input type="text" class="form-control" value="{{ rq.type }}" disabled>
+					<input type="text" class="form-control" value="{{ record.type }}" disabled>
 				</div>
 
 				<div class="form-group">
                     <label for="comment">Motivo de la solicitud:</label>
-                    <textarea class="form-control" rows="5" disabled>{{ rq.reason }}</textarea>
+                    <textarea class="form-control" rows="5" disabled>{{ record.reason }}</textarea>
                 </div>
 
-				{% if rq.is_Complete %}
+				{% if record.is_Complete %}
 	                <div class="form-group">
 	                    <label for="comment">Respuesta de la Administracion:</label>
-	                    <textarea class="form-control" rows="5" value="{{ rq.response }}" disabled></textarea>
+	                    <textarea class="form-control" rows="5" value="{{ record.response }}" disabled></textarea>
 	                </div>
 
-					{% if rq.file %}
+					{% if record.file %}
 					<div class="form-group">
 						<label for="empleados">Archivo:</label>
-						<a href="{{rq.file.url}}">{{rq.file.name}}</a>
+						<a href="{{record.file.url}}">{{record.file.name}}</a>
 					</div>
 					{% endif %}
-				{% elif rq.is_Cancel is False %}
+				{% elif record.is_Cancel is False %}
 					<div>
-						<a href="{% url 'payroll:voucher_cancel' rq.pk %}" class="btn btn-danger">
+						<a href="{% url 'payroll:voucher_cancel' record.pk %}" class="btn btn-danger">
 							Cancelar
 						</a>
 	                    <!--
@@ -94,20 +96,20 @@
 							 Estado:
 						</td>
 						<td class="own-table-info">
-							{% if rq.is_Complete %}
+							{% if record.is_Complete %}
 								<span class="label label-success own-label">
 									<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-									{{ rq.get_status_display }}
+									{{ record.get_status_display }}
 								</span>
-							{% elif rq.is_Cancel %}
+							{% elif record.is_Cancel %}
 								<span class="label label-danger own-label">
 									<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-									{{ rq.get_status_display }}
+									{{ record.get_status_display }}
 								</span>
 							{% else %}
 								<span class="label label-warning own-label">
 									<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
-									{{ rq.get_status_display }}
+									{{ record.get_status_display }}
 								</span>
 							{% endif %}
 						</td>
@@ -117,35 +119,35 @@
 							<span class="glyphicon glyphicon-user own-data-icon" aria-hidden="true"></span>
 							Creado por:
 						</td>
-						<td class="own-table-info">{{ rq.created_by|default:"" }}</td>
+						<td class="own-table-info">{{ record.created_by|default:"" }}</td>
 					</tr>
 					<tr>
 						<td class="own-table-label">
 							<span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
 							Creado el:
 						</td>
-						<td class="own-table-info">{{ rq.created_date|date:"d M Y" }}</td>
+						<td class="own-table-info">{{ record.created_date|date:"d M Y" }}</td>
 					</tr>
 					<tr>
 						<td class="own-table-label">
 							<span class="glyphicon glyphicon-user own-data-icon" aria-hidden="true"></span>
 							Actualizado por:
 						</td>
-						<td class="own-table-info">{{ rq.updated_by|default:"" }}</td>
+						<td class="own-table-info">{{ record.updated_by|default:"" }}</td>
 					</tr>
 					<tr>
 						<td class="own-table-label">
 							<span class="glyphicon glyphicon-calendar own-data-icon" aria-hidden="true"></span>
 							Actualizado el:
 						</td>
-						<td class="own-table-info">{{ rq.updated_date|date:"d M Y" }}</td>
+						<td class="own-table-info">{{ record.updated_date|date:"d M Y" }}</td>
 					</tr>
 				</table>
 			</div>
         </div>
 	</div>
 
-	{% tag_comments rq %}
+	{% tag_comments record %}
 </div>
 
 {% endblock content %}
@@ -163,6 +165,6 @@
 	<script src="{% static 'libs/momentjs/2.19.3/moment-with-locales.min.js' %}"></script>
 
 	<!-- Own's Libraries -->
-	<script src="{% static 'comment.js' %}"></script>
+	<script src="{% static 'comment.min.js' %}"></script>
 
 {% endblock scripts %}

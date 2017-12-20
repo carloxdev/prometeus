@@ -18,6 +18,7 @@ class VoucherTypeAdmin(admin.ModelAdmin):
     list_display = (
         'name',
         'description',
+        'valid_range',
         'created_date',
         'updated_date',
     )

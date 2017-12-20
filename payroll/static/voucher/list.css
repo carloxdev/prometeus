@@ -73,7 +73,7 @@
 		}
 
 		.own-data-comandvalue {
-			color: white;
+			color: #384b78;
 		}
 
 
@@ -87,8 +87,8 @@
 
 		text-align: center;
 		border-top: 1px solid #EBEFF2;
-		background-color: #de6324;
-		color: white !important;
+		background-color: #d0d2d4;
+		color: black !important;
 		display: block;
 	}
 
@@ -106,12 +106,11 @@
 		border-radius: 0 0  4px 4px;
 
 		background-color: #de6324;
-		color: white !important;
+		color: black !important;
 	}
 
 		.own-link-icon {
-			/*color: #BAC1CC !important;*/
-			color: white !important;
+			color: #384b78 !important;
 		}
 
 
@@ -167,6 +166,9 @@
 		padding: 0px;
 
 		border-radius: 0 4px  4px 0px;
+
+		background-color: #de6324;
+		color: white !important;
 	}
 
 	.own-column-comand {
@@ -187,6 +189,10 @@
 		padding-top: 1.8em !important;
 	}
 
+	.own-data-comandvalue {
+		color: white;
+	}
+
 		.own-data-icon {
 			font-size: .8em;
 		}
@@ -200,10 +206,13 @@
 			font-size: .7em;
 		}
 
-
 		/* Ocultamos etiquetas de los campos */
 		.own-data-label {
 			display: none;
+		}
+
+		.own-link-icon {
+			color: white !important;
 		}
 
 }

@@ -72,13 +72,13 @@
 				  				<i class="fa fa-exclamation-triangle fa-5x" aria-hidden="true"></i>
 				  			</div>
 				  			<div class="col-xs-9 text-right">
-								<div class="own-huge">0</div>
+								<div class="own-huge">{{ new_incidents }}</div>
 								<div>Nuevos Reportes</div>
 				  			</div>
 				  		</div>
 				    	Incidencias
 				  	</div>
-				  	<a href="#">
+				  	<a href="{% url 'labor:incident_list_admin_pending' %}">
 				  		<div class="panel-footer">
 							<span class="pull-left">Ver Reportes</span>
 							<span class="pull-right">

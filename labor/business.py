@@ -20,7 +20,7 @@ class IncidentReportBusiness(object):
         return requisition
 
     @classmethod
-    def get_No_Pending(self):
+    def get_No_Pendings(self):
         quantity = IncidentReport.objects.filter(status="pen").count()
         return quantity
 
