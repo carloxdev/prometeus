@@ -3,9 +3,6 @@
 # Python's Libraries
 from __future__ import unicode_literals
 
-# Django's Libraries
-# from django.shortcuts import render
-
 # Third-party Libraries
 from rest_framework import views
 from rest_framework import status
@@ -18,7 +15,6 @@ from .business import CommentBusiness
 class CommentAddAPI(views.APIView):
 
     def post(self, request, format=None):
-
         try:
             obj = CommentBusiness.add(
                 request.data['comment'],
@@ -36,7 +32,6 @@ class CommentAddAPI(views.APIView):
                 {'detail': str(error)},
                 status=status.HTTP_400_BAD_REQUEST
             )
-
         return Response(
             lista,
             status=status.HTTP_200_OK

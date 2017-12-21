@@ -125,6 +125,13 @@ hr {
 
 }
 
+.show-div {
+    display: block;
+}
+
+.hidden-div {
+    display: none;
+}
 
 @media (min-width: 768px) {
 

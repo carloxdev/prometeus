@@ -56,10 +56,12 @@
 						<input type="text" class="form-control" value="{{ form.instance.employee }}" disabled>
 					</div>
 
-					<div class="form-group">
-						<label for="empleados">Fechas:</label>
-						<input type="text" class="form-control" value="{{ form.instance.date_start|date:"d M Y" }} al {{ form.instance.date_end|date:"d M Y" }}" disabled />
-					</div>
+					{% if form.instance.type.valid_range %}
+						<div class="form-group">
+							<label for="empleados">Fechas:</label>
+							<input type="text" class="form-control" value="{{ form.instance.date_start|date:"d M Y" }} al {{ form.instance.date_end|date:"d M Y" }}" disabled />
+						</div>
+					{% endif %}
 
 					<div class="form-group">
 						<label for="empleados">Tipo de Comprobante:</label>

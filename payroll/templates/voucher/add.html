@@ -5,6 +5,10 @@
 
 {% block css %}
 
+    <!-- Alertify -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/alertify.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/themes/bootstrap.min.css' %}"/>
+
     <!-- Bootstrap Select -->
     <link rel="stylesheet" type="text/css" href="{% static 'libs/select2/4.0.3/dist/css/select2.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'libs/select2-bootstrap-theme-master/0.1.0-beta.10/dist/select2-bootstrap.min.css' %}"/>
@@ -71,6 +75,13 @@
 {% endblock content %}
 
 {% block scripts %}
+
+    <!-- JS Cookie -->
+    <script src="{% static 'libs/js-cookie/2.2.0/src/js.cookie.js' %}"></script>
+
+    <!-- Alertify -->
+	<script src="{% static 'libs/alertifyjs/1.11.0/alertify.min.js' %}"></script>
+	<script src="{% static 'alerts.min.js' %}"></script>
 
 	<!-- Bootstrap Select -->
 	<script type="text/javascript" src="{% static 'libs/select2/4.0.3/dist/js/select2.min.js' %}"></script>

@@ -1,0 +1,42 @@
+try:
+    vconfig = VoucherConfig.objects.get(
+        type=req.type
+    )
+
+    if req.employee.user == _request.user:
+        self.request.user.email_user(
+            "Tu Solicitud con el no. %s fue CANCELADA correctamente" %
+            (req.pk),
+            "Se avisara a la Administracion para que no siga dando "
+            "seguimiento a tu solicitud"
+        )
+
+        send_mail(
+            "%s CANCELO la solicitud con el no. %s" % (
+                req.employee.user.get_full_name(),
+                req.pk
+            ),
+            "Estimado Administrador, se CANCELO la solicitud #%s."
+            "No es necesario que siga dando seguimiento" %
+            (req.pk),
+            settings.DEFAULT_FROM_EMAIL,
+            [vconfig.email]
+        )
+    else:
+        self.request.user.email_user(
+            "La Administracion CANCELO tu solicitud con no. %s" %
+            (req.pk),
+            "La Administracion CANCELO tu solicitud dejando el "
+            "siguiente motivo: \n %s" % (req.response)
+        )
+
+        send_mail(
+            "Se CANCELO la solicitud con el no. %s" % (req.pk),
+            "Estimado Administrador, se CANCELO la solicitud #%s."
+            "No es necesario que siga dando seguimiento" % (req.pk),
+            settings.DEFAULT_FROM_EMAIL,
+            [vconfig.email]
+        )
+
+except Exception:
+    pass

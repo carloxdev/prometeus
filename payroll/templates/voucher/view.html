@@ -40,10 +40,10 @@
 				</div>
 
 				{% if record.type.valid_range %}
-				<div class="form-group">
-					<label for="empleados">Fechas:</label>
-					<input type="text" class="form-control" value="{{ record.date_start|date:"d M Y" }} al {{ record.date_end|date:"d M Y" }}" disabled />
-				</div>
+					<div class="form-group">
+						<label for="empleados">Fechas:</label>
+						<input type="text" class="form-control" value="{{ record.date_start|date:"d M Y" }} al {{ record.date_end|date:"d M Y" }}" disabled />
+					</div>
 				{% endif %}
 
 				<div class="form-group">

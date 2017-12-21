@@ -17,16 +17,23 @@ from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
 from django.conf import settings
 
+# Third-party Libraries
+from rest_framework import views
+from rest_framework import status
+from rest_framework.response import Response
 
 # Own's Libraries
 from security.mixins import GroupLoginRequiredMixin
 from management.models import VoucherConfig
 from management.models import BenefitConfig
 
+from .models import VoucherRequisition
+from .models import VoucherType
+from .models import BenefitRequisition
+
 from .business import VoucherRequisitionBusiness as VoucherBusiness
 from .business import BenefitRequisitionBusiness as BenefitBusiness
-from .models import VoucherRequisition
-from .models import BenefitRequisition
+
 from .forms import VoucherRequisitionAddForm
 from .forms import VoucherRequisitionEditForm
 from .forms import BenefitRequisitionAddForm
@@ -122,10 +129,10 @@ class VoucherAdd(GroupLoginRequiredMixin, CreateView):
 
         if response.status_code == 302:
             self.request.user.email_user(
-                "Tu Solicitud con el no. %s fue generada correctamente" %
+                "Tu Solicitud con el no. %s fue CREADA correctamente" %
                 (form.instance.pk),
-                "La administracion revisara tu solicitud"
-                "y te avisara cuando esta sea procesada"
+                "La Administracion revisara tu solicitud"
+                "y se te avisara por este medio cuando esta sea procesada."
             )
 
             try:
@@ -137,9 +144,14 @@ class VoucherAdd(GroupLoginRequiredMixin, CreateView):
                         form.instance.employee.user.get_full_name(),
                         form.instance.pk
                     ),
-                    "Estimado administrador se registro la solicitud #%s"
+                    "Estimado Administrador, el empleado %s registro "
+                    "la solicitud #%s, solicitando un comprobante de %s. "
                     "Favor de entrar a plataforma para revisar y procesar" %
-                    (form.instance.pk),
+                    (
+                        form.instance.employee.user.get_full_name(),
+                        form.instance.pk,
+                        form.instance.type.name
+                    ),
                     settings.DEFAULT_FROM_EMAIL,
                     [vconfig.email]
                 )
@@ -171,30 +183,31 @@ class VoucherCancel(GroupLoginRequiredMixin, View):
         req.status = "can"
         req.save()
 
-        # self.request.user.email_user(
-        #     "Tu Solicitud con el no. %s fue CANCELADA correctamente" %
-        #     (form.instance.pk),
-        #     "Se avisara La administracion no seguira dando seguimiento a tu solicitud"
-        #     "y te avisara cuando esta sea procesada"
-        # )
-        #
-        # try:
-        #     vconfig = VoucherConfig.objects.get(
-        #         type=form.instance.type
-        #     )
-        #     send_mail(
-        #         "%s genero una nueva solicitud con el no. %s" % (
-        #             form.instance.employee.user.get_full_name(),
-        #             form.instance.pk
-        #         ),
-        #         "Estimado administrador se registro la solicitud #%s"
-        #         "Favor de entrar a plataforma para revisar y procesar" %
-        #         (form.instance.pk),
-        #         settings.DEFAULT_FROM_EMAIL,
-        #         [vconfig.email]
-        #     )
-        # except Exception:
-        #     pass
+        try:
+            vconfig = VoucherConfig.objects.get(
+                type=req.type
+            )
+
+            req.employee.user.email_user(
+                "Tu Solicitud con el no. %s fue CANCELADA correctamente" %
+                (req.pk),
+                "Se avisara a la Administracion para que no siga dando "
+                "seguimiento a tu solicitud"
+            )
+
+            send_mail(
+                "%s CANCELO la solicitud con el no. %s" % (
+                    req.employee.user.get_full_name(),
+                    req.pk
+                ),
+                "Estimado Administrador, se CANCELO la solicitud #%s."
+                "No es necesario que le siga dando seguimiento." %
+                (req.pk),
+                settings.DEFAULT_FROM_EMAIL,
+                [vconfig.email]
+            )
+        except Exception:
+            pass
 
         return redirect(reverse('payroll:voucher_list_all'))
 
@@ -225,7 +238,60 @@ class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user.profile
-        return super(VoucherEdit, self).form_valid(form)
+        response = super(VoucherEdit, self).form_valid(form)
+
+        if response.status_code == 302:
+            try:
+                vconfig = VoucherConfig.objects.get(
+                    type=form.instance.type
+                )
+
+                form.instance.employee.user.email_user(
+                    "La Administracion CANCELO tu solicitud con no. %s" %
+                    (form.instance.pk),
+                    "La Administracion CANCELO tu solicitud dejando el "
+                    "siguiente motivo: \n %s" % (form.instance.response)
+                )
+
+                send_mail(
+                    "Se CANCELO la solicitud con el no. %s" %
+                    (form.instance.pk),
+                    "Estimado Administrador, se CANCELO la solicitud #%s."
+                    "No es necesario que le siga dando seguimiento." %
+                    (form.instance.pk),
+                    settings.DEFAULT_FROM_EMAIL,
+                    [vconfig.email]
+                )
+            except Exception:
+                pass
+
+        return response
+
+
+class VoucherTypeAPIView(views.APIView):
+
+    def get(self, request, pk):
+        try:
+            type = VoucherType.objects.get(id=pk)
+            data = {
+                'name': type.name,
+                'valid_range': type.valid_range
+            }
+
+        except VoucherType.DoesNotExist:
+            return Response(
+                {'detail': "Tipo no existe"},
+                status=status.HTTP_204_NO_CONTENT
+            )
+        except Exception as error:
+            return Response(
+                {'detail': str(error)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        return Response(
+            data,
+            status=status.HTTP_200_OK
+        )
 
 
 class BenefitList(GroupLoginRequiredMixin, View):

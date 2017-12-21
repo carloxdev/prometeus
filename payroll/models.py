@@ -121,7 +121,7 @@ class VoucherRequisition(models.Model):
 
             if fecha_fin is None:
                 raise ValidationError({
-                    'date_start': _(
+                    'date_end': _(
                         'Fecha Fin no proporcionada.'
                     )
                 })
