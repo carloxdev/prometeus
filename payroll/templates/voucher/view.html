@@ -59,7 +59,7 @@
 				{% if record.is_Complete %}
 	                <div class="form-group">
 	                    <label for="comment">Respuesta de la Administracion:</label>
-	                    <textarea class="form-control" rows="5" value="{{ record.response }}" disabled></textarea>
+	                    <textarea class="form-control" rows="5" disabled>{{ record.response }}</textarea>
 	                </div>
 
 					{% if record.file %}

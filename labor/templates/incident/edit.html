@@ -103,6 +103,7 @@
 								 Estado:
 							</td>
 							<td class="own-table-info">
+                                <span id="record_status" class="hidden">{{form.instance.status}}</span>
 								{% if form.instance.is_Complete %}
 									<span class="label label-success own-label">
 										<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
@@ -175,7 +176,7 @@
     <!-- Mommentjs -->
     <script src="{% static 'libs/momentjs/2.19.3/moment-with-locales.min.js' %}"></script>
 
-    <!-- Own's Libraries -->
+    <!-- Own's Scripts -->
     <script src="{% static 'comment.min.js' %}"></script>
 
 {% endblock scripts %}

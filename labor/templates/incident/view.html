@@ -22,7 +22,7 @@
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
 					  	<li class="own-breadcrumb-init"><a href="{% url 'labor:incident_list_all' %}">Solicitudes</a></li>
-						<li>Solicitud de Comprobante: <span class="badge own-badge" id="object_id" data-tag-model="{{ rq | to_class_name }}">{{record.pk}}</span></li>
+						<li>Solicitud de Comprobante: <span class="badge own-badge" id="object_id" data-tag-model="{{ record | to_class_name }}">{{record.pk}}</span></li>
 					</ol>
 				</h3>
             </header>
@@ -145,7 +145,7 @@
         </div>
 	</div>
 
-	{% tag_comments rq %}
+	{% tag_comments record %}
 </div>
 
 {% endblock content %}

@@ -49,6 +49,14 @@ class IncidentReportAddForm(ModelForm):
 
 
 class IncidentReportEditForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(IncidentReportEditForm, self).__init__(*args, **kwargs)
+        instance = kwargs['instance']
+        if instance.status == 'can' or instance.status == 'com':
+            self.fields['status'].widget.attrs['readonly'] = True
+            self.fields['file'].widget.attrs['readonly'] = True
+            self.fields['response'].widget.attrs['readonly'] = True
+
     class Meta:
         model = IncidentReport
         fields = (

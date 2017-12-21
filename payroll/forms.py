@@ -73,6 +73,15 @@ class VoucherRequisitionAddForm(ModelForm):
 
 
 class VoucherRequisitionEditForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super(VoucherRequisitionEditForm, self).__init__(*args, **kwargs)
+        instance = kwargs['instance']
+        if instance.status == 'can' or instance.status == 'com':
+            self.fields['status'].widget.attrs['readonly'] = True
+            self.fields['file'].widget.attrs['readonly'] = True
+            self.fields['response'].widget.attrs['readonly'] = True
+
     class Meta:
         model = VoucherRequisition
         fields = (
@@ -154,6 +163,7 @@ class BenefitRequisitionEditForm(ModelForm):
 
     def __init__(self, is_admin_form=False, is_cancelled=False, *args, **kwargs):
         super(BenefitRequisitionEditForm, self).__init__(*args, **kwargs)
+        self.fields['status'].required = False
         if not is_cancelled:
             if is_admin_form:
                 for field in [x for x in self.fields if x in self.user_fields]:

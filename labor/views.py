@@ -111,11 +111,11 @@ class IncidentAdd(GroupLoginRequiredMixin, CreateView):
         form.instance.updated_by = self.request.user.profile
         response = super(IncidentAdd, self).form_valid(form)
 
-        if response.status_code == 302:
-            self.request.user.email_user(
-                "Esta chido",
-                "Ejemplo de mensaje"
-            )
+        # if response.status_code == 302:
+        #     self.request.user.email_user(
+        #         "Esta chido",
+        #         "Ejemplo de mensaje"
+        #     )
         return response
 
 

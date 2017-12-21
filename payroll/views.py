@@ -246,22 +246,45 @@ class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
                     type=form.instance.type
                 )
 
-                form.instance.employee.user.email_user(
-                    "La Administracion CANCELO tu solicitud con no. %s" %
-                    (form.instance.pk),
-                    "La Administracion CANCELO tu solicitud dejando el "
-                    "siguiente motivo: \n %s" % (form.instance.response)
-                )
+                if form.instance.status == "can":
+                    form.instance.employee.user.email_user(
+                        "La Administracion CANCELO tu solicitud con no. %s" %
+                        (form.instance.pk),
+                        "La Administracion CANCELO tu solicitud dejando el "
+                        "siguiente motivo: \n - '%s'" % (
+                            form.instance.response
+                        )
+                    )
 
-                send_mail(
-                    "Se CANCELO la solicitud con el no. %s" %
-                    (form.instance.pk),
-                    "Estimado Administrador, se CANCELO la solicitud #%s."
-                    "No es necesario que le siga dando seguimiento." %
-                    (form.instance.pk),
-                    settings.DEFAULT_FROM_EMAIL,
-                    [vconfig.email]
-                )
+                    send_mail(
+                        "Se CANCELO la solicitud con el no. %s" %
+                        (form.instance.pk),
+                        "Estimado Administrador, se CANCELO la solicitud #%s. "
+                        "No es necesario que le siga dando seguimiento." %
+                        (form.instance.pk),
+                        settings.DEFAULT_FROM_EMAIL,
+                        [vconfig.email]
+                    )
+                elif form.instance.status == "com":
+                    form.instance.employee.user.email_user(
+                        "La Administracion COMPLETO tu solicitud con no. %s" %
+                        (form.instance.pk),
+                        "La Administracion COMPLETO tu solicitud dejando el "
+                        "siguiente mensaje: \n - '%s' \n - Archivo: %s" % (
+                            form.instance.response,
+                            "http://127.0.0.1:8000" + form.instance.file.url
+                        )
+                    )
+
+                    send_mail(
+                        "Se COMPLETO la solicitud con el no. %s" %
+                        (form.instance.pk),
+                        "Estimado Administrador, se COMPLETO la solicitud #%s."
+                        " No es necesario que le siga dando seguimiento." %
+                        (form.instance.pk),
+                        settings.DEFAULT_FROM_EMAIL,
+                        [vconfig.email]
+                    )
             except Exception:
                 pass
 
@@ -352,11 +375,11 @@ class BenefitAdd(CreateView):
         form.instance.updated_by = self.request.user.profile
         response = super(BenefitAdd, self).form_valid(form)
 
-        if response.status_code == 302:
-            self.request.user.email_user(
-                "Esta chido",
-                "Ejemplo de mensaje"
-            )
+        # if response.status_code == 302:
+        #     self.request.user.email_user(
+        #         "Esta chido",
+        #         "Ejemplo de mensaje"
+        #     )
         return response
 
 
@@ -390,15 +413,16 @@ class BenefitEdit(View):
         benefit = get_object_or_404(BenefitRequisition, pk=pk)
         form = BenefitRequisitionEditForm(data=request.POST, instance=benefit)
 
+        # import ipdb; ipdb.set_trace()
         if form.is_valid():
             form.save()
-            request.user.email_user(
-                "Esta chido",
-                "Ejemplo de mensaje"
-            )
+            # request.user.email_user(
+            #     "Esta chido",
+            #     "Ejemplo de mensaje"
+            # )
             return redirect('payroll:benefit_list_all')
         else:
-            return redirect(reverse('payroll:benefit_edit'), pk=pk)
+            return redirect(reverse('payroll:benefit_edit', kwargs={'pk': pk}))
 
 
 class BenefitCancel(GroupLoginRequiredMixin, View):
@@ -417,8 +441,8 @@ class BenefitCancel(GroupLoginRequiredMixin, View):
         req.updated_by = _request.user.profile
         req.status = "can"
         req.save()
-        _request.user.email_user(
-            "Esta chido",
-            "Ejemplo de mensaje"
-        )
+        # _request.user.email_user(
+        #     "Esta chido",
+        #     "Ejemplo de mensaje"
+        # )
         return redirect(reverse('payroll:benefit_list_all'))
