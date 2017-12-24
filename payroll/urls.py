@@ -13,7 +13,6 @@ from .views import VoucherAddSuccess
 from .views import VoucherView
 from .views import VoucherEdit
 from .views import VoucherCancel
-from .views import VoucherTypeAPIView
 
 from .views import BenefitList
 from .views import BenefitAdd
@@ -66,11 +65,6 @@ urlpatterns = [
         r'^vouchers/(?P<_pk>\d+)/cancel/$',
         VoucherCancel.as_view(),
         name="voucher_cancel"
-    ),
-    url(
-        r'^api/vouchertype/(?P<pk>\d+)/$',
-        VoucherTypeAPIView.as_view(),
-        name="vouchertype-retrieve"
     ),
 
     url(r'^benefits/pending/$', BenefitList.as_view(), {'status': 'pending'}, name="benefit_list_pending"),

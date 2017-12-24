@@ -8,27 +8,19 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
-from django.core.mail import send_mail
+
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.views.generic.base import View
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
-from django.conf import settings
-
-# Third-party Libraries
-from rest_framework import views
-from rest_framework import status
-from rest_framework.response import Response
 
 # Own's Libraries
 from security.mixins import GroupLoginRequiredMixin
-from management.models import VoucherConfig
-from management.models import BenefitConfig
+from management.postman import VoucherMail
 
 from .models import VoucherRequisition
-from .models import VoucherType
 from .models import BenefitRequisition
 
 from .business import VoucherRequisitionBusiness as VoucherBusiness
@@ -131,32 +123,25 @@ class VoucherAdd(GroupLoginRequiredMixin, CreateView):
             self.request.user.email_user(
                 "Tu Solicitud con el no. %s fue CREADA correctamente" %
                 (form.instance.pk),
-                "La Administracion revisara tu solicitud"
+                "La Administracion revisara tu solicitud "
                 "y se te avisara por este medio cuando esta sea procesada."
             )
 
-            try:
-                vconfig = VoucherConfig.objects.get(
-                    type=form.instance.type
+            VoucherMail.send(
+                _type=form.instance.type,
+                _subject="%s genero una nueva solicitud con el no. %s" % (
+                    form.instance.employee.user.get_full_name(),
+                    form.instance.pk
+                ),
+                _content="Estimado Administrador,\nEl empleado %s registro "
+                "la solicitud #%s, solicitando un comprobante de %s. "
+                "Favor de entrar a plataforma para revisar y procesar" %
+                (
+                    form.instance.employee.user.get_full_name(),
+                    form.instance.pk,
+                    form.instance.type.name
                 )
-                send_mail(
-                    "%s genero una nueva solicitud con el no. %s" % (
-                        form.instance.employee.user.get_full_name(),
-                        form.instance.pk
-                    ),
-                    "Estimado Administrador, el empleado %s registro "
-                    "la solicitud #%s, solicitando un comprobante de %s. "
-                    "Favor de entrar a plataforma para revisar y procesar" %
-                    (
-                        form.instance.employee.user.get_full_name(),
-                        form.instance.pk,
-                        form.instance.type.name
-                    ),
-                    settings.DEFAULT_FROM_EMAIL,
-                    [vconfig.email]
-                )
-            except Exception:
-                pass
+            )
 
         return response
 
@@ -183,31 +168,23 @@ class VoucherCancel(GroupLoginRequiredMixin, View):
         req.status = "can"
         req.save()
 
-        try:
-            vconfig = VoucherConfig.objects.get(
-                type=req.type
-            )
+        req.employee.user.email_user(
+            "Tu Solicitud con el no. %s fue CANCELADA correctamente" %
+            (req.pk),
+            "Se avisara a la Administracion para que no siga dando "
+            "seguimiento a tu solicitud"
+        )
 
-            req.employee.user.email_user(
-                "Tu Solicitud con el no. %s fue CANCELADA correctamente" %
-                (req.pk),
-                "Se avisara a la Administracion para que no siga dando "
-                "seguimiento a tu solicitud"
-            )
-
-            send_mail(
-                "%s CANCELO la solicitud con el no. %s" % (
-                    req.employee.user.get_full_name(),
-                    req.pk
-                ),
-                "Estimado Administrador, se CANCELO la solicitud #%s."
-                "No es necesario que le siga dando seguimiento." %
-                (req.pk),
-                settings.DEFAULT_FROM_EMAIL,
-                [vconfig.email]
-            )
-        except Exception:
-            pass
+        VoucherMail.send(
+            _type=req.type,
+            _subject="%s CANCELO la solicitud con el no. %s" % (
+                req.employee.user.get_full_name(),
+                req.pk
+            ),
+            _content="Estimado Administrador, \nSe CANCELO la solicitud #%s."
+            "No es necesario que le siga dando seguimiento." %
+            (req.pk),
+        )
 
         return redirect(reverse('payroll:voucher_list_all'))
 
@@ -217,16 +194,6 @@ class VoucherView(GroupLoginRequiredMixin, DetailView):
     template_name = "voucher/view.html"
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
     context_object_name = "record"
-
-    def get_context_data(self, **kwargs):
-        context = {}
-        if self.object:
-            context['object'] = self.object
-            context_object_name = self.get_context_object_name(self.object)
-            if context_object_name:
-                context[context_object_name] = self.object
-        context.update(kwargs)
-        return super(VoucherView, self).get_context_data(**context)
 
 
 class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
@@ -241,80 +208,51 @@ class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
         response = super(VoucherEdit, self).form_valid(form)
 
         if response.status_code == 302:
-            try:
-                vconfig = VoucherConfig.objects.get(
-                    type=form.instance.type
+            if form.instance.status == "can":
+                form.instance.employee.user.email_user(
+                    "La Administracion CANCELO tu solicitud con no. %s" %
+                    (form.instance.pk),
+                    "La Administracion CANCELO tu solicitud dejando el "
+                    "siguiente motivo: \n - '%s'" % (
+                        form.instance.response
+                    )
                 )
 
-                if form.instance.status == "can":
-                    form.instance.employee.user.email_user(
-                        "La Administracion CANCELO tu solicitud con no. %s" %
-                        (form.instance.pk),
-                        "La Administracion CANCELO tu solicitud dejando el "
-                        "siguiente motivo: \n - '%s'" % (
-                            form.instance.response
-                        )
-                    )
+                VoucherMail.send(
+                    _type=form.instance.type,
+                    _subject="Se CANCELO la solicitud con el no. %s" %
+                    (form.instance.pk),
+                    _content="Estimado Administrador, \n"
+                    "se CANCELO la solicitud #%s. "
+                    "No es necesario que le siga dando seguimiento." %
+                    (form.instance.pk)
+                )
 
-                    send_mail(
-                        "Se CANCELO la solicitud con el no. %s" %
-                        (form.instance.pk),
-                        "Estimado Administrador, se CANCELO la solicitud #%s. "
-                        "No es necesario que le siga dando seguimiento." %
-                        (form.instance.pk),
-                        settings.DEFAULT_FROM_EMAIL,
-                        [vconfig.email]
+            elif form.instance.status == "com":
+                form.instance.employee.user.email_user(
+                    "La Administracion COMPLETO tu solicitud con no. %s" %
+                    (form.instance.pk),
+                    "La Administracion COMPLETO tu solicitud dejando el "
+                    "siguiente mensaje: \n - '%s' \n - Archivo: %s" % (
+                        form.instance.response,
+                        "http://127.0.0.1:8000" + form.instance.file.url
                     )
-                elif form.instance.status == "com":
-                    form.instance.employee.user.email_user(
-                        "La Administracion COMPLETO tu solicitud con no. %s" %
-                        (form.instance.pk),
-                        "La Administracion COMPLETO tu solicitud dejando el "
-                        "siguiente mensaje: \n - '%s' \n - Archivo: %s" % (
-                            form.instance.response,
-                            "http://127.0.0.1:8000" + form.instance.file.url
-                        )
-                    )
+                )
 
-                    send_mail(
-                        "Se COMPLETO la solicitud con el no. %s" %
-                        (form.instance.pk),
-                        "Estimado Administrador, se COMPLETO la solicitud #%s."
-                        " No es necesario que le siga dando seguimiento." %
-                        (form.instance.pk),
-                        settings.DEFAULT_FROM_EMAIL,
-                        [vconfig.email]
-                    )
-            except Exception:
-                pass
+                VoucherMail.send(
+                    _type=form.instance.type,
+                    _subject="Se COMPLETO la solicitud con el no. %s" %
+                    (form.instance.pk),
+                    _content="Estimado Administrador, \n"
+                    "se COMPLETO la solicitud #%s."
+                    " No es necesario que le siga dando seguimiento." %
+                    (form.instance.pk)
+                )
 
         return response
 
-
-class VoucherTypeAPIView(views.APIView):
-
-    def get(self, request, pk):
-        try:
-            type = VoucherType.objects.get(id=pk)
-            data = {
-                'name': type.name,
-                'valid_range': type.valid_range
-            }
-
-        except VoucherType.DoesNotExist:
-            return Response(
-                {'detail': "Tipo no existe"},
-                status=status.HTTP_204_NO_CONTENT
-            )
-        except Exception as error:
-            return Response(
-                {'detail': str(error)},
-                status=status.HTTP_400_BAD_REQUEST
-            )
-        return Response(
-            data,
-            status=status.HTTP_200_OK
-        )
+    def form_invalid(self, form):
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 class BenefitList(GroupLoginRequiredMixin, View):
