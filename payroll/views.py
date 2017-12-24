@@ -32,16 +32,24 @@ from .forms import BenefitRequisitionAddForm
 from .forms import BenefitRequisitionEditForm
 
 
-class VoucherListPending(GroupLoginRequiredMixin, View):
+class VoucherListView(GroupLoginRequiredMixin, View):
     template_name = "voucher/list_for_review.html"
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
-    def get(self, _request):
+    def get(self, _request, _status):
         query = _request.GET.get('q')
-        requisitions = VoucherBusiness.get_Pending(
-            query,
-            _request.user.profile
-        )
+
+        if _status == 'pending':
+            requisitions = VoucherBusiness.get_Pending(
+                query,
+                _request.user.profile
+            )
+        else:
+            requisitions = VoucherBusiness.get_All(
+                query,
+                _request.user.profile
+            )
+
         requisitions_paginated = VoucherBusiness.get_Paginated(
             requisitions,
             _request.GET.get('page')
@@ -52,50 +60,18 @@ class VoucherListPending(GroupLoginRequiredMixin, View):
         return render(_request, self.template_name, context)
 
 
-class VoucherListAll(GroupLoginRequiredMixin, View):
+class VoucherListEdit(GroupLoginRequiredMixin, View):
     template_name = "voucher/list_for_review.html"
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
-    def get(self, _request):
+    def get(self, _request, _status):
         query = _request.GET.get('q')
-        requisitions = VoucherBusiness.get_All(
-            query,
-            _request.user.profile
-        )
-        requisitions_paginated = VoucherBusiness.get_Paginated(
-            requisitions,
-            _request.GET.get('page')
-        )
-        context = {
-            'records': requisitions_paginated
-        }
-        return render(_request, self.template_name, context)
 
+        if _status == 'pending':
+            requisitions = VoucherBusiness.get_Pending(query)
+        else:
+            requisitions = BenefitBusiness.get_All(query)
 
-class VoucherListAdminPending(GroupLoginRequiredMixin, View):
-    template_name = "voucher/list_for_edit.html"
-    group = ['COMPROBANTES_ADM', ]
-
-    def get(self, _request):
-        query = _request.GET.get('q')
-        requisitions = VoucherBusiness.get_Pending(query)
-        requisitions_paginated = VoucherBusiness.get_Paginated(
-            requisitions,
-            _request.GET.get('page')
-        )
-        context = {
-            'records': requisitions_paginated
-        }
-        return render(_request, self.template_name, context)
-
-
-class VoucherListAdminAll(GroupLoginRequiredMixin, View):
-    template_name = "voucher/list_for_edit.html"
-    group = ['COMPROBANTES_ADM', ]
-
-    def get(self, _request):
-        query = _request.GET.get('q')
-        requisitions = VoucherBusiness.get_All(query)
         requisitions_paginated = VoucherBusiness.get_Paginated(
             requisitions,
             _request.GET.get('page')
@@ -255,13 +231,13 @@ class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
         return self.render_to_response(self.get_context_data(form=form))
 
 
-class BenefitList(GroupLoginRequiredMixin, View):
+class BenefitListView(GroupLoginRequiredMixin, View):
     template_name = "benefit/list.html"
     group = ['PRESTACIONES_ADM', 'PRESTACIONES_USR', ]
 
-    def get(self, _request, status):
+    def get(self, _request, _status):
         query = _request.GET.get('q')
-        if status == 'pending':
+        if _status == 'pending':
             requisitions = BenefitBusiness.get_Pendings(
                 query, _request.user.profile)
         else:
@@ -272,20 +248,20 @@ class BenefitList(GroupLoginRequiredMixin, View):
             requisitions, _request.GET.get('page'))
 
         context = {
-            'status': status,
+            'status': _status,
             'requisitions': requisitions_paginated
         }
 
         return render(_request, self.template_name, context)
 
 
-class BenefitListAdmin(GroupLoginRequiredMixin, View):
+class BenefitListEdit(GroupLoginRequiredMixin, View):
     template_name = "benefit/list_admin.html"
     group = ['PRESTACIONES_ADM', ]
 
-    def get(self, _request, status):
+    def get(self, _request, _status):
         query = _request.GET.get('q')
-        if status == 'pending':
+        if _status == 'pending':
             requisitions = BenefitBusiness.get_Pendings(query)
         else:
             requisitions = BenefitBusiness.get_All(query)
@@ -294,7 +270,7 @@ class BenefitListAdmin(GroupLoginRequiredMixin, View):
             requisitions, _request.GET.get('page'))
 
         context = {
-            'status': status,
+            'status': _status,
             'requisitions': requisitions_paginated
         }
 

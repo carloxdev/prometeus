@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'', include('security.urls', namespace="security")),
 
     url(r'api/', include('payroll.urls_rest', namespace="api-payroll")),
-    url(r'api/', include('social.urls', namespace="api-social")),
+    url(r'api/', include('social.urls_rest', namespace="api-social")),
 ]
 
 
