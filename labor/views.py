@@ -19,6 +19,8 @@ from django.contrib import messages
 
 # Own's Libraries
 from security.mixins import GroupLoginRequiredMixin
+from management.postman import IncidentMail
+
 from .business import IncidentReportBusiness as IncidentBusiness
 from .models import IncidentReport
 from .forms import IncidentReportAddForm
@@ -120,14 +122,41 @@ class IncidentAddEvidence(GroupLoginRequiredMixin, View):
 
         if record.type.evidence_required:
             if len(evidences) > 0:
-                return redirect(reverse('labor:incident_list_all'))
+                record.status = "pen"
+                record.save()
+
+                self.request.user.email_user(
+                    "Tu Reporte con el no. %s fue CREADO correctamente" %
+                    (record.pk),
+                    "La Administracion revisara tu reporte "
+                    "y se te avisara por este medio la revion del mismo."
+                )
+
+                IncidentMail.send(
+                    _type=record.type,
+                    _subject="%s genero un nuevo reporte con el no. %s" % (
+                        record.employee.user.get_full_name(),
+                        record.pk
+                    ),
+                    _content="Estimado Administrador,\nEl empleado %s registro"
+                    " la solicitud #%s, informando de una incidencia de %s. "
+                    "Favor de entrar a plataforma para revisar y procesar" %
+                    (
+                        record.employee.user.get_full_name(),
+                        record.pk,
+                        record.type.name
+                    )
+                )
+
+                return redirect(reverse('labor:incident_add_success'))
             else:
                 messages.error(
                     _request,
                     "Se require al menos una imagen de evidencia"
                 )
         else:
-            return redirect(reverse('labor:incident_list_all'))
+
+            return redirect(reverse('labor:incident_add_success'))
 
         context = {
             'record': record,
@@ -158,6 +187,25 @@ class IncidentCancel(GroupLoginRequiredMixin, View):
         record.updated_by = _request.user.profile
         record.status = "can"
         record.save()
+
+        record.employee.user.email_user(
+            "Tu Reporte con el no. %s fue CANCELADO correctamente" %
+            (record.pk),
+            "Se avisara a la Administracion para que no siga dando "
+            "seguimiento a tu reporte"
+        )
+
+        IncidentMail.send(
+            _type=record.type,
+            _subject="%s CANCELO el reporte con el no. %s" % (
+                record.employee.user.get_full_name(),
+                record.pk
+            ),
+            _content="Estimado Administrador, \nSe CANCELO el reporte #%s."
+            "No es necesario que le siga dando seguimiento." %
+            (record.pk),
+        )
+
         return redirect(reverse('labor:incident_list_all'))
 
 

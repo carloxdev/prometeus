@@ -53,6 +53,7 @@ class IncidentReportEditForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(IncidentReportEditForm, self).__init__(*args, **kwargs)
         instance = kwargs['instance']
+        self.fields['response'].required = True
         if instance.status == 'can' or instance.status == 'com':
             self.fields['status'].widget.attrs['readonly'] = True
             self.fields['file'].widget.attrs['readonly'] = True

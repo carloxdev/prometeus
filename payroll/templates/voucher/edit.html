@@ -73,7 +73,15 @@
 	                    <textarea class="form-control" rows="5" disabled>{{ form.instance.reason }}</textarea>
 	                </div>
 
-					{% tag_file form.file form %}
+					{% if form.instance.is_Editable %}
+						{% tag_file form.file form %}
+					{% else %}
+						{% if form.instance.file %}
+							<p>Archivo actual: <a href="{{ form.instance.file.url }}">{{ form.instance.file.name }}</a></p>
+						{% else %}
+							<p class="text-center">(Sin archivo seleccionado)</p>
+						{% endif %}
+					{% endif %}
 
                     {% tag_field form.status %}
 
@@ -84,10 +92,12 @@
 							<span class="glyphicon glyphicon-arrow-left"></span>
 							Regresar a listado
 						</a>
-	                        <button type="submit" class="btn btn-success">
-	                            <span class="glyphicon glyphicon-ok"></span>
-	                            Guardar
-	                        </button>
+						{% if form.instance.is_Editable %}
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            Guardar
+                        </button>
+						{% endif %}
                     </div>
 
 				</form>

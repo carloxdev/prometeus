@@ -127,6 +127,13 @@ class IncidentReport(models.Model):
             return False
 
     @property
+    def is_Editable(self):
+        if self.status == "can" or self.status == "com":
+            return False
+        else:
+            return True
+
+    @property
     def comments(self):
         records = CommentBusiness.get(self.__class__, self.id)
         return records

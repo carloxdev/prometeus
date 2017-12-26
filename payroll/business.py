@@ -88,7 +88,7 @@ class VoucherRequisitionBusiness(object):
 
     @classmethod
     def get_Paginated(self, _requisitions, _current_page):
-        paginator = Paginator(_requisitions, 20)
+        paginator = Paginator(_requisitions, 10)
         current_pagina = _current_page
 
         try:
@@ -176,7 +176,7 @@ class BenefitRequisitionBusiness(object):
 
     @classmethod
     def get_Paginated(self, _requisitions, _current_page):
-        paginator = Paginator(_requisitions, 20)
+        paginator = Paginator(_requisitions, 10)
         current_pagina = _current_page
 
         try:

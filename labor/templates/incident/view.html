@@ -2,6 +2,7 @@
 {% load static from staticfiles %}
 {% load social_tags %}
 {% load to_class_name from custom_tags %}
+{% load tag_filename from custom_tags %}
 {% block css %}
 
     <!-- Alertify -->
@@ -9,7 +10,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/themes/bootstrap.min.css' %}"/>
 
     <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'tags/forms.min.css' %}"/>
     <link rel="stylesheet" type="text/css" href="{% static 'details.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'incident/view.css' %}"/>
 
 {% endblock css %}
 
@@ -41,7 +44,7 @@
 
 				<div class="form-group">
 					<label for="empleados">Fechas:</label>
-					<input type="text" class="form-control" value="{{ record.date_start|date:"d M Y" }} al {{ record.date_end|date:"d M Y" }}" disabled />
+					<input type="text" class="form-control" value="{{ record.date|date:"d M Y" }}" disabled />
 				</div>
 
 				<div class="form-group">
@@ -57,7 +60,7 @@
 				{% if record.is_Complete %}
 	                <div class="form-group">
 	                    <label for="comment">Respuesta de la Administracion:</label>
-	                    <textarea class="form-control" rows="5" value="{{ record.response }}" disabled></textarea>
+	                    <textarea class="form-control" rows="5" disabled>{{ record.response }}</textarea>
 	                </div>
 
 					{% if record.file %}
@@ -80,6 +83,24 @@
 	                </div>
 				{% endif %}
 			</div>
+
+            <div class="own-form-title">
+                Imagenes de evidencia:
+            </div>
+            <div class="well">
+                <div class="row">
+                    <div class="col-xs-12">
+                    {% for evidence in record.incidentevidence_set.all %}
+                    <div class="col-xs-12 col-sm-12 col-md-4">
+                        <a href="{{evidence.image.url}}">
+                            <img class="img-thumbnail evidence" title="{{ evidence.image|tag_filename }}" src="{{evidence.image.url}}" alt="imagen">
+                        </a>
+                    </div>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+
 		</div>
 
         <div class="col-xs-12 col-md-4 col-lg-3">
@@ -104,9 +125,14 @@
 									<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
 									{{ record.get_status_display }}
 								</span>
+                            {% elif record.status == "pen" %}
+                                <span class="label label-warning own-label">
+                                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                    {{ record.get_status_display }}
+                                </span>
 							{% else %}
-								<span class="label label-warning own-label">
-									<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+								<span class="label label-info own-label">
+									<span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
 									{{ record.get_status_display }}
 								</span>
 							{% endif %}

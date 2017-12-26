@@ -9,7 +9,7 @@
 {% block css %}
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" href="{% static 'incident/list.css' %}" />
+    <link rel="stylesheet" href="{% static 'incident/list.min.css' %}" />
 
 {% endblock css %}
 
@@ -83,8 +83,10 @@
                             own-column-pk-success
                         {% elif record.is_Cancel %}
                             own-column-pk-cancel
-                        {% else %}
+                        {% elif record.status == 'pen' %}
                             own-column-pk-warning
+                        {% else %}
+                            own-column-pk-info
                         {% endif %}">
                         {{record.type}} - {{record.pk}}
 
@@ -93,8 +95,10 @@
                                 <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
                             {% elif record.is_Cancel %}
                                 <span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
-                            {% else %}
+                            {% elif record.status == 'pen' %}
                                 <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
                             {% endif %}
                         </span>
                     </div>
@@ -122,8 +126,10 @@
                                 <span class="glyphicon glyphicon-ok-sign own-data-icon-success" aria-hidden="true"></span>
                             {% elif record.is_Cancel %}
                                 <span class="glyphicon glyphicon-minus-sign own-data-icon-cancel" aria-hidden="true"></span>
-                            {% else %}
+                            {% elif record.status == 'pen' %}
                                 <span class="glyphicon glyphicon-time own-data-icon-warning" aria-hidden="true"></span>
+                            {% else %}
+                                <span class="glyphicon glyphicon-adjust own-data-icon-info" aria-hidden="true"></span>
                             {% endif %}
                         </span>
                     </div>

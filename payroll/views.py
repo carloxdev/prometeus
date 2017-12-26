@@ -8,6 +8,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
+from django.http.request import HttpRequest
 
 from django.views.generic import CreateView
 from django.views.generic import UpdateView
@@ -70,7 +71,7 @@ class VoucherListEdit(GroupLoginRequiredMixin, View):
         if _status == 'pending':
             requisitions = VoucherBusiness.get_Pending(query)
         else:
-            requisitions = BenefitBusiness.get_All(query)
+            requisitions = VoucherBusiness.get_All(query)
 
         requisitions_paginated = VoucherBusiness.get_Paginated(
             requisitions,
@@ -211,7 +212,9 @@ class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
                     "La Administracion COMPLETO tu solicitud dejando el "
                     "siguiente mensaje: \n - '%s' \n - Archivo: %s" % (
                         form.instance.response,
-                        "http://127.0.0.1:8000" + form.instance.file.url
+                        "http://" +
+                        self.request.get_host() +
+                        form.instance.file.url
                     )
                 )
 
@@ -228,7 +231,6 @@ class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
         return response
 
     def form_invalid(self, form):
-        # import ipdb; ipdb.set_trace()
         update_obj = VoucherRequisition.objects.get(id=form.instance.pk)
         form.instance = update_obj
         return self.render_to_response(self.get_context_data(form=form))

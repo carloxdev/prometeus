@@ -32,7 +32,7 @@ urlpatterns = [
     ),
     url(
         r'^incidents/admin/all/$',
-        IncidentListEdit.as_view(), {'_status': 'pending'},
+        IncidentListEdit.as_view(), {'_status': 'all'},
         name="incident_list_admin_all"
     ),
     url(

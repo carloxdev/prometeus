@@ -51,25 +51,13 @@ class VoucherRequisitionAddForm(ModelForm):
             'reason': 'Motivo:'
         }
 
-    # def clean_date_end(self):
-    #     date_start = self.cleaned_data['date_start']
-    #     date_end = self.cleaned_data['date_end']
-    #
-    #     if date_end < date_start:
-    #         raise ValidationError(
-    #             "La fecha final no puede ser menor a la inicial"
-    #         )
-    #
-    #     return date_end
-
 
 class VoucherRequisitionEditForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(VoucherRequisitionEditForm, self).__init__(*args, **kwargs)
-        self.fields['file'].required = True
+        instance = kwargs['instance']        
         self.fields['response'].required = True
-        instance = kwargs['instance']
         if instance.status == 'can' or instance.status == 'com':
             self.fields['status'].widget.attrs['readonly'] = True
             self.fields['file'].widget.attrs['readonly'] = True

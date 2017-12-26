@@ -38,6 +38,7 @@
 
 		<div class="row">
 			<div class="col-xs-12 col-md-8 col-lg-9">
+
 				<div class="own-form-title">
                     Proporciona la siguiente información:
                 </div>
@@ -71,7 +72,16 @@
 	                    <textarea class="form-control" rows="5" disabled>{{ form.instance.reason }}</textarea>
 	                </div>
 
-					{% tag_file form.file form %}
+                    {% if form.instance.is_Editable %}
+						{% tag_file form.file form %}
+					{% else %}
+						{% if form.instance.file %}
+							<p>Archivo actual: <a href="{{ form.instance.file.url }}">{{ form.instance.file.name }}</a></p>
+						{% else %}
+							<p class="text-center">(Sin archivo seleccionado)</p>
+						{% endif %}
+					{% endif %}
+
 
                     {% tag_field form.status %}
 
@@ -82,13 +92,31 @@
 							<span class="glyphicon glyphicon-arrow-left"></span>
 							Regresar a listado
 						</a>
+                        {% if form.instance.is_Editable %}
                         <button type="submit" class="btn btn-success">
                             <span class="glyphicon glyphicon-ok"></span>
                             Guardar
                         </button>
+                        {% endif %}
                     </div>
 
 				</form>
+
+                <div class="own-form-title">
+                    Imagenes de evidencia:
+                </div>
+                <div class="well">
+                    <div class="row">
+                        <div class="col-xs-12">
+                        {% for evidence in form.instance.incidentevidence_set.all %}
+                        <div class="col-xs-12 col-sm-12 col-md-4">
+                            <img class="img-thumbnail evidence" title="{{ evidence.image|tag_filename }}" src="{{evidence.image.url}}" alt="imagen">
+                        </div>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
 			</div>
 
 			<div class="col-xs-12 col-md-4 col-lg-3">
@@ -114,9 +142,14 @@
 										<span class="glyphicon glyphicon-minus-sign" aria-hidden="true"></span>
 										{{ form.instance.get_status_display }}
 									</span>
+                                {% elif form.instance.status == "pen" %}
+                                    <span class="label label-warning own-label">
+                                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+                                        {{ form.instance.get_status_display }}
+                                    </span>
 								{% else %}
-									<span class="label label-warning own-label">
-										<span class="glyphicon glyphicon-time" aria-hidden="true"></span>
+									<span class="label label-info own-label">
+										<span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
 										{{ form.instance.get_status_display }}
 									</span>
 								{% endif %}

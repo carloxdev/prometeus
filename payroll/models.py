@@ -257,6 +257,27 @@ class BenefitRequisition(models.Model):
         return desc
 
     @property
+    def is_Complete(self):
+        if self.status == "com":
+            return True
+        else:
+            return False
+
+    @property
+    def is_Cancel(self):
+        if self.status == "can":
+            return True
+        else:
+            return False
+
+    @property
+    def is_Editable(self):
+        if self.status == "can" or self.status == "com":
+            return False
+        else:
+            return True
+
+    @property
     def comments(self):
         records = CommentBusiness.get(self.__class__, self.id)
         return records

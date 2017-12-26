@@ -21,7 +21,8 @@ class IncidentReportBusiness(object):
 
     @classmethod
     def get_No_Pendings(self):
-        quantity = IncidentReport.objects.filter(status="pen").count()
+        quantity = IncidentReport.objects.filter(
+            status__in=["pen", 'inc']).count()
         return quantity
 
     @classmethod
@@ -52,11 +53,11 @@ class IncidentReportBusiness(object):
                     Q(employee__user__first_name__icontains=_value) |
                     Q(employee__user__last_name__icontains=_value)
                 ) \
-                .filter(status="pen") \
+                .filter(status__in=["pen", 'inc']) \
                 .order_by("-created_date")
         else:
             records = IncidentReport.objects \
-                .filter(status="pen") \
+                .filter(status__in=["pen", 'inc']) \
                 .order_by("-created_date")
 
         if _profile:
@@ -88,7 +89,7 @@ class IncidentReportBusiness(object):
 
     @classmethod
     def get_Paginated(self, _records, _current_page):
-        paginator = Paginator(_records, 20)
+        paginator = Paginator(_records, 10)
         current_pagina = _current_page
 
         try:

@@ -1,3 +1,6 @@
+# Python's Libraries
+import os
+
 # Django's Libraries
 from django import template
 from django.contrib.auth.models import Group
@@ -110,3 +113,8 @@ def tag_form_errors(_form):
         'form': _form,
     }
     return context
+
+
+@register.filter
+def tag_filename(value):
+    return os.path.basename(value.file.name)
