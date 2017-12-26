@@ -235,4 +235,55 @@ class IncidentEdit(GroupLoginRequiredMixin, UpdateView):
 
     def form_valid(self, form):
         form.instance.updated_by = self.request.user.profile
-        return super(IncidentEdit, self).form_valid(form)
+        response = super(IncidentEdit, self).form_valid(form)
+
+        if response.status_code == 302:
+            if form.instance.status == "can":
+                form.instance.employee.user.email_user(
+                    "La Administracion CANCELO tu reporte con no. %s" %
+                    (form.instance.pk),
+                    "La Administracion CANCELO tu reporte dejando el "
+                    "siguiente motivo: \n - '%s'" % (
+                        form.instance.response
+                    )
+                )
+
+                IncidentMail.send(
+                    _type=form.instance.type,
+                    _subject="Se CANCELO el reporte con el no. %s" %
+                    (form.instance.pk),
+                    _content="Estimado Administrador, \n"
+                    "se CANCELO el reporte #%s. "
+                    "No es necesario que le siga dando seguimiento." %
+                    (form.instance.pk)
+                )
+
+            elif form.instance.status == "com":
+                form.instance.employee.user.email_user(
+                    "La Administracion PROCESO tu reporte con no. %s" %
+                    (form.instance.pk),
+                    "La Administracion PROCESO tu reporte dejando el "
+                    "siguiente mensaje: \n - '%s' \n - Archivo: %s" % (
+                        form.instance.response,
+                        "http://" +
+                        self.request.get_host() +
+                        form.instance.file.url
+                    )
+                )
+
+                IncidentMail.send(
+                    _type=form.instance.type,
+                    _subject="Se PROCESO el reporte con el no. %s" %
+                    (form.instance.pk),
+                    _content="Estimado Administrador, \n"
+                    "se PROCESO el reporte #%s."
+                    " No es necesario que le siga dando seguimiento." %
+                    (form.instance.pk)
+                )
+
+        return response
+
+    def form_invalid(self, form):
+        update_obj = IncidentReport.objects.get(id=form.instance.pk)
+        form.instance = update_obj
+        return self.render_to_response(self.get_context_data(form=form))
