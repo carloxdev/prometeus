@@ -63,19 +63,12 @@ class VoucherRequisitionAddForm(ModelForm):
     #     return date_end
 
 
-# class VoucherRequisitionCancel(ModelForm):
-#     class Meta:
-#         model = VoucherRequisition
-#         fields = (
-#             ''
-#         )
-#
-
-
 class VoucherRequisitionEditForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(VoucherRequisitionEditForm, self).__init__(*args, **kwargs)
+        self.fields['file'].required = True
+        self.fields['response'].required = True
         instance = kwargs['instance']
         if instance.status == 'can' or instance.status == 'com':
             self.fields['status'].widget.attrs['readonly'] = True
@@ -120,10 +113,17 @@ class VoucherRequisitionEditForm(ModelForm):
         file = self.cleaned_data['file']
         response = self.cleaned_data['response']
 
-        if status == "com" and file is None:
-            raise ValidationError(
-                "No se puede marcar como Completado sin adjuntar un archivo"
-            )
+        if status == "com":
+            if file is None:
+                raise ValidationError(
+                    "No se puede marcar como Completado "
+                    "sin adjuntar un archivo"
+                )
+
+            if response == "":
+                raise ValidationError(
+                    "Favor de dar una respuesta al Empleado"
+                )
 
         if status == "can" and response == "":
             raise ValidationError(

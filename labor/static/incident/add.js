@@ -1,47 +1,30 @@
-/*-----------------------------------------------*\
-            GLOBAL VARIABLES
-\*-----------------------------------------------*/
-
-// OBJS
-
-
-/*-----------------------------------------------*\
-            LOAD
-\*-----------------------------------------------*/
+/*------------- LOAD -------------*/
 
 $(document).ready(function () {
+	form = new Formulario()
+})
 
-	$employee = $('#id_employee')
-	$employee.select2({
-		theme: "bootstrap"
-	})
 
-	$fecha = $('#id_date')
-	$fecha.datepicker({
+/*------------- OBJETO: Formulario -------------*/
+
+function Formulario() {
+	this.$fecha = $('#id_date')
+	this.$btn_submit = $('#btn_submit')
+
+	this.init_Components()
+	this.set_Events()
+}
+Formulario.prototype.init_Components = function () {
+
+	this.$fecha.datepicker({
 		format: 'dd/mm/yyyy',
 		autoclose: true,
 		clearBtn: true
 	})
-})
-
-
-
-/*-----------------------------------------------*\
-            OBJETO: PostThree
-\*-----------------------------------------------*/
-
-// function PostThree() {
-
-//     this.id = $('#myTree')
-
-//     this.init_Components()
-// }
-// PostThree.prototype.init_Components = function () {
-
-//     // dataSource = function(parentData, callback){
-//     //   //...
-//     // };
-
-//     this.id.tree()
-
-// }
+}
+Formulario.prototype.set_Events = function () {
+	this.$btn_submit.on("click", this, this.click_Submit)
+}
+Formulario.prototype.click_Submit = function (e) {
+	Pace.restart()
+}

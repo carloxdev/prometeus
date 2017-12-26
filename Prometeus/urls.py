@@ -22,6 +22,7 @@ urlpatterns = [
 
     url(r'api/', include('payroll.urls_rest', namespace="api-payroll")),
     url(r'api/', include('social.urls_rest', namespace="api-social")),
+    url(r'api/', include('labor.urls_rest', namespace="api-labor")),
 ]
 
 

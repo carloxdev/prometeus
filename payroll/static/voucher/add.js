@@ -17,6 +17,7 @@ function Formulario() {
 	this.$dates_section = $('#section_id_date_start')
 	this.$date_start_id = $('#id_date_start')
 	this.$date_end_id = $('#id_date_end')
+	this.$btn_submit = $('#btn_submit')
 
     this.init_Components()
 	this.set_Events()
@@ -36,8 +37,8 @@ Formulario.prototype.init_Components = function () {
     })
 }
 Formulario.prototype.set_Events = function () {
-
 	this.$type.on("change", this, this.change_Employee)
+	this.$btn_submit.on("click", this, this.click_Submit)
 }
 Formulario.prototype.change_Employee = function (e) {
 	e.preventDefault()
@@ -63,6 +64,9 @@ Formulario.prototype.change_Employee = function (e) {
 			alertify.error(response.responseJSON.detail)
 		}
 	})
+}
+Formulario.prototype.click_Submit = function (e) {
+	Pace.restart()
 }
 Formulario.prototype.show_DateSection = function () {
 	this.$dates_section.show()

@@ -45,6 +45,7 @@
                 </div>
 
                 <form action=""
+                id="form"
                 method="post"
                 class="well"
                 enctype="multipart/form-data"> {% csrf_token %}
@@ -61,7 +62,7 @@
 
                     <div class="text-center">
                         <a href="{% url 'payroll:voucher_list_all' %}" class="btn btn-default">Cancelar</a>
-                        <button type="submit" class="btn btn-success">
+                        <button type="submit" class="btn btn-success" id="btn_submit">
                             <span class="glyphicon glyphicon-ok"></span>
                             Solicitar
                         </button>

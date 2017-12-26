@@ -14,6 +14,7 @@ from django.views.generic.base import View
 from django.views.generic.base import TemplateView
 from django.views.generic.detail import DetailView
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 
 # Own's Libraries
@@ -24,16 +25,24 @@ from .forms import IncidentReportAddForm
 from .forms import IncidentReportEditForm
 
 
-class IncidentListPending(GroupLoginRequiredMixin, View):
+class IncidentListView(GroupLoginRequiredMixin, View):
     template_name = "incident/list_for_review.html"
     group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
 
-    def get(self, _request):
+    def get(self, _request, _status):
         query = _request.GET.get('q')
-        records = IncidentBusiness.get_Pending(
-            query,
-            _request.user.profile
-        )
+
+        if _status == 'pending':
+            records = IncidentBusiness.get_Pending(
+                query,
+                _request.user.profile
+            )
+        else:
+            records = IncidentBusiness.get_All(
+                query,
+                _request.user.profile
+            )
+
         records_paginated = IncidentBusiness.get_Paginated(
             records,
             _request.GET.get('page')
@@ -44,50 +53,18 @@ class IncidentListPending(GroupLoginRequiredMixin, View):
         return render(_request, self.template_name, context)
 
 
-class IncidentListAll(GroupLoginRequiredMixin, View):
-    template_name = "incident/list_for_review.html"
-    group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
-
-    def get(self, _request):
-        query = _request.GET.get('q')
-        records = IncidentBusiness.get_All(
-            query,
-            _request.user.profile
-        )
-        records_paginated = IncidentBusiness.get_Paginated(
-            records,
-            _request.GET.get('page')
-        )
-        context = {
-            'records': records_paginated
-        }
-        return render(_request, self.template_name, context)
-
-
-class IncidentListAdminPending(GroupLoginRequiredMixin, View):
+class IncidentListEdit(GroupLoginRequiredMixin, View):
     template_name = "incident/list_for_edit.html"
     group = ['INCIDENCIAS_ADM', ]
 
-    def get(self, _request):
+    def get(self, _request, _status):
         query = _request.GET.get('q')
-        records = IncidentBusiness.get_Pending(query)
-        records_paginated = IncidentBusiness.get_Paginated(
-            records,
-            _request.GET.get('page')
-        )
-        context = {
-            'records': records_paginated
-        }
-        return render(_request, self.template_name, context)
 
+        if _status == 'pending':
+            records = IncidentBusiness.get_Pending(query)
+        else:
+            records = IncidentBusiness.get_All(query)
 
-class IncidentListAdminAll(GroupLoginRequiredMixin, View):
-    template_name = "incident/list_for_edit.html"
-    group = ['INCIDENCIAS_ADM', ]
-
-    def get(self, _request):
-        query = _request.GET.get('q')
-        records = IncidentBusiness.get_All(query)
         records_paginated = IncidentBusiness.get_Paginated(
             records,
             _request.GET.get('page')
@@ -103,20 +80,61 @@ class IncidentAdd(GroupLoginRequiredMixin, CreateView):
     model = IncidentReport
     form_class = IncidentReportAddForm
     group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
-    success_url = reverse_lazy('labor:incident_add_success')
 
     def form_valid(self, form):
         form.instance.employee = self.request.user.profile
         form.instance.created_by = self.request.user.profile
         form.instance.updated_by = self.request.user.profile
-        response = super(IncidentAdd, self).form_valid(form)
 
-        # if response.status_code == 302:
-        #     self.request.user.email_user(
-        #         "Esta chido",
-        #         "Ejemplo de mensaje"
-        #     )
+        if form.instance.type.evidence_required:
+            form.instance.status = 'inc'
+        else:
+            form.instance.status = 'pen'
+
+        response = super(IncidentAdd, self).form_valid(form)
         return response
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy(
+            'labor:incident_add_evidence',
+            args=(self.object.pk,)
+        )
+
+
+class IncidentAddEvidence(GroupLoginRequiredMixin, View):
+    template_name = "incident/add_evidence.html"
+    group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
+
+    def get(self, _request, pk):
+        record = get_object_or_404(IncidentReport, pk=pk)
+        evidences = record.incidentevidence_set.all()
+        context = {
+            'record': record,
+            'evidences': evidences
+        }
+        return render(_request, self.template_name, context)
+
+    def post(self, _request, pk):
+        record = get_object_or_404(IncidentReport, pk=pk)
+        evidences = record.incidentevidence_set.all()
+
+        if record.type.evidence_required:
+            if len(evidences) > 0:
+                return redirect(reverse('labor:incident_list_all'))
+            else:
+                messages.error(
+                    _request,
+                    "Se require al menos una imagen de evidencia"
+                )
+        else:
+            return redirect(reverse('labor:incident_list_all'))
+
+        context = {
+            'record': record,
+            'evidences': evidences
+        }
+
+        return render(_request, self.template_name, context)
 
 
 class IncidentAddSuccess(GroupLoginRequiredMixin, TemplateView):
@@ -129,17 +147,17 @@ class IncidentCancel(GroupLoginRequiredMixin, View):
     group = ['INCIDENCIAS_ADM', 'INCIDENCIAS_USR', ]
 
     def get(self, _request, pk):
-        req = get_object_or_404(IncidentReport, pk=pk)
+        record = get_object_or_404(IncidentReport, pk=pk)
         context = {
-            'req': req
+            'record': record
         }
         return render(_request, self.template_name, context)
 
     def post(self, _request, pk):
-        req = get_object_or_404(IncidentReport, pk=pk)
-        req.updated_by = _request.user.profile
-        req.status = "can"
-        req.save()
+        record = get_object_or_404(IncidentReport, pk=pk)
+        record.updated_by = _request.user.profile
+        record.status = "can"
+        record.save()
         return redirect(reverse('labor:incident_list_all'))
 
 

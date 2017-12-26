@@ -7,6 +7,9 @@ from __future__ import unicode_literals
 # Django's Libraries
 from django.db import models
 
+# Third-party Libraries
+from django_resized import ResizedImageField
+
 # Own's Libraries
 from security.models import Profile
 from social.business import CommentBusiness
@@ -21,6 +24,7 @@ class IncidentType(models.Model):
         unique=True
     )
     description = models.TextField("Descripción", blank=True, null=True)
+    evidence_required = models.BooleanField("Requerir evidencia", default=True)
 
     created_date = models.DateTimeField(
         auto_now=False,
@@ -41,6 +45,7 @@ class IncidentType(models.Model):
 
 class IncidentReport(models.Model):
     STATUS_OPTIONS = (
+        ('inc', 'INCOMPLETO'),
         ('pen', 'PENDIENTE'),
         ('can', 'CANCELADO'),
         ('com', 'PROCESADO'),
@@ -63,7 +68,7 @@ class IncidentReport(models.Model):
     response = models.TextField("Respuesta de Administracion", blank=True)
     file = models.FileField(
         "Archivo",
-        upload_to=Helper.get_FilePath_incident,
+        upload_to=Helper.get_FilePath_Incident,
         validators=[
             Helper.validate_Size
         ],
@@ -125,3 +130,24 @@ class IncidentReport(models.Model):
     def comments(self):
         records = CommentBusiness.get(self.__class__, self.id)
         return records
+
+
+class IncidentEvidence(models.Model):
+    incident = models.ForeignKey(
+        IncidentReport,
+        verbose_name="Reporte de Incidencia",
+        blank=True,
+        null=True
+    )
+    image = ResizedImageField(
+        "Foto",
+        upload_to=Helper.get_ImagePath_Evidence,
+        quality=75,
+        blank=True,
+        keep_meta=False,
+        validators=[
+            Helper.validate_Img_Extension,
+            Helper.validate_Size
+        ]
+    )
+    uploaded_at = models.DateTimeField(auto_now_add=True)

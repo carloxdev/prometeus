@@ -4,12 +4,11 @@
 from django.conf.urls import url
 
 # Own's Libraries
-from .views import IncidentListPending
-from .views import IncidentListAll
-from .views import IncidentListAdminPending
-from .views import IncidentListAdminAll
+from .views import IncidentListView
+from .views import IncidentListEdit
 from .views import IncidentAdd
 from .views import IncidentAddSuccess
+from .views import IncidentAddEvidence
 from .views import IncidentView
 from .views import IncidentEdit
 from .views import IncidentCancel
@@ -18,28 +17,33 @@ from .views import IncidentCancel
 urlpatterns = [
     url(
         r'^incidents/pending/$',
-        IncidentListPending.as_view(),
+        IncidentListView.as_view(), {'_status': 'pending'},
         name="incident_list_pending"
     ),
     url(
         r'^incidents/all/$',
-        IncidentListAll.as_view(),
+        IncidentListView.as_view(), {'_status': 'all'},
         name="incident_list_all"
     ),
     url(
         r'^incidents/admin/pending/$',
-        IncidentListAdminPending.as_view(),
+        IncidentListEdit.as_view(), {'_status': 'pending'},
         name="incident_list_admin_pending"
     ),
     url(
         r'^incidents/admin/all/$',
-        IncidentListAdminAll.as_view(),
+        IncidentListEdit.as_view(), {'_status': 'pending'},
         name="incident_list_admin_all"
     ),
     url(
         r'^incidents/add/$',
         IncidentAdd.as_view(),
         name="incident_add"
+    ),
+    url(
+        r'^incidents/(?P<pk>\d+)/evidence/add/$',
+        IncidentAddEvidence.as_view(),
+        name="incident_add_evidence"
     ),
     url(
         r'^incidents/add/success/$',

@@ -1,0 +1,119 @@
+{% extends 'master.html' %}
+{% load static from staticfiles %}
+{% block title %} GCM - Evidencia en Reporte de Incidencia {% endblock title %}
+
+{% block css %}
+
+    <!-- Alertify -->
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/alertify.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'libs/alertifyjs/1.11.0/css/themes/bootstrap.min.css' %}"/>
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'tags/forms.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'tags/components.min.css' %}"/>
+
+    <!-- Own's Styles -->
+    <link rel="stylesheet" type="text/css" href="{% static 'incident/add_evidence.css' %}"></link>
+
+{% endblock css %}
+
+{% block content %}
+
+    <div class="container own-components-area">
+
+        <div class="row">
+
+            <div class="col-xs-12">
+                <header>
+                    <h3>
+                        <ol class="breadcrumb own-breadcrumb">
+                          <li class="own-breadcrumb-init">Reportes</li>
+                          <li class="own-breadcrumb-init">Reporte de Incidencia</li>
+                          <li>Evidencia</li>
+                        </ol>
+                    </h3>
+                </header>
+                <hr>
+    		</div>
+
+            <div class="col-xs-12">
+                <div class="own-form-title">
+                    Agregar imagenes presionado el siguiente boton:
+                </div>
+
+                {% include 'messages.html' %}
+                <p class="well">
+
+                    {# 1. BUTTON TO TRIGGER THE ACTION #}
+                    <button type="button" class="btn btn-primary" id="btn-upload">
+                        <span class="glyphicon glyphicon-cloud-upload"></span> Subir Imagenes
+                    </button>
+
+                    {# 2. FILE INPUT TO BE USED BY THE PLUG-IN #}
+                    <input id="fileupload"
+                    type="file"
+                    name="image"
+                    multiple
+                    style="display: none;"
+                    data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}", "incident": "{{record.pk}}"}'>
+
+                    {# 3. TABLE TO DISPLAY THE UPLOADED PHOTOS #}
+
+                    <table id="gallery" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Imagenes:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if evidences %}
+                                {% for evidence in evidences %}
+                                <tr>
+                                    <td><a href="{{ evidence.image.url }}">{{ evidence.image.name }}</a></td>
+                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr id="empty-section-message">
+                                    <td class="empty-message text-center">
+                                        Sin imagenes cargadas
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+
+
+                    <form action=""
+                    method="post"
+                    enctype="multipart/form-data"> {% csrf_token %}
+                        <div class="text-center">
+
+                            <button type="submit" class="btn btn-success" id="btn_submit">
+                                <span class="glyphicon glyphicon-ok"></span>
+                                Guardar, Y enviar Reporte
+                            </button>
+
+                        </div>
+                    </form>
+                </p>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+
+    <!-- Alertify -->
+    <script src="{% static 'libs/alertifyjs/1.11.0/alertify.min.js' %}"></script>
+    <script src="{% static 'alerts.min.js' %}"></script>
+
+    <!-- JQuery File Upload -->
+    <script src="{% static 'libs/jquery-file-upload/9.14.1/js/vendor/jquery.ui.widget.js' %}"></script>
+    <script src="{% static 'libs/jquery-file-upload/9.14.1/js/jquery.iframe-transport.js' %}"></script>
+    <script src="{% static 'libs/jquery-file-upload/9.14.1/js/jquery.fileupload.js' %}"></script>
+
+    <!-- Own's Scripts -->
+    <script src="{% static 'incident/add_evidence.js' %}"></script>
+
+{% endblock scripts %}

@@ -37,11 +37,21 @@ class Helper(object):
                                   str(megabyte_limit))
 
     @classmethod
-    def get_FilePath_incident(self, _instance, _filename):
+    def get_FilePath_Incident(self, _instance, _filename):
 
         if (_instance):
             upload_dir = os.path.join(
                 'files',
                 'incidents',
+            )
+        return os.path.join(upload_dir, _filename)
+
+    @classmethod
+    def get_ImagePath_Evidence(self, _instance, _filename):
+        if (_instance):
+            upload_dir = os.path.join(
+                'files',
+                'incidents',
+                str(_instance.incident.pk)
             )
         return os.path.join(upload_dir, _filename)

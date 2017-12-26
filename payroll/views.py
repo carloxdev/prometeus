@@ -61,7 +61,7 @@ class VoucherListView(GroupLoginRequiredMixin, View):
 
 
 class VoucherListEdit(GroupLoginRequiredMixin, View):
-    template_name = "voucher/list_for_review.html"
+    template_name = "voucher/list_for_edit.html"
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
     def get(self, _request, _status):
@@ -132,34 +132,34 @@ class VoucherCancel(GroupLoginRequiredMixin, View):
     group = ['COMPROBANTES_ADM', 'COMPROBANTES_USR', ]
 
     def get(self, _request, _pk):
-        req = get_object_or_404(VoucherRequisition, pk=_pk)
+        record = get_object_or_404(VoucherRequisition, pk=_pk)
         context = {
-            'req': req
+            'record': record
         }
         return render(_request, self.template_name, context)
 
     def post(self, _request, _pk):
-        req = get_object_or_404(VoucherRequisition, pk=_pk)
-        req.updated_by = _request.user.profile
-        req.status = "can"
-        req.save()
+        record = get_object_or_404(VoucherRequisition, pk=_pk)
+        record.updated_by = _request.user.profile
+        record.status = "can"
+        record.save()
 
-        req.employee.user.email_user(
+        record.employee.user.email_user(
             "Tu Solicitud con el no. %s fue CANCELADA correctamente" %
-            (req.pk),
+            (record.pk),
             "Se avisara a la Administracion para que no siga dando "
             "seguimiento a tu solicitud"
         )
 
         VoucherMail.send(
-            _type=req.type,
+            _type=record.type,
             _subject="%s CANCELO la solicitud con el no. %s" % (
-                req.employee.user.get_full_name(),
-                req.pk
+                record.employee.user.get_full_name(),
+                record.pk
             ),
             _content="Estimado Administrador, \nSe CANCELO la solicitud #%s."
             "No es necesario que le siga dando seguimiento." %
-            (req.pk),
+            (record.pk),
         )
 
         return redirect(reverse('payroll:voucher_list_all'))
@@ -228,6 +228,9 @@ class VoucherEdit(GroupLoginRequiredMixin, UpdateView):
         return response
 
     def form_invalid(self, form):
+        # import ipdb; ipdb.set_trace()
+        update_obj = VoucherRequisition.objects.get(id=form.instance.pk)
+        form.instance = update_obj
         return self.render_to_response(self.get_context_data(form=form))
 
 

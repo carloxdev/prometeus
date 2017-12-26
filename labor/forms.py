@@ -11,6 +11,7 @@ from django.forms import ValidationError
 
 # Own's Libraries
 from .models import IncidentReport
+from .models import IncidentEvidence
 
 
 class IncidentReportAddForm(ModelForm):
@@ -103,3 +104,9 @@ class IncidentReportEditForm(ModelForm):
             raise ValidationError(
                 "Favor de dar explicar porque estas cancelando la solicitud"
             )
+
+
+class IncidentEvidenceAddForm(ModelForm):
+    class Meta:
+        model = IncidentEvidence
+        fields = ('incident', 'image')
