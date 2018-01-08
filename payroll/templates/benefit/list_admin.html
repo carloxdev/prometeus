@@ -1,10 +1,11 @@
-{% extends 'master.html' %}
-
+{% extends 'master_in.html' %}
 {% load static from staticfiles %}
-
 {% load humanize %}
-{% load filter_has_group from custom_tags %}
+{% load forms %}
+{% load security %}
+
 {% block title %} GCM - Prestaciones{% endblock %}
+
 {% block css %}
 
     <!-- Own's Styles -->

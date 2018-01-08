@@ -1,6 +1,7 @@
-{% extends 'master.html' %}
+{% extends 'master_in.html' %}
 {% load static from staticfiles %}
-{% load custom_tags %}
+{% load forms %}
+{% load feedback %}
 {% block title %} GCM - Nuevo Reporte de Incidencia {% endblock title %}
 
 {% block css %}
@@ -49,7 +50,7 @@
                 class="well"
                 enctype="multipart/form-data"> {% csrf_token %}
 
-                    {% include 'messages.html' %}
+                    {% tag_messages messages %}
 
                     {% tag_form_errors form %}
 

@@ -1,15 +1,12 @@
-{% extends 'out.html' %}
-
+{% extends 'master_out.html' %}
 {% load static from staticfiles %}
-
-{% load custom_tags %}
+{% load forms %}
+{% load feedback %}
 
 {% block title %} GCM - Restablecer Contraseña Confirmacion {% endblock title %}
 
 {% block css %}
-
     <link rel="stylesheet" type="text/css" href="{% static 'tags.min.css' %}"/>
-
 {% endblock css %}
 
 {% block content %}
@@ -30,7 +27,7 @@
 
                     <br>
 
-                    {% include 'messages.html' %}
+                    {% tag_messages messages %}
 
                     {% tag_form_errors form %}
 

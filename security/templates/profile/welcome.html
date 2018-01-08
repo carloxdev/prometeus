@@ -1,8 +1,7 @@
-{% extends 'out.html' %}
-
+{% extends 'master_out.html' %}
 {% load static from staticfiles %}
-
-{% load custom_tags %}
+{% load forms %}
+{% load feedback %}
 
 {% block title %} GCM - Proporcionar Datos {% endblock title %}
 
@@ -40,7 +39,7 @@
 
                     <br>
 
-                    {% include 'messages.html' %}
+                    {% tag_messages messages %}
 
                     {% tag_form_errors form %}
 

@@ -18,7 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'libs/awesome-icons/4.7.0/css/font-awesome.min.css' %}">
 
     <!-- Own's Styles -->
-    <link rel="stylesheet" type="text/css" href="{% static 'out.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'master_out.min.css' %}">
 
     {% block css %}
 
@@ -44,7 +44,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand own-navbar-brand" href="{% url 'home:default' %}">
+                            <a class="navbar-brand own-navbar-brand" href="{% url 'home:landing' %}">
                                 <img alt="Brand" src="{% static 'images/logos/logo-medium.png' %}" class="img-responsive own-logo">
                             </a>
                         </div>

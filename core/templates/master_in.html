@@ -1,6 +1,6 @@
 {% load static from staticfiles %}
-
-{% load custom_tags %}
+{% load security %}
+{% load forms %}
 
 <!DOCTYPE html>
 <html lang="es">
@@ -23,7 +23,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'libs/awesome-icons/4.7.0/css/font-awesome.min.css' %}">
 
         <!-- Own's Styles -->
-        <link rel="stylesheet" type="text/css" href="{% static 'master.min.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'master_in.min.css' %}"/>
 
         {% block css %}
 
@@ -42,7 +42,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand own-navbar-brand" href="{% url 'home:default' %}">
+                            <a class="navbar-brand own-navbar-brand" href="{% url 'home:landing' %}">
                                 <img alt="Brand" src="{% static 'images/logos/logo-medium.png' %}" class="img-responsive own-logo">
                             </a>
                         </div>
@@ -52,19 +52,19 @@
 
                                 {% if user.is_authenticated %}
 
-                                {% if user.is_superuser or user|filter_has_group:"PRESTACIONES_USR" %}
+                                {% if user.is_superuser or user|check_has_group:"PRESTACIONES_USR" %}
                                     <li><a class="own-menu-option" href="{% url 'payroll:benefit_list_all' %}">Prestaciones</a></li>
                                 {% endif %}
 
-                                {% if user.is_superuser or user|filter_has_group:"COMPROBANTES_USR" %}
+                                {% if user.is_superuser or user|check_has_group:"COMPROBANTES_USR" %}
                                     <li><a class="own-menu-option" href="{% url 'payroll:voucher_list_all' %}">Comprobantes</a></li>
                                 {% endif %}
 
-                                {% if user.is_superuser or user|filter_has_group:"INCIDENCIAS_USR" %}
+                                {% if user.is_superuser or user|check_has_group:"INCIDENCIAS_USR" %}
                                     <li><a class="own-menu-option" href="{% url 'labor:incident_list_all' %}">Incidencias</a></li>
                                 {% endif %}
 
-                                {% if user.is_superuser or user|filter_has_group:"NOTICIAS_ADM" %}
+                                {% if user.is_superuser or user|check_has_group:"NOTICIAS_ADM" %}
                                     <li><a class="own-menu-option" href="{% url 'editorial:post_list' %}">Noticias</a></li>
                                 {% endif %}
 
@@ -94,7 +94,7 @@
                                             <li><a class="own-submenu-option" href="{% url 'security:profile' user.pk %}">Mi Perfil</a></li>
                                         {% endif %}
 
-                                        {% if user.is_superuser or user|filter_has_group:"ADMINISTRACION" %}
+                                        {% if user.is_superuser or user|check_has_group:"ADMINISTRACION" %}
                                             <li><a class="own-submenu-option" href="{% url 'management:task_list' %}">Bandeja</a></li>
                                         {% endif %}
                                     </ul>
@@ -142,7 +142,7 @@
         <script type="text/javascript" src="{% static 'libs/pace/1.0.0/pace.min.js' %} "></script>
 
         <!-- Own's Libraries -->
-        <script type="text/javascript" src="{% static 'master.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'master_in.min.js' %}"></script>
 
         {% block scripts %}
 

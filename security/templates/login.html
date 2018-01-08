@@ -1,9 +1,8 @@
-{% extends 'out.html' %}
-
+{% extends 'master_out.html' %}
 {% load static from staticfiles %}
-
-{% load custom_tags %}
-
+{% load forms %}
+{% load feedback %}
+{% load feedback %}
 {% block title %} GCM - Login {% endblock title %}
 
 {% block css %}
@@ -22,7 +21,9 @@
                     <div class="panel-title">Bienvenido a GCM Empleados</div>
                 </div>
                 <div class="panel-body own-panel-body" >
-                    {% include 'messages.html' %}
+
+                    {% tag_messages messages %}
+
                     <form method="post"> {% csrf_token %}
                         {% tag_form_errors form %}
                         <div class="input-group own-fields">

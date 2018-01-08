@@ -1,9 +1,7 @@
-{% extends 'master.html' %}
-
+{% extends 'master_in.html' %}
 {% load static from staticfiles %}
-
-{% load custom_tags %}
-
+{% load forms %}
+{% load feedback %}
 {% block title %} GCM - Permisos de usuario {% endblock title %}
 
 {% block css %}
@@ -41,7 +39,7 @@
 
                     <div class="row">
                         <div class="col-xs-12 col-md-8  col-md-offset-2">
-                            {% include 'messages.html' %}
+                            {% tag_messages messages %}
 
                             {% tag_form_errors form %}
 

@@ -1,8 +1,8 @@
-{% extends 'master.html' %}
+{% extends 'master_in.html' %}
 {% load static from staticfiles %}
 {% load social_tags %}
-{% load to_class_name from custom_tags %}
-{% load filter_has_group from custom_tags %}
+{% load forms %}
+{% load security %}
 {% block title %} GCM - Ver solicitud de prestacion{% endblock %}
 {% block css %}
 
@@ -58,7 +58,7 @@
                 </div>
                 <form id="form_benefit_edit" method="POST">
                     {% csrf_token %}
-                    {% if user.is_superuser or user|filter_has_group:"PRESTACIONES_ADM" %}
+                    {% if user.is_superuser or user|check_has_group:"PRESTACIONES_ADM" %}
                         <div class="form-group">
                             {{ form.status.label_tag }}
                             {{ form.status }}
@@ -77,7 +77,7 @@
                         {{ form.admin_response }}
                     </div>
                     {% if  form.status.value != 'can' %}
-                        {% if user.is_superuser or user|filter_has_group:"PRESTACIONES_ADM" or form.status.value == 'pen' %}
+                        {% if user.is_superuser or user|check_has_group:"PRESTACIONES_ADM" or form.status.value == 'pen' %}
                             <a class="btn btn-danger" href="{% url 'payroll:benefit_cancel' rq.pk %}" type="button">
                                 <i class="glyphicon glyphicon-cancel"></i>
                                 Cancelar

@@ -1,9 +1,8 @@
-{% extends 'master.html' %}
-
+{% extends 'master_in.html' %}
 {% load static from staticfiles %}
-
 {% load humanize %}
-{% load filter_has_group from custom_tags %}
+{% load forms %}
+{% load security %}
 {% block title %} GCM - Prestaciones{% endblock %}
 {% block css %}
 
@@ -21,10 +20,10 @@
                 <h3 class="own-titulo">Prestaciones</h3>
             </header>
 
-            <hr class="own-article-line">            
+            <hr class="own-article-line">
 
             <nav class="own-article-toolbar">
-                
+
                 <div class="row">
 
                     <div class="col-xs-12 col-sm-6">
@@ -44,7 +43,7 @@
                             </a>
                         {% endif %}
                     </div>
-                    
+
                     <br class="visible-xs">
                     <br class="visible-xs">
 
@@ -52,20 +51,20 @@
 
                         <div class="input-group">
                             <input type="text" class="form-control" name="q" placeholder="escribe texto a buscar" value="{{ request.GET.q }}">
-                            
+
                             <span class="input-group-btn">
                               <button type="submit" id="boton_buscar" class="btn btn-info btn-flat">
                                 <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                                 <span class="hidden-xs">Buscar</span>
                               </button>
                             </span>
-                        </div>   
+                        </div>
 
                     </form>
                 </div>
-            </nav>  
+            </nav>
 
-            <br>            
+            <br>
 
             <div class="container-fluid">
             {% if requisitions %}

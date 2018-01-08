@@ -14,8 +14,8 @@ from django.core.urlresolvers import reverse
 from editorial.business import PostBusiness
 
 
-class Default(View):
-    template_name = "default.html"
+class LandingView(View):
+    template_name = "landing.html"
 
     def get(self, _request):
 

@@ -4,9 +4,9 @@
 from django.conf.urls import url
 
 # Own's Libraries
-from .views import Default
+from .views import LandingView
 
 
 urlpatterns = [
-    url(r'^$', Default.as_view(), name="default"),
+    url(r'^$', LandingView.as_view(), name="landing"),
 ]

@@ -1,5 +1,6 @@
-{% extends 'master.html' %}
+{% extends 'master_in.html' %}
 {% load static from staticfiles %}
+{% load feedback %}
 {% block title %} GCM - Evidencia en Reporte de Incidencia {% endblock title %}
 
 {% block css %}
@@ -41,7 +42,7 @@
                     Agregar imagenes presionado el siguiente boton:
                 </div>
 
-                {% include 'messages.html' %}
+                {% tag_messages messages %}
                 <p class="well">
 
                     {# 1. BUTTON TO TRIGGER THE ACTION #}
