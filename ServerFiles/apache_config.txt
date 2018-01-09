@@ -1,0 +1,41 @@
+
+WSGIPythonPath e:/Nuve/envwin/Lib/site-packages
+
+<VirtualHost *:80>
+
+    WSGIScriptAlias / e:/Nuve/Sitio/mod.wsgi
+    <Directory e:/Nuve/Sitio>
+	Require all granted
+    #<Files mod.wsgi>
+
+    #</Files>
+    </Directory>
+
+    Alias /media e:/Nuve/Sitio/media
+    <Directory /media>
+    	Order allow,deny
+	Allow from all
+    </Directory>
+
+    Alias /static e:/Nuve/Sitio/static
+    <Directory /static>
+    	Order allow,deny
+	Allow from all
+    </Directory>
+
+    # Proyecto de Pruebas
+    WSGIScriptAlias /proyectotest "c:/xampp/htdocs/proyectotest/mod.wsgi"
+
+    Alias /proyectotest/media "c:/xampp/htdocs/proyectotest/media"
+    <Directory "/proyectotest/media">
+    	Order allow,deny
+	Allow from all
+    </Directory>
+
+    Alias /proyectotest/static "c:/xampp/htdocs/proyectotest/static"
+    <Directory "/proyectotest/static">
+            Order allow,deny
+            Allow from all
+    </Directory>
+
+</VirtualHost>
