@@ -1,8 +1,8 @@
 {% extends 'master_in.html' %}
 {% load static from staticfiles %}
-{% load social_tags %}
-{% load to_class_name from custom_tags %}
-{% load tag_filename from custom_tags %}
+{% load social %}
+{% load models %}
+{% load forms %}
 {% block css %}
 
     <!-- Alertify -->
@@ -24,8 +24,8 @@
             <header>
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
-					  	<li class="own-breadcrumb-init"><a href="{% url 'labor:incident_list_all' %}">Solicitudes</a></li>
-						<li>Solicitud de Comprobante: <span class="badge own-badge" id="object_id" data-tag-model="{{ record | to_class_name }}">{{record.pk}}</span></li>
+					  	<li class="own-breadcrumb-init"><a href="{% url 'labor:incident_list_all' %}">Reportes</a></li>
+						<li>Reporte de Incidencia: <span class="badge own-badge" id="object_id" data-tag-model="{{ record | get_class_name }}">{{record.pk}}</span></li>
 					</ol>
 				</h3>
             </header>
@@ -93,7 +93,7 @@
                     {% for evidence in record.incidentevidence_set.all %}
                     <div class="col-xs-12 col-sm-12 col-md-4">
                         <a href="{{evidence.image.url}}">
-                            <img class="img-thumbnail evidence" title="{{ evidence.image|tag_filename }}" src="{{evidence.image.url}}" alt="imagen">
+                            <img class="img-thumbnail evidence" title="{{ evidence.image|get_filename }}" src="{{evidence.image.url}}" alt="imagen">
                         </a>
                     </div>
                     {% endfor %}

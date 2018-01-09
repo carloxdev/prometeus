@@ -3,7 +3,8 @@
 {% load humanize %}
 {% load forms %}
 {% load feedback %}
-{% load social_tags %}
+{% load models %}
+{% load social %}
 {% block title %} GCM - Editar Solicitud de Comprobante {% endblock title %}
 
 {% block css %}
@@ -29,7 +30,7 @@
                     <h3>
                         <ol class="breadcrumb own-breadcrumb">
                           <li class="own-breadcrumb-init"><a href="{% url 'payroll:voucher_list_admin_pending' %}">Solicitudes</a></li>
-						  <li>Editar Solicitud de Comprobante: <span class="badge own-badge" id="object_id" data-tag-model="{{ form.instance | to_class_name }}">{{form.instance.id}}</span></li>
+						  <li>Editar Solicitud de Comprobante: <span class="badge own-badge" id="object_id" data-tag-model="{{ form.instance | get_class_name }}">{{form.instance.id}}</span></li>
                         </ol>
                     </h3>
                 </header>

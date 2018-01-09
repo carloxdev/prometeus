@@ -2,8 +2,9 @@
 {% load static from staticfiles %}
 {% load humanize %}
 {% load forms %}
+{% load models %}
 {% load feedback %}
-{% load social_tags %}
+{% load social %}
 {% block title %} GCM - Editar Reporte de Incidencia {% endblock title %}
 
 {% block css %}
@@ -29,8 +30,8 @@
                 <header>
                     <h3>
                         <ol class="breadcrumb own-breadcrumb">
-                          <li class="own-breadcrumb-init"><a href="{% url 'labor:incident_list_admin_pending' %}">Solicitudes</a></li>
-						  <li>Editar Reporte de Incidente: <span class="badge own-badge" id="object_id" data-tag-model="{{ form.instance | to_class_name }}">{{form.instance.id}}</span></li>
+                          <li class="own-breadcrumb-init"><a href="{% url 'labor:incident_list_admin_pending' %}">Reportes</a></li>
+						  <li>Editar Reporte de Incidente: <span class="badge own-badge" id="object_id" data-tag-model="{{ form.instance | get_class_name }}">{{form.instance.id}}</span></li>
                         </ol>
                     </h3>
                 </header>
@@ -113,7 +114,7 @@
                         {% for evidence in form.instance.incidentevidence_set.all %}
                         <div class="col-xs-12 col-sm-12 col-md-4">
                             <a href="{{evidence.image.url}}">
-                                <img class="img-thumbnail evidence" title="{{ evidence.image|tag_filename }}" src="{{evidence.image.url}}" alt="imagen">
+                                <img class="img-thumbnail evidence" title="{{ evidence.image|get_filename }}" src="{{evidence.image.url}}" alt="imagen">
                             </a>
                         </div>
                         {% endfor %}

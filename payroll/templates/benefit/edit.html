@@ -1,7 +1,8 @@
 {% extends 'master_in.html' %}
 {% load static from staticfiles %}
-{% load social_tags %}
+{% load social %}
 {% load forms %}
+{% load models %}
 {% load security %}
 {% block title %} GCM - Ver solicitud de prestacion{% endblock %}
 {% block css %}
@@ -25,7 +26,7 @@
                 <h3 class="own-titulo">
 					<ol class="breadcrumb own-breadcrumb">
 					  	<li class="own-breadcrumb-init"><a href="{% url 'payroll:benefit_list_all' %}">Solicitudes</a></li>
-					  	<li>Solicitud de prestación no. <span id="object_id" data-tag-model="{{ rq | to_class_name }}">{{rq.pk}}</span></li>
+					  	<li>Solicitud de prestación no. <span id="object_id" data-tag-model="{{ rq | get_class_name }}">{{rq.pk}}</span></li>
 					</ol>
 				</h3>
             </header>
